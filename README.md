@@ -1,2 +1,2 @@
-# SuperBro64.github.io
+# superbro64.github.io
 My own website hosted on GitHub!
