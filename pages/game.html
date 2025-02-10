@@ -21,11 +21,39 @@
         </style>
     </head>
 
-    <body>
+    <body onload="startGame()">
+
+        <script>
+            function startGame()
+            {
+                gameArea.start();
+            }
+
+            var gameArea =
+            {
+                canvas: document.createElement("canvas"),
+                start: function()
+                {
+                    this.canvas.width = 640;
+                    this.canvas.height = 480;
+                    this.canvas.style = "border: 3px solid black";
+
+                    this.context = this.canvas.getContext("2d");
+                    this.context.fillStyle = "white";
+                    this.context.fillRect(0, 0, 640, 480);
+
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                }
+            }
+        </script>
 
         <h1>
-            Webgame
+            Webgame (in progress)
         </h1>
+
+        <p>
+            <a href = "https://superbro64.github.io/">Back to Homepage</a>
+        </p>
 
     </body>
 </html>
