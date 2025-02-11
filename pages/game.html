@@ -24,31 +24,97 @@
     <body onload="startGame()">
 
         <script>
+            var player;
+
             function startGame()
             {
-                gameArea.start();
+                gameArea.start(640, 480, "border: 5px solid black", "white", 0, 0, 640, 480, 20);
+                player = new component(320, 240, 20, 0, 2, "forestgreen", 2, "black");
             }
 
             var gameArea =
             {
                 canvas: document.createElement("canvas"),
-                start: function()
+
+                start: function(canvasWidth, canvasHeight, canvasStyle, fillColor, x, y, fillWidth, fillHeight, updateSpeed)
                 {
-                    this.canvas.width = 640;
-                    this.canvas.height = 480;
-                    this.canvas.style = "border: 3px solid black";
+                    this.canvasWidth = canvasWidth;
+                    this.canvasHeight = canvasHeight;
+                    this.canvasStyle = canvasStyle;
+                    this.fillColor = fillColor;
+                    this.x = x;
+                    this.y = y;
+                    this.fillWidth = fillWidth;
+                    this.fillHeight = fillHeight;
+                    this.updateSpeed = updateSpeed;
+
+                    this.canvas.width = this.canvasWidth;
+                    this.canvas.height = this.canvasHeight;
+                    this.canvas.style = this.canvasStyle;
 
                     this.context = this.canvas.getContext("2d");
-                    this.context.fillStyle = "white";
-                    this.context.fillRect(0, 0, 640, 480);
+
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.fillWidth, this.fillHeight);
 
                     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.interval = setInterval(updateGameArea, updateSpeed);
+                },
+
+                clear: function()
+                {
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
                 }
+            }
+
+            function component(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
+            {   
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.startAngle = startAngle;
+                this.endAngle = endAngle;
+                this.fillColor = fillColor;
+                this.lineWidth = lineWidth;
+                this.lineColor = lineColor;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.beginPath();
+                    this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fill();
+
+                    this.context.lineWidth = this.lineWidth;
+                    this.context.strokeStyle = this.lineColor;
+                    this.context.stroke();
+                }
+            }
+
+            function updateGameArea()
+            {
+                gameArea.clear();
+
+                if (player.x <= 640)
+                {
+                    player.x += 1;
+                }
+
+                if (player.y <= 480)
+                {
+                    player.y += 1;
+                }
+
+                player.update();
             }
         </script>
 
         <h1>
-            Webgame (in progress)
+            Heroic Triacosihexacontagon's Magnificent Legend (WIP)
         </h1>
 
         <p>
