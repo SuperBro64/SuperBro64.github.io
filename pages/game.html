@@ -18,6 +18,12 @@
                 padding: 15px 25px; border: 3px solid black;
             }
             a:hover, a:active { background-color: firebrick; }
+            button
+            {
+                color: black; display: inline-block;
+                font-family: monospace; font-size: xx-large; text-align: center;
+                padding: 10px 20px; border: 3px solid black;
+            }
         </style>
     </head>
 
@@ -71,6 +77,8 @@
 
             function component(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
             {   
+                this.speedX = 0;
+                this.speedY = 0;
                 this.x = x;
                 this.y = y;
                 this.radius = radius;
@@ -93,28 +101,91 @@
                     this.context.strokeStyle = this.lineColor;
                     this.context.stroke();
                 }
+
+                this.newPosition = function()
+                {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
             }
 
             function updateGameArea()
             {
                 gameArea.clear();
 
-                if (player.x <= 640)
-                {
-                    player.x += 1;
-                }
-
-                if (player.y <= 480)
-                {
-                    player.y += 1;
-                }
-
+                player.newPosition();
                 player.update();
+            }
+
+            function playerMoveUp()
+            {
+                player.speedY -= 1;
+            }
+
+            function playerMoveDown()
+            {
+                player.speedY += 1;
+            }
+
+            function playerMoveLeft()
+            {
+                player.speedX -= 1;
+            }
+
+            function playerMoveRight()
+            {
+                player.speedX += 1;
+            }
+
+            function playerStopMove()
+            {
+                player.speedX = 0;
+                player.speedY = 0;
             }
         </script>
 
+        <br>
+
+        <div style = "text-align: center; width: 640px;">
+            <button style = "background-color: dodgerblue">A</button>
+            <button
+                style = "background-color: lightgray"
+                onmousedown = "playerMoveUp()"
+                onmouseup = "playerStopMove()"
+                ontouchstart = "playerMoveUp()"
+            >↑</button>
+            <button style = "background-color: tomato">S</button>
+
+            <br>
+
+            <button
+                style = "background-color: lightgray"
+                onmousedown = "playerMoveLeft()"
+                onmouseup = "playerStopMove()"
+                ontouchstart = "playerMoveLeft()"
+            >←</button>
+            <button style = "background-color: gray">/</button>
+            <button
+                style = "background-color: lightgray"
+                onmousedown = "playerMoveRight()"
+                onmouseup = "playerStopMove()"
+                ontouchstart = "playerMoveRight()"
+            >→</button>
+
+            <br>
+            
+            <button style = "background-color: limegreen">Z</button>
+            <button
+                style = "background-color: lightgray"
+                onmousedown = "playerMoveDown()"
+                onmouseup = "playerStopMove()"
+                ontouchstart = "playerMoveDown()"
+            >↓</button>
+            <button style = "background-color: gold">X</button>
+        </div>
+
         <h1>
-            Heroic Triacosihexacontagon's Magnificent Legend (WIP)
+            Heroic Triacosihexacontagon's Magnificent Legend
         </h1>
 
         <p>
