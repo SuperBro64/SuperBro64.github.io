@@ -22,7 +22,7 @@
             {
                 color: black; display: inline-block;
                 font-family: monospace; font-size: xx-large; text-align: center;
-                padding: 10px 20px; border: 3px solid black;
+                padding: 15px 25px; border: 3px solid black;
             }
         </style>
     </head>
@@ -35,7 +35,7 @@
             function startGame()
             {
                 gameArea.start(640, 480, "border: 5px solid black", "white", 0, 0, 640, 480, 20);
-                player = new component(320, 240, 20, 0, 2, "forestgreen", 2, "black");
+                player = new component(320, 240, 20, 0, 2, "red", 2, "black");
             }
 
             var gameArea =
@@ -142,19 +142,23 @@
                 player.speedX = 0;
                 player.speedY = 0;
             }
+
+            function playerAction()
+            {
+                player.fillColor = "forestgreen"
+            }
         </script>
 
         <br>
 
         <div style = "text-align: center; width: 640px;">
-            <button style = "background-color: dodgerblue">A</button>
             <button
                 style = "background-color: lightgray"
                 onmousedown = "playerMoveUp()"
                 onmouseup = "playerStopMove()"
                 ontouchstart = "playerMoveUp()"
+                ontouchend = "playerStopMove()"
             >↑</button>
-            <button style = "background-color: tomato">S</button>
 
             <br>
 
@@ -163,25 +167,30 @@
                 onmousedown = "playerMoveLeft()"
                 onmouseup = "playerStopMove()"
                 ontouchstart = "playerMoveLeft()"
+                ontouchend = "playerStopMove()"
             >←</button>
-            <button style = "background-color: gray">/</button>
+            <button
+                style = "background-color: tomato"
+                onmousedown = "playerAction()"
+                ontouchstart = "playerAction()"
+            >Z</button>
             <button
                 style = "background-color: lightgray"
                 onmousedown = "playerMoveRight()"
                 onmouseup = "playerStopMove()"
                 ontouchstart = "playerMoveRight()"
+                ontouchend = "playerStopMove()"
             >→</button>
 
             <br>
             
-            <button style = "background-color: limegreen">Z</button>
             <button
                 style = "background-color: lightgray"
                 onmousedown = "playerMoveDown()"
                 onmouseup = "playerStopMove()"
                 ontouchstart = "playerMoveDown()"
+                ontouchend = "playerStopMove()"
             >↓</button>
-            <button style = "background-color: gold">X</button>
         </div>
 
         <h1>
