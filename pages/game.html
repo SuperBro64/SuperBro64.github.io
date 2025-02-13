@@ -34,7 +34,7 @@
 
             function startGame()
             {
-                gameArea.start(640, 480, "border: 5px solid black", "white", 0, 0, 20);
+                gameArea.start(640, 480, "border: 5px solid black", "white", 0, 0, 20, "none");
                 player = new component(320, 240, 20, 0, 2, "red", 2, "black");
             }
 
@@ -42,12 +42,13 @@
             {
                 canvas: document.createElement("canvas"),
 
-                start: function(width, height, style, fillColor, x, y, updateSpeed)
+                start: function(width, height, style, fillColor, x, y, updateSpeed, cursor)
                 {
                     this.canvas.width = width, this.canvas.height = height, this.canvas.style = style;
                     this.fillColor = fillColor;
                     this.x = x, this.y = y;
                     this.updateSpeed = updateSpeed;
+                    this.canvas.style.cursor = cursor;
 
                     this.context = this.canvas.getContext("2d");
 
@@ -56,6 +57,12 @@
 
                     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                     this.interval = setInterval(updateGameArea, this.updateSpeed);
+
+                    window.addEventListener('mousemove', function(cursor)
+                    { gameArea.x = cursor.pageX, gameArea.y = cursor.pageY; } )
+
+                    window.addEventListener('touchmove', function(touch)
+                    { gameArea.x = touch.touches[0].screenX, gameArea.y = touch.touches[0].screenY; } )
                 },
 
                 clear: function()
@@ -88,49 +95,38 @@
                     this.context.strokeStyle = this.lineColor;
                     this.context.stroke();
                 }
-
-                this.newPosition = function()
-                {
-                    this.x += this.speedX, this.y += this.speedY;
-                }
             }
 
             function updateGameArea()
             {
                 gameArea.clear();
 
-                player.newPosition();
+                if (gameArea.x >= 0 && gameArea.x <= 640 && gameArea.y >= 0 && gameArea.y <= 480)
+                {
+                    player.x = gameArea.x, player.y = gameArea.y;
+                }
+
                 player.update();
             }
 
-            function playerMoveUp()
+            function playerActionA()
             {
-                player.speedY -= 2;
+                player.fillColor = "blue";
             }
 
-            function playerMoveDown()
+            function playerActionS()
             {
-                player.speedY += 2;
+                player.fillColor = "red";
             }
 
-            function playerMoveLeft()
+            function playerActionZ()
             {
-                player.speedX -= 2;
+                player.fillColor = "green";
             }
 
-            function playerMoveRight()
+            function playerActionX()
             {
-                player.speedX += 2;
-            }
-
-            function playerStopMove()
-            {
-                player.speedX = 0, player.speedY = 0;
-            }
-
-            function playerAction()
-            {
-                player.fillColor = "forestgreen"
+                player.fillColor = "yellow";
             }
         </script>
 
@@ -138,96 +134,28 @@
 
         <div style = "text-align: center; width: 640px;">
             <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveUp(); playerMoveLeft()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveUp(); playerMoveLeft()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬉</b></button>
-            <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveUp()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveUp()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬆</b></button>
-            <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveUp(); playerMoveRight()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveUp(); playerMoveRight()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬈</b></button>
-
-            <br>
-
-            <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveLeft()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveLeft()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬅</b></button>
+                style = "background-color: dodgerblue"
+                onmousedown = "playerActionA()"
+                ontouchstart = "playerActionA()"
+            ><b>A</b></button>
             <button
                 style = "background-color: tomato"
-                onmousedown = "playerAction()"
-                ontouchstart = "playerAction()"
-            ><b>Z</b></button>
-            <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveRight()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveRight()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>➡</b></button>
+                onmousedown = "playerActionS()"
+                ontouchstart = "playerActionS()"
+            ><b>S</b></button>
 
             <br>
-            
-            <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveDown(); playerMoveLeft()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
 
-                ontouchstart = "playerMoveDown(); playerMoveLeft()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬋</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveDown()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveDown()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬇</b></button>
+                style = "background-color: limegreen"
+                onmousedown = "playerActionZ()"
+                ontouchstart = "playerActionZ()"
+            ><b>Z</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "playerMoveDown(); playerMoveRight()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
-
-                ontouchstart = "playerMoveDown(); playerMoveRight()"
-                ontouchend = "playerStopMove()"
-                ontouchcancel = "playerStopMove()"
-            ><b>⬊</b></button>
+                style = "background-color: gold"
+                onmousedown = "playerActionX()"
+                ontouchstart = "playerActionX()"
+            ><b>X</b></button>
         </div>
 
         <h1>
