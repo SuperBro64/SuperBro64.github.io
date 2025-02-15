@@ -108,28 +108,52 @@
             function updateGameArea()
             {
                 gameArea.clear();
-                playerStopMove();
 
-                if (gameArea.keys && gameArea.keys[38]) { playerMoveUp(); }
-                if (gameArea.keys && gameArea.keys[40]) { playerMoveDown(); }
-                if (gameArea.keys && gameArea.keys[37]) { playerMoveLeft(); }
-                if (gameArea.keys && gameArea.keys[39]) { playerMoveRight(); }
+                if (gameArea.keys && gameArea.keys[38]) { keyMoveUp(); }
+                if (gameArea.keys && gameArea.keys[40]) { keyMoveDown(); }
+                if (gameArea.keys && gameArea.keys[37]) { keyMoveLeft(); }
+                if (gameArea.keys && gameArea.keys[39]) { keyMoveRight(); }
 
-                if (gameArea.keys && gameArea.keys[90]) { playerAction(); }
+                if (gameArea.keys && gameArea.keys[191]) { pause(); }
+                if (gameArea.keys && gameArea.keys[65]) { actionA(); }
+                if (gameArea.keys && gameArea.keys[83]) { actionS(); }
+                if (gameArea.keys && gameArea.keys[90]) { actionZ(); }
+                if (gameArea.keys && gameArea.keys[88]) { actionX(); }
 
                 player.newPosition();
                 player.update();
             }
 
-            function playerMoveUp() { player.speedY -= 3; }
-            function playerMoveDown() { player.speedY += 3; }
-            function playerMoveLeft() { player.speedX -= 3; }
-            function playerMoveRight() { player.speedX += 3; }
-            function playerStopMove() { player.speedX = 0, player.speedY = 0; }
+            function keyMoveUp() { player.y -= 3; }
+            function keyMoveDown() { player.y += 3; }
+            function keyMoveLeft() { player.x -= 3; }
+            function keyMoveRight() { player.x += 3; }
 
-            function playerAction()
+            function buttonMoveUp() { player.speedY -= 3; }
+            function buttonMoveDown() { player.speedY += 3; }
+            function buttonMoveLeft() { player.speedX -= 3; }
+            function buttonMoveRight() { player.speedX += 3; }
+            function buttonStopMoving() { player.speedX = 0, player.speedY = 0; }
+
+            function pause()
             {
-                player.fillColor = "forestgreen"
+                player.fillColor = "gray";
+            }
+            function actionA()
+            {
+                player.fillColor = "blue";
+            }
+            function actionS()
+            {
+                player.fillColor = "red";
+            }
+            function actionZ()
+            {
+                player.fillColor = "green";
+            }
+            function actionX()
+            {
+                player.fillColor = "yellow";
             }
         </script>
 
@@ -137,88 +161,108 @@
 
         <div style = "text-align: center; width: 640px;">
             <button
+                style = "background-color: dodgerblue"
+                onmousedown = "actionA()"
+                ontouchstart = "actionA()"
+            ><b>A</b></button>
+            <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveUp(); playerMoveLeft()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveUp(); buttonMoveLeft()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveUp(); playerMoveLeft()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveUp(); buttonMoveLeft()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬉</b></button>
             <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveUp()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveUp()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveUp()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveUp()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬆</b></button>
             <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveUp(); playerMoveRight()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveUp(); buttonMoveRight()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveUp(); playerMoveRight()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveUp(); buttonMoveRight()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬈</b></button>
+            <button
+                style = "background-color: tomato"
+                onmousedown = "actionS()"
+                ontouchstart = "actionS()"
+            ><b>S</b></button>
 
             <br>
 
             <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveLeft()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveLeft()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveLeft()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveLeft()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬅</b></button>
             <button
-                style = "background-color: tomato"
-                onmousedown = "playerAction()"
-                ontouchstart = "playerAction()"
-            ><b>Z</b></button>
+                style = "background-color: gray"
+                onmousedown = "pause()"
+                ontouchstart = "pause()"
+            ><b>/</b></button>
             <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveRight()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveRight()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveRight()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveRight()"
+                ontouchend = "buttonStopMoving()"
             ><b>➡</b></button>
 
             <br>
             
             <button
+                style = "background-color: limegreen"
+                onmousedown = "actionZ()"
+                ontouchstart = "actionZ()"
+            ><b>Z</b></button>
+            <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveDown(); playerMoveLeft()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveDown(); buttonMoveLeft()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveDown(); playerMoveLeft()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveDown(); buttonMoveLeft()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬋</b></button>
             <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveDown()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveDown()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
 
-                ontouchstart = "playerMoveDown()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveDown()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬇</b></button>
             <button
                 style = "background-color: lightgray"
-                onmousedown = "playerMoveDown(); playerMoveRight()"
-                onmouseup = "playerStopMove()"
-                onmouseleave = "playerStopMove()"
+                onmousedown = "buttonMoveDown(); buttonMoveRight()"
+                onmouseup = "buttonStopMoving()"
+                onmouseleave = "buttonStopMoving()"
                 
-                ontouchstart = "playerMoveDown(); playerMoveRight()"
-                ontouchend = "playerStopMove()"
+                ontouchstart = "buttonMoveDown(); buttonMoveRight()"
+                ontouchend = "buttonStopMoving()"
             ><b>⬊</b></button>
+            <button
+                style = "background-color: gold"
+                onmousedown = "actionX()"
+                ontouchstart = "actionX()"
+            ><b>X</b></button>
         </div>
 
         <h1>
