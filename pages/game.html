@@ -102,7 +102,8 @@
 
                 this.newPosition = function()
                 {
-                    this.x += this.speedX, this.y += this.speedY;
+                    if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= 640) { this.x += this.speedX; }
+                    if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= 480) { this.y += this.speedY; }
                 }
             }
 
