@@ -24,6 +24,7 @@
                 font-family: monospace; font-size: xx-large; text-align: center;
                 padding: 10px 20px; border: 3px solid black;
             }
+            .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
         </style>
     </head>
 
@@ -129,11 +130,11 @@
             function keyMoveLeft() { player.x -= 3; }
             function keyMoveRight() { player.x += 3; }
 
-            function buttonMoveUp() { player.speedY -= 3; }
-            function buttonMoveDown() { player.speedY += 3; }
-            function buttonMoveLeft() { player.speedX -= 3; }
-            function buttonMoveRight() { player.speedX += 3; }
-            function buttonStopMoving() { player.speedX = 0, player.speedY = 0; }
+            function btnMoveUp() { player.speedY -= 3; }
+            function btnMoveDown() { player.speedY += 3; }
+            function btnMoveLeft() { player.speedX -= 3; }
+            function btnMoveRight() { player.speedX += 3; }
+            function btnStopMove() { player.speedX = 0, player.speedY = 0; }
 
             function pause()
             {
@@ -161,107 +162,70 @@
 
         <div style = "text-align: center; width: 640px;">
             <button
-                style = "background-color: dodgerblue"
-                onmousedown = "actionA()"
-                ontouchstart = "actionA()"
+                style = "background-color: dodgerblue" class= "prevent-select"
+                onmousedown = "actionA()" ontouchstart = "actionA()"
             ><b>A</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveUp(); buttonMoveLeft()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveUp(); buttonMoveLeft()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveUp(); btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveUp(); btnMoveLeft()" ontouchend = "btnStopMove()"
             ><b>⬉</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveUp()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveUp()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveUp()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveUp()" ontouchend = "btnStopMove()"
             ><b>⬆</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveUp(); buttonMoveRight()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveUp(); buttonMoveRight()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveUp(); btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveUp(); btnMoveRight()" ontouchend = "btnStopMove()"
             ><b>⬈</b></button>
             <button
-                style = "background-color: tomato"
-                onmousedown = "actionS()"
-                ontouchstart = "actionS()"
+                style = "background-color: tomato" class= "prevent-select"
+                onmousedown = "actionS()" ontouchstart = "actionS()"
             ><b>S</b></button>
 
             <br>
 
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveLeft()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveLeft()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveLeft()" ontouchend = "btnStopMove()"
             ><b>⬅</b></button>
             <button
-                style = "background-color: gray"
-                onmousedown = "pause()"
-                ontouchstart = "pause()"
+                style = "background-color: gray" class= "prevent-select"
+                onmousedown = "pause()" ontouchstart = "pause()"
             ><b>/</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveRight()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveRight()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveRight()" ontouchend = "btnStopMove()"
             ><b>➡</b></button>
 
             <br>
             
             <button
-                style = "background-color: limegreen"
-                onmousedown = "actionZ()"
-                ontouchstart = "actionZ()"
+                style = "background-color: limegreen" class= "prevent-select"
+                onmousedown = "actionZ()" ontouchstart = "actionZ()"
             ><b>Z</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveDown(); buttonMoveLeft()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveDown(); buttonMoveLeft()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveDown(); btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveDown(); btnMoveLeft()" ontouchend = "btnStopMove()"
             ><b>⬋</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveDown()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-
-                ontouchstart = "buttonMoveDown()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveDown()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveDown()" ontouchend = "btnStopMove()"
             ><b>⬇</b></button>
             <button
-                style = "background-color: lightgray"
-                onmousedown = "buttonMoveDown(); buttonMoveRight()"
-                onmouseup = "buttonStopMoving()"
-                onmouseleave = "buttonStopMoving()"
-                
-                ontouchstart = "buttonMoveDown(); buttonMoveRight()"
-                ontouchend = "buttonStopMoving()"
+                style = "background-color: lightgray" class= "prevent-select"
+                onmousedown = "btnMoveDown(); btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
+                ontouchstart = "btnMoveDown(); btnMoveRight()" ontouchend = "btnStopMove()"
             ><b>⬊</b></button>
             <button
-                style = "background-color: gold"
-                onmousedown = "actionX()"
-                ontouchstart = "actionX()"
+                style = "background-color: gold" class= "prevent-select"
+                onmousedown = "actionX()" ontouchstart = "actionX()"
             ><b>X</b></button>
         </div>
 
