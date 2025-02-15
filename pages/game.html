@@ -126,10 +126,10 @@
                 player.update();
             }
 
-            function keyMoveUp() { player.y -= 3; }
-            function keyMoveDown() { player.y += 3; }
-            function keyMoveLeft() { player.x -= 3; }
-            function keyMoveRight() { player.x += 3; }
+            function keyMoveUp() { if ((player.y - 3) >= 0) { player.y -= 3; } }
+            function keyMoveDown() { if ((player.y + 3) <= 480) { player.y += 3; } }
+            function keyMoveLeft() { if ((player.x - 3) >= 0) { player.x -= 3; } }
+            function keyMoveRight() { if ((player.x + 3) <= 640) { player.x += 3; } }
 
             function btnMoveUp() { player.speedY -= 3; }
             function btnMoveDown() { player.speedY += 3; }
