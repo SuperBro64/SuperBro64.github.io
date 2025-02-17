@@ -32,23 +32,32 @@
 
         <script>
             var player;
+            var treasure = [];
+            var score;
 
             function startGame()
             {
                 player = new component(320, 240, 20, 0, 2, "red", 2, "black");
-                gameArea.start(640, 480, "border: 5px solid black", "white", 0, 0, 20);
+                treasure = [(new component(160, 120, 10, 0, 2, "gold", 2, "black")),
+                            (new component(480, 120, 10, 0, 2, "gold", 2, "black")),
+                            (new component(160, 360, 10, 0, 2, "gold", 2, "black")),
+                            (new component(480, 360, 10, 0, 2, "gold", 2, "black"))];
+                
+                score = new component(0, 0, 0, "25px", "Consolas", "black", 10, 30, "text");
+
+                gameArea.start(640, 480, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
             }
 
             var gameArea =
             {
                 canvas: document.createElement("canvas"),
 
-                start: function(width, height, style, fillColor, x, y, updateSpeed)
+                start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
                 {
                     this.canvas.width = width, this.canvas.height = height, this.canvas.style = style;
                     this.fillColor = fillColor;
                     this.x = x, this.y = y;
-                    this.updateSpeed = updateSpeed;
+                    this.frameNum = frameNum, this.updateSpeed = updateSpeed;
 
                     this.context = this.canvas.getContext("2d");
 
@@ -77,8 +86,9 @@
                 }
             }
 
-            function component(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
+            function component(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor, type)
             {   
+                this.type = type;
                 this.speedX = 0, this.speedY = 0;
                 this.x = x, this.y = y;
                 this.radius = radius;
@@ -86,18 +96,29 @@
                 this.fillColor = fillColor;
                 this.lineWidth = lineWidth, this.lineColor = lineColor;
 
+                if (this.type == "text") { this.collected = 0; }
+
                 this.update = function()
                 {
                     this.context = gameArea.context;
 
-                    this.context.beginPath();
-                    this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
-                    this.context.fillStyle = this.fillColor;
-                    this.context.fill();
+                    if (this.type == "text")
+                    {
+                        this.context.font = this.startAngle + " " + this.endAngle;
+                        this.context.fillStyle = this.fillColor;
+                        this.context.fillText(this.text, this.lineWidth, this.lineColor);
+                    }
+                    else
+                    {
+                        this.context.beginPath();
+                        this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
+                        this.context.fillStyle = this.fillColor;
+                        this.context.fill();
 
-                    this.context.lineWidth = this.lineWidth;
-                    this.context.strokeStyle = this.lineColor;
-                    this.context.stroke();
+                        this.context.lineWidth = this.lineWidth;
+                        this.context.strokeStyle = this.lineColor;
+                        this.context.stroke();
+                    }
                 }
 
                 this.newPosition = function()
@@ -105,25 +126,57 @@
                     if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= 640) { this.x += this.speedX; }
                     if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= 480) { this.y += this.speedY; }
                 }
+
+                this.collectTreasure = function(otherObject)
+                {
+                    var left = this.x - this.radius, right = this.x + this.radius;
+                    var top = this.y - this.radius, bottom = this.y + this.radius;
+                    
+                    var otherLeft = otherObject.x - otherObject.radius, otherRight = otherObject.x + otherObject.radius;
+                    var otherTop = otherObject.y - otherObject.radius, otherBottom = otherObject.y + otherObject.radius;
+
+                    var collected = true;
+
+                    if ((bottom < otherTop) || (top >  otherBottom) || (right < otherLeft) || (left > otherRight)) { collected = false; }
+
+                    return collected;
+                }
+
+                this.treasureDisappears = function() { this.radius = 0; }
             }
 
             function updateGameArea()
             {
                 gameArea.clear();
+                gameArea.frameNum += 1;
 
                 if (gameArea.keys && gameArea.keys[38]) { keyMoveUp(); }
                 if (gameArea.keys && gameArea.keys[40]) { keyMoveDown(); }
                 if (gameArea.keys && gameArea.keys[37]) { keyMoveLeft(); }
                 if (gameArea.keys && gameArea.keys[39]) { keyMoveRight(); }
+                if (gameArea.keys && gameArea.keys[90]) { action(); }
 
-                if (gameArea.keys && gameArea.keys[191]) { pause(); }
-                if (gameArea.keys && gameArea.keys[65]) { actionA(); }
-                if (gameArea.keys && gameArea.keys[83]) { actionS(); }
-                if (gameArea.keys && gameArea.keys[90]) { actionZ(); }
-                if (gameArea.keys && gameArea.keys[88]) { actionX(); }
+                for (i = 0; i < treasure.length; i += 1)
+                {
+                    if (player.collectTreasure(treasure[i]) && treasure[i].radius != 0)
+                    {
+                        treasure[i].treasureDisappears();
+                        score.collected += 1;
+                    }
+                    treasure[i].update();
+                }
+
+                score.text = "Level 1" + "                         Treasure: " + score.collected + "/" + treasure.length;
+                score.update();
 
                 player.newPosition();
                 player.update();
+            }
+
+            function everyInterval(n)
+            {
+                if ((gameArea.frameNum / n) % 1 == 0) { return true; }
+                return false;
             }
 
             function keyMoveUp() { if ((player.y - 3) >= 0) { player.y -= 3; } }
@@ -137,35 +190,15 @@
             function btnMoveRight() { player.speedX += 3; }
             function btnStopMove() { player.speedX = 0, player.speedY = 0; }
 
-            function pause()
-            {
-                player.fillColor = "gray";
-            }
-            function actionA()
-            {
-                player.fillColor = "blue";
-            }
-            function actionS()
-            {
-                player.fillColor = "red";
-            }
-            function actionZ()
+            function action()
             {
                 player.fillColor = "green";
-            }
-            function actionX()
-            {
-                player.fillColor = "yellow";
             }
         </script>
 
         <br>
 
         <div style = "text-align: center; width: 640px;">
-            <button
-                style = "background-color: dodgerblue" class= "prevent-select"
-                onmousedown = "actionA()" ontouchstart = "actionA()"
-            ><b>A</b></button>
             <button
                 style = "background-color: lightgray" class= "prevent-select"
                 onmousedown = "btnMoveUp(); btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
@@ -181,10 +214,6 @@
                 onmousedown = "btnMoveUp(); btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
                 ontouchstart = "btnMoveUp(); btnMoveRight()" ontouchend = "btnStopMove()"
             ><b>⬈</b></button>
-            <button
-                style = "background-color: tomato" class= "prevent-select"
-                onmousedown = "actionS()" ontouchstart = "actionS()"
-            ><b>S</b></button>
 
             <br>
 
@@ -194,9 +223,9 @@
                 ontouchstart = "btnMoveLeft()" ontouchend = "btnStopMove()"
             ><b>⬅</b></button>
             <button
-                style = "background-color: gray" class= "prevent-select"
-                onmousedown = "pause()" ontouchstart = "pause()"
-            ><b>/</b></button>
+                style = "background-color: tomato" class= "prevent-select"
+                onmousedown = "action()" ontouchstart = "action()"
+            ><b>Z</b></button>
             <button
                 style = "background-color: lightgray" class= "prevent-select"
                 onmousedown = "btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
@@ -205,10 +234,6 @@
 
             <br>
             
-            <button
-                style = "background-color: limegreen" class= "prevent-select"
-                onmousedown = "actionZ()" ontouchstart = "actionZ()"
-            ><b>Z</b></button>
             <button
                 style = "background-color: lightgray" class= "prevent-select"
                 onmousedown = "btnMoveDown(); btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
@@ -224,17 +249,29 @@
                 onmousedown = "btnMoveDown(); btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
                 ontouchstart = "btnMoveDown(); btnMoveRight()" ontouchend = "btnStopMove()"
             ><b>⬊</b></button>
-            <button
-                style = "background-color: gold" class= "prevent-select"
-                onmousedown = "actionX()" ontouchstart = "actionX()"
-            ><b>X</b></button>
         </div>
 
         <h1>
-            Heroic Triacosihexacontagon's Magnificent Legend
+            Heroic Triacosihexacontagon's Mystifying Levels
         </h1>
 
+        <h2>
+            Description
+        </h2>
+
         <p>
+            Take control of your triacosihexacontagon (that's a polygon with 360 sides!) and collect all the treasure you see! Can you complete every level?
+        </p>
+
+        <h2>
+            Controls
+        </h2>
+
+        <p>
+            - Press arrow keys / click arrow buttons: Move in that direction
+            <br>
+            - Press Z key / click Z button: Perform situation-specific actions
+            <br><br>
             <a href = "https://superbro64.github.io/">Back to Homepage</a>
         </p>
 
