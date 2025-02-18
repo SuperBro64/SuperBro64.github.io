@@ -71,10 +71,21 @@
                     {
                         gameArea.keys = (gameArea.keys || []);
                         gameArea.keys[input.keyCode] = true;
+
+                        if (gameArea.keys && (gameArea.keys[38] || gameArea.keys[40] || gameArea.keys[37] || gameArea.keys[39]))
+                        { input.preventDefault(); }
                     })
                     window.addEventListener('keyup', function(input)
                     {
                         gameArea.keys[input.keyCode] = false;
+                    })
+
+                    window.addEventListener('touchstart', function(input)
+                    {
+                        input.preventDefault();
+                    })
+                    window.addEventListener('touchend', function(input)
+                    {
                     })
                 },
 
