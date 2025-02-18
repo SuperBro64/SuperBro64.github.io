@@ -34,6 +34,7 @@
             var player;
             var treasure = [];
             var score;
+            var music;
 
             function startGame()
             {
@@ -44,6 +45,8 @@
                             (new component(480, 360, 10, 0, 2, "gold", 2, "black"))];
                 
                 score = new component(0, 0, 0, "25px", "monospace", "black", 10, 30, "text");
+                music = new sound("/sounds/Super_Monkey_Ball_2_-_Menu_Default.mp3");
+                music.play();
 
                 gameArea.start(640, 480, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
             }
@@ -188,6 +191,19 @@
             {
                 if ((gameArea.frameNum / n) % 1 == 0) { return true; }
                 return false;
+            }
+
+            function sound(source)
+            {
+                this.sound = document.createElement("audio");
+                this.sound.source = source;
+                this.sound.setAttribute("preload", "auto");
+                this.sound.setAttribute("controls", "none");
+                this.sound.style.display = "none";
+                document.body.appendChild(this.sound);
+
+                this.play = function() { this.sound.play(); }
+                this.stop = function() { this.sound.pause(); }
             }
 
             function keyMoveUp() { if ((player.y - 3) >= 0) { player.y -= 3; } }
