@@ -31,6 +31,51 @@
     <body onload="startGame()">
 
         <script>
+            function startGame()
+            {
+                
+            }
+        </script>
+        
+        <h1>
+            Heroic Triacontagon's Maddening Levels (WIP)
+        </h1>
+
+        <h2>
+            Description
+        </h2>
+
+        <p>
+            Take control of your triacontagon (that's a polygon with 30 sides!) and make your way to the end of each level before time runs out! Collect all of the coins in a level to increase your completion percentage! Can you finish every level and reach 100% completion? Good luck!
+        </p>
+
+        <h2>
+            Controls
+        </h2>
+
+        <p>
+            - Arrow Buttons: Hold-click on one to move in that direction
+            <br>
+            - A Button: Click to perform situation-specific actions
+        </p>
+        
+        <h2>
+            Credits
+        </h2>
+
+        <p>
+            - Creator: SuperBro64 (Brandon Jackson)
+            <br>
+            - Background Music: Super Monkey Ball 2
+            <br><br>
+            <a href = "https://superbro64.github.io/">Back to Homepage</a>
+        </p>
+
+    </body>
+</html>
+
+<!--
+        <script>
             var player;
             var treasure = [];
             var score;
@@ -43,9 +88,11 @@
                             (new component(480, 120, 10, 0, 2, "gold", 2, "black")),
                             (new component(160, 360, 10, 0, 2, "gold", 2, "black")),
                             (new component(480, 360, 10, 0, 2, "gold", 2, "black"))];
+
+                upButton = new button(30, 30, "gray", 50, 10);
                 
                 score = new component(0, 0, 0, "25px", "monospace", "black", 10, 30, "text");
-                music = new sound(src = "/sounds/Super_Monkey_Ball_2_-_Menu_Default.mp3");
+                music = new sound("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Menu_Default.mp3");
                 music.play();
 
                 gameArea.start(640, 480, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
@@ -83,12 +130,26 @@
                         gameArea.keys[input.keyCode] = false;
                     })
 
+                    window.addEventListener('mousedown', function(input)
+                    {
+                        gameArea.x = input.pageX;
+                        gameArea.y = input.pageY;
+                    })
+                    window.addEventListener('mouseup', function(input)
+                    {
+                        gameArea.x = false;
+                        gameArea.y = false;
+                    })
+
                     window.addEventListener('touchstart', function(input)
                     {
-                        input.preventDefault();
+                        gameArea.x = input.pageX;
+                        gameArea.y = input.pageY;
                     })
                     window.addEventListener('touchend', function(input)
                     {
+                        gameArea.x = false;
+                        gameArea.y = false;
                     })
                 },
 
@@ -159,6 +220,36 @@
                 this.treasureDisappears = function() { this.radius = 0; }
             }
 
+            function button(width, height, fillColor, x, y)
+            {
+                this.width = width, this.height = height;
+                this.x = x, this.y = y;
+                this.fillColor = fillColor;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.width, this.height);
+                }
+
+                this.clicked = function()
+                {
+                    var left = this.x;
+                    var right = this.x + this.width;
+                    var top = this.y;
+                    var bottom = this.y + this.height;
+                    var clicked = true;
+
+                    if ((bottom < gameArea.y) || (top > gameArea.y) || (right < gameArea.x) || (left > gameArea.x))
+                    {
+                        clicked = false;
+                    }
+                    return clicked;
+                }
+            }
+
             function updateGameArea()
             {
                 gameArea.clear();
@@ -169,6 +260,11 @@
                 if (gameArea.keys && gameArea.keys[37]) { keyMoveLeft(); }
                 if (gameArea.keys && gameArea.keys[39]) { keyMoveRight(); }
                 if (gameArea.keys && gameArea.keys[90]) { action(); }
+
+                if (gameArea.x && gameArea.y)
+                {
+                    if (upButton.clicked()) { player.y -= 3; }
+                }
 
                 for (i = 0; i < treasure.length; i += 1)
                 {
@@ -183,6 +279,8 @@
                 score.text = "Level 1" + " | Treasure: " + score.collected + "/" + treasure.length;
                 score.update();
 
+                upButton.update();
+
                 player.newPosition();
                 player.update();
             }
@@ -196,7 +294,9 @@
             function sound(source)
             {
                 this.sound = document.createElement("audio");
-                this.sound.source = source;
+                this.sound.src = source;
+                this.sound.loop = true;
+                this.sound.volume = 0.0;
                 this.sound.setAttribute("preload", "auto");
                 this.sound.setAttribute("controls", "none");
                 this.sound.style.display = "none";
@@ -277,30 +377,4 @@
                 ontouchstart = "btnMoveDown(); btnMoveRight()" ontouchend = "btnStopMove()"
             ><b>⬊</b></button>
         </div>
-
-        <h1>
-            Heroic Triacosihexacontagon's Mystifying Levels
-        </h1>
-
-        <h2>
-            Description
-        </h2>
-
-        <p>
-            Take control of your triacosihexacontagon (that's a polygon with 360 sides!) and collect all the treasure you see! Can you complete every level?
-        </p>
-
-        <h2>
-            Controls
-        </h2>
-
-        <p>
-            - Press arrow keys / click arrow buttons: Move in that direction
-            <br>
-            - Press Z key / click Z button: Perform situation-specific actions
-            <br><br>
-            <a href = "https://superbro64.github.io/">Back to Homepage</a>
-        </p>
-
-    </body>
-</html>
+        -->
