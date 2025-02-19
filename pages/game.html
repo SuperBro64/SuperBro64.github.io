@@ -33,9 +33,147 @@
         <script>
             function startGame()
             {
-                
+                gameArea.start(800, 600, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+            }
+
+            var player;
+
+            var gameArea =
+            {
+                canvas: document.createElement("canvas"),
+
+                start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
+                {
+                    this.canvas.width = width, this.canvas.height = height;
+                    this.canvas.style = style, this.fillColor = fillColor;
+                    this.x = x, this.y = y;
+                    this.frameNum = frameNum, this.updateSpeed = updateSpeed;
+
+                    this.context = this.canvas.getContext("2d");
+
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.canvas.width, this.canvas.height);
+
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.interval = setInterval(updateGameArea, this.updateSpeed);
+                },
+
+                clear: function()
+                {
+                    this.context.clearRect(this.x, this.y, this.canvas.width, this.canvas.height);
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.canvas.width, this.canvas.height);
+                }
+            }
+
+            function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
+            {
+                this.speedX = 0, this.speedY = 0;
+                this.x = x, this.y = y, this.radius = radius;
+                this.startAngle = startAngle, this.endAngle = endAngle;
+                this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.beginPath();
+                    this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fill();
+
+                    this.context.lineWidth = this.lineWidth;
+                    this.context.strokeStyle = this.lineColor;
+                    this.context.stroke();
+                }
+
+                this.newPosition = function()
+                {
+                    if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= 800) { this.x += this.speedX; }
+                    if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= 600) { this.y += this.speedY; }
+                }
+            }
+
+            function updateGameArea()
+            {
+                gameArea.clear();
+                gameArea.frameNum += 1;
+
+                player.newPosition();
+                player.update();
+            }
+
+            function playerMoveUpLeft() { player.speedY -= 2.121, player.speedX -= 2.121; }
+            function playerMoveUp() { player.speedY -= 3; }
+            function playerMoveUpRight() { player.speedY -= 2.121, player.speedX += 2.121; }
+            function playerMoveLeft() { player.speedX -= 3; }
+            function playerMoveRight() { player.speedX += 3; }
+            function playerMoveDownLeft() { player.speedY += 2.121, player.speedX -= 2.121; }
+            function playerMoveDown() { player.speedY += 3; }
+            function playerMoveDownRight() { player.speedY += 2.121, player.speedX += 2.121; }
+            function playerStop() { player.speedX = 0, player.speedY = 0; }
+
+            function playerAction()
+            {
+                player.fillColor = "green";
             }
         </script>
+
+        <br>
+
+        <div style = "text-align: center; width: 800px;">
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveUpLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveUpLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬉</b></button>
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveUp()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveUp()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬆</b></button>
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveUpRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveUpRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬈</b></button>
+
+            <br>
+
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬅</b></button>
+            <button
+                style = "background-color: tomato" class = "prevent-select"
+                onmousedown = "playerAction()" ontouchstart = "playerAction()"
+            ><b>Z</b></button>
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>➡</b></button>
+
+            <br>
+
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveDownLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveDownLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬋</b></button>
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveDown()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveDown()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬇</b></button>
+            <button
+                style = "background-color: lightgray" class = "prevent-select"
+                onmousedown = "playerMoveDownRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
+                ontouchstart = "playerMoveDownRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
+            ><b>⬊</b></button>
+        </div>
         
         <h1>
             Heroic Triacontagon's Maddening Levels (WIP)
@@ -56,7 +194,7 @@
         <p>
             - Arrow Buttons: Hold-click on one to move in that direction
             <br>
-            - A Button: Click to perform situation-specific actions
+            - Z Button: Click to perform situation-specific actions
         </p>
         
         <h2>
@@ -104,8 +242,8 @@
 
                 start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
                 {
-                    this.canvas.width = width, this.canvas.height = height, this.canvas.style = style;
-                    this.fillColor = fillColor;
+                    this.canvas.width = width, this.canvas.height = height;
+                    this.canvas.style = style, this.fillColor = fillColor;
                     this.x = x, this.y = y;
                     this.frameNum = frameNum, this.updateSpeed = updateSpeed;
 
@@ -165,8 +303,7 @@
             {   
                 this.type = type;
                 this.speedX = 0, this.speedY = 0;
-                this.x = x, this.y = y;
-                this.radius = radius;
+                this.x = x, this.y = y, this.radius = radius;
                 this.startAngle = startAngle, this.endAngle = endAngle;
                 this.fillColor = fillColor;
                 this.lineWidth = lineWidth, this.lineColor = lineColor;
