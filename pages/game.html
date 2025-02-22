@@ -34,10 +34,23 @@
             function startGame()
             {
                 gameArea.start(800, 600, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+
                 player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [(new componentTreasure(200, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
+
+                score = new componentScore("25px monospace", "black", 10, 30);
+                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_World_1.mp3");
+                music.play();
             }
 
             var player;
+            var treasure = [];
+
+            var score;
+            var music;
 
             var gameArea =
             {
@@ -93,6 +106,60 @@
                     if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= 800) { this.x += this.speedX; }
                     if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= 600) { this.y += this.speedY; }
                 }
+
+                this.collectTreasure = function(otherObject)
+                {
+                    var left = this.x - this.radius, right = this.x + this.radius;
+                    var top = this.y - this.radius, bottom = this.y + this.radius;
+
+                    var otherLeft = otherObject.x - otherObject.radius, otherRight = otherObject.x + otherObject.radius;
+                    var otherTop = otherObject.y - otherObject.radius, otherBottom = otherObject.y + otherObject.radius;
+
+                    var collected = true;
+
+                    if ((bottom < otherTop) || (top > otherBottom) || (right < otherLeft) || (left > otherRight)) { collected = false; }
+
+                    return collected;
+                }
+            }
+
+            function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
+            {
+                this.x = x, this.y = y, this.radius = radius;
+                this.startAngle = startAngle, this.endAngle = endAngle;
+                this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.beginPath();
+                    this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fill();
+
+                    this.context.lineWidth = this.lineWidth;
+                    this.context.strokeStyle = this.lineColor;
+                    this.context.stroke();
+                }
+
+                this.disappear = function() { this.radius = 0; }
+            }
+
+            function componentScore(font, color, x, y)
+            {
+                this.coinsCollected = 0;
+                this.font = font, this.color = color;
+                this.x = x, this.y = y;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.font = this.font;
+                    this.context.fillStyle = this.color;
+                    this.context.fillText(this.text, this.x, this.y);
+                }
             }
 
             function updateGameArea()
@@ -100,8 +167,42 @@
                 gameArea.clear();
                 gameArea.frameNum += 1;
 
+                for (i = 0; i < treasure.length; i += 1)
+                {
+                    if (player.collectTreasure(treasure[i]) && treasure[i].radius != 0)
+                    {
+                        treasure[i].disappear();
+                        score.coinsCollected += 1;
+                    }
+                    treasure[i].update();
+                }
+
+                score.text = "Level 1" + " | Treasure: " + score.coinsCollected + "/" + treasure.length;
+                score.text += " | Time: " + (gameArea.frameNum / 50).toFixed(1);
+                score.update();
+
                 player.newPosition();
                 player.update();
+            }
+
+            function everyInterval(n)
+            {
+                if ((gameArea.frameNum / n) % 1 == 0) { return true; }
+                return false;
+            }
+
+            function backgroundMusic(source)
+            {
+                this.sound = document.createElement("audio");
+                this.sound.src = source, this.sound.loop = true, this.sound.volume = 0.2;
+
+                this.sound.setAttribute("preload", "auto");
+                this.sound.setAttribute("controls", "none");
+                this.sound.style.display = "none";
+                document.body.appendChild(this.sound);
+
+                this.play = function() { this.sound.play(); }
+                this.stop = function() { this.sound.pause(); }
             }
 
             function playerMoveUpLeft() { player.speedY -= 2.121, player.speedX -= 2.121; }
@@ -211,307 +312,3 @@
 
     </body>
 </html>
-
-<!--
-        <script>
-            var player;
-            var treasure = [];
-            var score;
-            var music;
-
-            function startGame()
-            {
-                player = new component(320, 240, 20, 0, 2, "red", 2, "black");
-                treasure = [(new component(160, 120, 10, 0, 2, "gold", 2, "black")),
-                            (new component(480, 120, 10, 0, 2, "gold", 2, "black")),
-                            (new component(160, 360, 10, 0, 2, "gold", 2, "black")),
-                            (new component(480, 360, 10, 0, 2, "gold", 2, "black"))];
-
-                upButton = new button(30, 30, "gray", 50, 10);
-                
-                score = new component(0, 0, 0, "25px", "monospace", "black", 10, 30, "text");
-                music = new sound("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Menu_Default.mp3");
-                music.play();
-
-                gameArea.start(640, 480, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
-            }
-
-            var gameArea =
-            {
-                canvas: document.createElement("canvas"),
-
-                start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
-                {
-                    this.canvas.width = width, this.canvas.height = height;
-                    this.canvas.style = style, this.fillColor = fillColor;
-                    this.x = x, this.y = y;
-                    this.frameNum = frameNum, this.updateSpeed = updateSpeed;
-
-                    this.context = this.canvas.getContext("2d");
-
-                    this.context.fillStyle = this.fillColor;
-                    this.context.fillRect(this.x, this.y, this.canvas.width, this.canvas.height);
-
-                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-                    this.interval = setInterval(updateGameArea, this.updateSpeed);
-
-                    window.addEventListener('keydown', function(input)
-                    {
-                        gameArea.keys = (gameArea.keys || []);
-                        gameArea.keys[input.keyCode] = true;
-
-                        if (gameArea.keys && (gameArea.keys[38] || gameArea.keys[40] || gameArea.keys[37] || gameArea.keys[39]))
-                        { input.preventDefault(); }
-                    })
-                    window.addEventListener('keyup', function(input)
-                    {
-                        gameArea.keys[input.keyCode] = false;
-                    })
-
-                    window.addEventListener('mousedown', function(input)
-                    {
-                        gameArea.x = input.pageX;
-                        gameArea.y = input.pageY;
-                    })
-                    window.addEventListener('mouseup', function(input)
-                    {
-                        gameArea.x = false;
-                        gameArea.y = false;
-                    })
-
-                    window.addEventListener('touchstart', function(input)
-                    {
-                        gameArea.x = input.pageX;
-                        gameArea.y = input.pageY;
-                    })
-                    window.addEventListener('touchend', function(input)
-                    {
-                        gameArea.x = false;
-                        gameArea.y = false;
-                    })
-                },
-
-                clear: function()
-                {
-                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                    this.context.fillStyle = this.fillColor;
-                    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-                }
-            }
-
-            function component(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor, type)
-            {   
-                this.type = type;
-                this.speedX = 0, this.speedY = 0;
-                this.x = x, this.y = y, this.radius = radius;
-                this.startAngle = startAngle, this.endAngle = endAngle;
-                this.fillColor = fillColor;
-                this.lineWidth = lineWidth, this.lineColor = lineColor;
-
-                if (this.type == "text") { this.collected = 0; }
-
-                this.update = function()
-                {
-                    this.context = gameArea.context;
-
-                    if (this.type == "text")
-                    {
-                        this.context.font = this.startAngle + " " + this.endAngle;
-                        this.context.fillStyle = this.fillColor;
-                        this.context.fillText(this.text, this.lineWidth, this.lineColor);
-                    }
-                    else
-                    {
-                        this.context.beginPath();
-                        this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
-                        this.context.fillStyle = this.fillColor;
-                        this.context.fill();
-
-                        this.context.lineWidth = this.lineWidth;
-                        this.context.strokeStyle = this.lineColor;
-                        this.context.stroke();
-                    }
-                }
-
-                this.newPosition = function()
-                {
-                    if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= 640) { this.x += this.speedX; }
-                    if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= 480) { this.y += this.speedY; }
-                }
-
-                this.collectTreasure = function(otherObject)
-                {
-                    var left = this.x - this.radius, right = this.x + this.radius;
-                    var top = this.y - this.radius, bottom = this.y + this.radius;
-                    
-                    var otherLeft = otherObject.x - otherObject.radius, otherRight = otherObject.x + otherObject.radius;
-                    var otherTop = otherObject.y - otherObject.radius, otherBottom = otherObject.y + otherObject.radius;
-
-                    var collected = true;
-
-                    if ((bottom < otherTop) || (top >  otherBottom) || (right < otherLeft) || (left > otherRight)) { collected = false; }
-
-                    return collected;
-                }
-
-                this.treasureDisappears = function() { this.radius = 0; }
-            }
-
-            function button(width, height, fillColor, x, y)
-            {
-                this.width = width, this.height = height;
-                this.x = x, this.y = y;
-                this.fillColor = fillColor;
-
-                this.update = function()
-                {
-                    this.context = gameArea.context;
-
-                    this.context.fillStyle = this.fillColor;
-                    this.context.fillRect(this.x, this.y, this.width, this.height);
-                }
-
-                this.clicked = function()
-                {
-                    var left = this.x;
-                    var right = this.x + this.width;
-                    var top = this.y;
-                    var bottom = this.y + this.height;
-                    var clicked = true;
-
-                    if ((bottom < gameArea.y) || (top > gameArea.y) || (right < gameArea.x) || (left > gameArea.x))
-                    {
-                        clicked = false;
-                    }
-                    return clicked;
-                }
-            }
-
-            function updateGameArea()
-            {
-                gameArea.clear();
-                gameArea.frameNum += 1;
-
-                if (gameArea.keys && gameArea.keys[38]) { keyMoveUp(); }
-                if (gameArea.keys && gameArea.keys[40]) { keyMoveDown(); }
-                if (gameArea.keys && gameArea.keys[37]) { keyMoveLeft(); }
-                if (gameArea.keys && gameArea.keys[39]) { keyMoveRight(); }
-                if (gameArea.keys && gameArea.keys[90]) { action(); }
-
-                if (gameArea.x && gameArea.y)
-                {
-                    if (upButton.clicked()) { player.y -= 3; }
-                }
-
-                for (i = 0; i < treasure.length; i += 1)
-                {
-                    if (player.collectTreasure(treasure[i]) && treasure[i].radius != 0)
-                    {
-                        treasure[i].treasureDisappears();
-                        score.collected += 1;
-                    }
-                    treasure[i].update();
-                }
-
-                score.text = "Level 1" + " | Treasure: " + score.collected + "/" + treasure.length;
-                score.update();
-
-                upButton.update();
-
-                player.newPosition();
-                player.update();
-            }
-
-            function everyInterval(n)
-            {
-                if ((gameArea.frameNum / n) % 1 == 0) { return true; }
-                return false;
-            }
-
-            function sound(source)
-            {
-                this.sound = document.createElement("audio");
-                this.sound.src = source;
-                this.sound.loop = true;
-                this.sound.volume = 0.0;
-                this.sound.setAttribute("preload", "auto");
-                this.sound.setAttribute("controls", "none");
-                this.sound.style.display = "none";
-                document.body.appendChild(this.sound);
-
-                this.play = function() { this.sound.play(); }
-                this.stop = function() { this.sound.pause(); }
-            }
-
-            function keyMoveUp() { if ((player.y - 3) >= 0) { player.y -= 3; } }
-            function keyMoveDown() { if ((player.y + 3) <= 480) { player.y += 3; } }
-            function keyMoveLeft() { if ((player.x - 3) >= 0) { player.x -= 3; } }
-            function keyMoveRight() { if ((player.x + 3) <= 640) { player.x += 3; } }
-
-            function btnMoveUp() { player.speedY -= 3; }
-            function btnMoveDown() { player.speedY += 3; }
-            function btnMoveLeft() { player.speedX -= 3; }
-            function btnMoveRight() { player.speedX += 3; }
-            function btnStopMove() { player.speedX = 0, player.speedY = 0; }
-
-            function action()
-            {
-                player.fillColor = "green";
-            }
-        </script>
-
-        <br>
-
-        <div style = "text-align: center; width: 640px;">
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveUp(); btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveUp(); btnMoveLeft()" ontouchend = "btnStopMove()"
-            ><b>⬉</b></button>
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveUp()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveUp()" ontouchend = "btnStopMove()"
-            ><b>⬆</b></button>
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveUp(); btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveUp(); btnMoveRight()" ontouchend = "btnStopMove()"
-            ><b>⬈</b></button>
-
-            <br>
-
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveLeft()" ontouchend = "btnStopMove()"
-            ><b>⬅</b></button>
-            <button
-                style = "background-color: tomato" class= "prevent-select"
-                onmousedown = "action()" ontouchstart = "action()"
-            ><b>Z</b></button>
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveRight()" ontouchend = "btnStopMove()"
-            ><b>➡</b></button>
-
-            <br>
-            
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveDown(); btnMoveLeft()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveDown(); btnMoveLeft()" ontouchend = "btnStopMove()"
-            ><b>⬋</b></button>
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveDown()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveDown()" ontouchend = "btnStopMove()"
-            ><b>⬇</b></button>
-            <button
-                style = "background-color: lightgray" class= "prevent-select"
-                onmousedown = "btnMoveDown(); btnMoveRight()" onmouseup = "btnStopMove()" onmouseleave = "btnStopMove()"
-                ontouchstart = "btnMoveDown(); btnMoveRight()" ontouchend = "btnStopMove()"
-            ><b>⬊</b></button>
-        </div>
-        -->
