@@ -47,7 +47,7 @@
                         (new componentWarp(385, 100, 30, 30, "green", 2, "black", "Hub Level"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Heroic Triacontagon's Maddening Levels", 0);
-                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Title.mp3");
+                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_Title.mp3", "BGM");
                 music.play();
             }
 
@@ -59,7 +59,7 @@
                 warp = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Credits", 0);
-                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Credits.mp3");
+                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_Credits.mp3", "BGM");
                 music.play();
             }
 
@@ -72,7 +72,7 @@
                         (new componentWarp(100, 100, 30, 30, "green", 2, "black", "Level 1"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Hub Level", 0);
-                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Menu.mp3");
+                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_Menu.mp3", "BGM");
                 music.play();
             }
 
@@ -87,7 +87,7 @@
                 warp = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 1", 30);
-                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_World_1.mp3");
+                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_1.mp3");
                 music.play();
             }
 
@@ -148,6 +148,7 @@
             // Variables for all of the various objects within the game area
             var player, treasure = [], warp = [];
             var hud, music;
+            var soundSrcURL = "https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/";
 
             // Variable for the playable game area
             var gameArea =
@@ -363,11 +364,14 @@
                 return false;
             }
 
-            // Code for playing the game's background music
-            function backgroundMusic(source)
+            // Code for playing the game's background music and sound effects
+            function componentSound(source, type)
             {
                 this.sound = document.createElement("audio");
-                this.sound.src = source, this.sound.loop = true, this.sound.volume = 0.2;
+                this.sound.src = source, this.sound.volume = 0.2;
+
+                if (type == "BGM") { this.sound.loop = true; }
+                else if (type == "SFX") { this.sound.loop = false; }
 
                 this.sound.setAttribute("preload", "auto");
                 this.sound.setAttribute("controls", "none");
@@ -460,7 +464,9 @@
         </h2>
 
         <p>
-            Take control of your triacontagon (that's a polygon with 30 sides!) and make your way to the end of each level before time runs out! Collect all of the treasure in a level to increase your completion percentage! Can you finish every level and reach 100% completion? Good luck!
+            Take control of your triacontagon (that's a polygon with 30 sides!) and make your way to the end of
+            each level before time runs out! Collect all of the treasure in a level to increase your completion
+            percentage! Can you finish every level and reach 100% completion? Good luck!
         </p>
 
         <h2>
