@@ -31,24 +31,122 @@
     <body onload="startGame()">
 
         <script>
-            // Setup for the game
+            // Setup for the start of the game
             function startGame()
             {
                 gameArea.start(800, 600, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+                titleScreen();
+            }
 
+            // Setup for the title screen
+            function titleScreen()
+            {
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [];
+                warp = [(new componentWarp(100, 100, 30, 30, "green", 2, "black", "Credits")),
+                        (new componentWarp(385, 100, 30, 30, "green", 2, "black", "Hub Level"))];
+
+                hud = new componentHud("25px monospace", "black", 10, 30, "Heroic Triacontagon's Maddening Levels", 0);
+                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Title.mp3");
+                music.play();
+            }
+
+            // Setup for the credits;
+            function credits()
+            {
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [];
+                warp = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen"))];
+
+                hud = new componentHud("25px monospace", "black", 10, 30, "Credits", 0);
+                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Credits.mp3");
+                music.play();
+            }
+
+            // Setup for the hub level
+            function hubLevel()
+            {
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [];
+                warp = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen")),
+                        (new componentWarp(100, 100, 30, 30, "green", 2, "black", "Level 1"))];
+
+                hud = new componentHud("25px monospace", "black", 10, 30, "Hub Level", 0);
+                music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_Menu.mp3");
+                music.play();
+            }
+
+            // Setup for level 1
+            function level1()
+            {
                 player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                 treasure = [(new componentTreasure(200, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
+                warp = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 1", 30);
                 music = new backgroundMusic("https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/Super_Monkey_Ball_2_-_World_1.mp3");
                 music.play();
             }
 
+            // Setup for level 2
+            function level2()
+            {
+
+            }
+
+            // Setup for level 3
+            function level3()
+            {
+
+            }
+
+            // Setup for level 4
+            function level4()
+            {
+
+            }
+
+            // Setup for level 5
+            function level5()
+            {
+
+            }
+
+            // Setup for level 6
+            function level6()
+            {
+
+            }
+
+            // Setup for level 7
+            function level7()
+            {
+
+            }
+
+            // Setup for level 8
+            function level8()
+            {
+
+            }
+
+            // Setup for level 9
+            function level9()
+            {
+
+            }
+
+            // Setup for level 10
+            function level10()
+            {
+
+            }
+
             // Variables for all of the various objects within the game area
-            var player, treasure = [];
+            var player, treasure = [], warp = [];
             var hud, music;
 
             // Variable for the playable game area
@@ -108,19 +206,34 @@
                     if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= 600) { this.y += this.speedY; }
                 }
 
-                this.collectTreasure = function(otherObject)
+                this.collectTreasure = function(treasure)
                 {
                     var left = this.x - this.radius, right = this.x + this.radius;
                     var top = this.y - this.radius, bottom = this.y + this.radius;
 
-                    var otherLeft = otherObject.x - otherObject.radius, otherRight = otherObject.x + otherObject.radius;
-                    var otherTop = otherObject.y - otherObject.radius, otherBottom = otherObject.y + otherObject.radius;
+                    var treasLeft = treasure.x - treasure.radius, treasRight = treasure.x + treasure.radius;
+                    var treasTop = treasure.y - treasure.radius, treasBottom = treasure.y + treasure.radius;
 
                     var collected = true;
 
-                    if ((bottom < otherTop) || (top > otherBottom) || (right < otherLeft) || (left > otherRight)) { collected = false; }
+                    if ((bottom < treasTop) || (top > treasBottom) || (right < treasLeft) || (left > treasRight)) { collected = false; }
 
                     return collected;
+                }
+
+                this.enterWarp = function(warp)
+                {
+                    var left = this.x - this.radius, right = this.x + this.radius;
+                    var top = this.y - this.radius, bottom = this.y + this.radius;
+
+                    var warpLeft = warp.x, warpRight = warp.x + warp.width;
+                    var warpTop = warp.y, warpBottom = warp.y + warp.height;
+
+                    var entered = true;
+
+                    if ((bottom < warpTop) || (top > warpBottom) || (right < warpLeft) || (left > warpRight)) { entered = false; }
+
+                    return entered;
                 }
             }
 
@@ -146,6 +259,46 @@
                 }
 
                 this.disappear = function() { this.radius = 0; }
+            }
+
+            // Code for the warps
+            function componentWarp(x, y, width, height, fillColor, lineWidth, lineColor, destination)
+            {
+                this.x = x, this.y = y, this.width = width, this.height = height;
+                this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+                this.destination = destination;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.width, this.height);
+
+                    this.context.lineWidth = this.lineWidth;
+                    this.context.strokeStyle = this.lineColor;
+                    this.context.strokeRect(this.x, this.y, this.width, this.height);
+                }
+
+                this.toDestination = function()
+                {
+                    music.stop();
+                    gameArea.frameNum = 0;
+
+                    if (this.destination == "Title Screen") { titleScreen(); }
+                    else if (this.destination == "Credits") { credits(); }
+                    else if (this.destination == "Hub Level") { hubLevel(); }
+                    else if (this.destination == "Level 1") { level1(); }
+                    else if (this.destination == "Level 2") { level2(); }
+                    else if (this.destination == "Level 3") { level3(); }
+                    else if (this.destination == "Level 4") { level4(); }
+                    else if (this.destination == "Level 5") { level5(); }
+                    else if (this.destination == "Level 6") { level6(); }
+                    else if (this.destination == "Level 7") { level7(); }
+                    else if (this.destination == "Level 8") { level8(); }
+                    else if (this.destination == "Level 9") { level9(); }
+                    else if (this.destination == "Level 10") { level10(); }
+                }
             }
 
             // Code for the heads-up display
@@ -182,6 +335,15 @@
                         hud.treasureCollected += 1;
                     }
                     treasure[i].update();
+                }
+
+                for (i = 0; i < warp.length; i += 1)
+                {
+                    if (player.enterWarp(warp[i]))
+                    {
+                        warp[i].toDestination();
+                    }
+                    warp[i].update();
                 }
 
                 hud.text = hud.currentLevel;
