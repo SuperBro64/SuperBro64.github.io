@@ -259,6 +259,8 @@
 
                     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                     this.interval = setInterval(updateGameArea, this.updateSpeed);
+
+                    document.addEventListener("contextmenu", function(event) { event.preventDefault(); event.stopPropagation(); })
                 },
 
                 clear: function()
