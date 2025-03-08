@@ -24,11 +24,7 @@
                 font-family: monospace; font-size: xx-large; text-align: center;
                 padding: 10px 20px; border: 3px solid black;
             }
-            .prevent-select
-            {
-                -webkit-user-select: none; -webkit-touch-callout: none; -khtml-user-select: none;
-                -moz-user-select: none; -ms-user-select: none; user-select: none;
-            }
+            .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
         </style>
     </head>
 
@@ -263,15 +259,6 @@
 
                     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                     this.interval = setInterval(updateGameArea, this.updateSpeed);
-
-                    document.addEventListener("touchstart", function(event)
-                    {
-                        event.preventDefault(); event.stopPropagation(); this.style.userSelect = "none";
-                    })
-                    document.addEventListener("touchend", function(event)
-                    {
-                        event.preventDefault(); event.stopPropagation(); this.style.userSelect = "default";
-                    })
                 },
 
                 clear: function()
@@ -429,7 +416,7 @@
             function componentSound(source, type)
             {
                 this.sound = document.createElement("audio");
-                this.sound.src = source, this.sound.volume = 0.0;
+                this.sound.src = source, this.sound.volume = 0.2;
 
                 if (type == "BGM") { this.sound.loop = true; }
                 else if (type == "SFX") { this.sound.loop = false; }
