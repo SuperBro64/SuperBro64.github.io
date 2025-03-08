@@ -260,7 +260,7 @@
                     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                     this.interval = setInterval(updateGameArea, this.updateSpeed);
 
-                    document.addEventListener("contextmenu", function(event) { event.preventDefault(); event.stopPropagation(); })
+                    //document.addEventListener("contextmenu", function(event) { event.preventDefault(); event.stopPropagation(); })
                 },
 
                 clear: function()
@@ -418,7 +418,7 @@
             function componentSound(source, type)
             {
                 this.sound = document.createElement("audio");
-                this.sound.src = source, this.sound.volume = 0.2;
+                this.sound.src = source, this.sound.volume = 0.0;
 
                 if (type == "BGM") { this.sound.loop = true; }
                 else if (type == "SFX") { this.sound.loop = false; }
@@ -497,19 +497,19 @@
 
         <br>
 
-        <div style = "text-align: center; width: 800px;">
+        <div style = "text-align: center; width: 800px;" class = "prevent-select">
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveUpLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUpLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬉</b></button>
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveUp()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUp()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬆</b></button>
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveUpRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUpRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬈</b></button>
@@ -517,16 +517,16 @@
             <br>
 
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬅</b></button>
             <button
-                style = "background-color: tomato" class = "prevent-select"
+                style = "background-color: tomato"
                 onmousedown = "playerAction()" ontouchstart = "playerAction()"
             ><b>Z</b></button>
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>➡</b></button>
@@ -534,17 +534,17 @@
             <br>
 
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveDownLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveDownLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬋</b></button>
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveDown()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveDown()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬇</b></button>
             <button
-                style = "background-color: lightgray" class = "prevent-select"
+                style = "background-color: lightgray"
                 onmousedown = "playerMoveDownRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveDownRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬊</b></button>
