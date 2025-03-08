@@ -18,12 +18,20 @@
                 padding: 15px 25px; border: 3px solid black;
             }
             a:hover, a:active { background-color: firebrick; }
-            button
+            #moveButton
             {
-                color: black; display: inline-block;
+                background-color: lightgray; color: black; display: inline-block;
                 font-family: monospace; font-size: xx-large; text-align: center;
-                padding: 10px 20px; border: 3px solid black;
+                padding: 15px 25px; border: 3px solid black;
             }
+            #moveButton:active { background-color: gray; }
+            #actionButton
+            {
+                background-color: mediumseagreen; color: black; display: inline-block;
+                font-family: monospace; font-size: xx-large; text-align: center;
+                padding: 15px 25px; border: 3px solid black;
+            }
+            #actionButton:active { background-color: seagreen; }
             .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
         </style>
     </head>
@@ -496,53 +504,44 @@
         <br>
 
         <div style = "text-align: center; width: 800px;" class = "prevent-select">
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveUpLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUpLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬉</b></button>
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveUp()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUp()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬆</b></button>
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveUpRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUpRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬈</b></button>
 
             <br>
 
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬅</b></button>
-            <button
-                style = "background-color: tomato"
+            <button id = "actionButton"
                 onmousedown = "playerAction()" ontouchstart = "playerAction()"
-            ><b>Z</b></button>
-            <button
-                style = "background-color: lightgray"
+            ><b>A</b></button>
+            <button id = "moveButton"
                 onmousedown = "playerMoveRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>➡</b></button>
 
             <br>
 
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveDownLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveDownLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬋</b></button>
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveDown()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveDown()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬇</b></button>
-            <button
-                style = "background-color: lightgray"
+            <button id = "moveButton"
                 onmousedown = "playerMoveDownRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveDownRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬊</b></button>
@@ -569,7 +568,7 @@
         <p>
             - Arrow Buttons: Hold-click on one to move in that direction
             <br>
-            - Z Button: Click to perform situation-specific actions
+            - A Button: Click to perform situation-specific actions
         </p>
         
         <h2>
