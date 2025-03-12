@@ -284,6 +284,7 @@
                 this.x = x, this.y = y, this.radius = radius;
                 this.startAngle = startAngle, this.endAngle = endAngle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+                this.action = false;
 
                 this.update = function()
                 {
@@ -297,6 +298,8 @@
                     this.context.lineWidth = this.lineWidth;
                     this.context.strokeStyle = this.lineColor;
                     this.context.stroke();
+
+                    this.action = false;
                 }
 
                 this.newPosition = function()
@@ -363,20 +366,26 @@
             // Code for the warps
             function componentWarp(x, y, width, height, fillColor, lineWidth, lineColor, destination)
             {
-                this.x = x, this.y = y, this.width = width, this.height = height;
+                this.x = x, this.y = y, this.width = width, this.height = height, this.angle = 0;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.destination = destination;
+                this.rotationSpeed = 180, this.destination = destination;
 
                 this.update = function()
                 {
                     this.context = gameArea.context;
+                    this.context.save();
+
+                    this.context.translate(this.x, this.y);
+                    this.context.rotate(this.angle);
 
                     this.context.fillStyle = this.fillColor;
-                    this.context.fillRect(this.x, this.y, this.width, this.height);
+                    this.context.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 
                     this.context.lineWidth = this.lineWidth;
                     this.context.strokeStyle = this.lineColor;
-                    this.context.strokeRect(this.x, this.y, this.width, this.height);
+                    this.context.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
+
+                    this.context.restore();
                 }
 
                 this.toDestination = function()
@@ -458,8 +467,13 @@
                 {
                     if (player.enterWarp(warps[i]))
                     {
-                        warps[i].toDestination();
+                        warps[i].rotationSpeed = 45;
+
+                        if (player.action) { warps[i].toDestination(); }
                     }
+                    else { warps[i].rotationSpeed = 180; }
+
+                    warps[i].angle += (1 * Math.PI / warps[i].rotationSpeed);
                     warps[i].update();
                 }
 
@@ -494,10 +508,7 @@
             // Code for the player's actions
             function playerAction()
             {
-                music.stop();
-                gameArea.frameNum = 0;
-
-                hubLevel();
+                player.action = true;
             }
         </script>
 
@@ -579,6 +590,8 @@
             - Creator: SuperBro64 (Brandon Jackson)
             <br>
             - Background Music: Super Monkey Ball 2
+            <br>
+            - Sound Effects: Super Mario 64
             <br><br>
             <a href = "https://superbro64.github.io/">Back to Homepage</a>
         </p>
