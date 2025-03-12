@@ -32,6 +32,20 @@
                 padding: 15px 25px; border: 3px solid black;
             }
             #actionButton:active { background-color: seagreen; }
+            #muteButton
+            {
+                background-color: slateblue; color: black; display: inline-block;
+                font-family: monospace; font-size: xx-large; text-align: center;
+                padding: 15px 25px; border: 3px solid black;
+            }
+            #muteButton:active { background-color: darkslateblue; }
+            #pauseButton
+            {
+                background-color: goldenrod; color: black; display: inline-block;
+                font-family: monospace; font-size: xx-large; text-align: center;
+                padding: 15px 25px; border: 3px solid black;
+            }
+            #pauseButton:active { background-color: darkgoldenrod; }
             .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
         </style>
     </head>
@@ -43,6 +57,8 @@
             function startGame()
             {
                 gameArea.start(800, 600, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+                music = new componentSound(soundSrcURL, "BGM"), sfx = new componentSound(soundSrcURL, "SFX");
+
                 titleScreen();
             }
 
@@ -55,8 +71,7 @@
                         (new componentWarp(385, 100, 30, 30, "green", 2, "black", "Hub Level"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Heroic Triacontagon's Maddening Levels", 0);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_Title.mp3", "BGM");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Title.mp3"; music.play();
             }
 
             // Setup for the credits;
@@ -67,8 +82,7 @@
                 warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Credits", 0);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_Credits.mp3", "BGM");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
             }
 
             // Setup for the hub level
@@ -89,8 +103,7 @@
                         (new componentWarp(700, 100, 30, 30, "green", 2, "black", "Level 10"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Hub Level", 0);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_Menu.mp3", "BGM");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Menu.mp3"; music.play();
             }
 
             // Setup for level 1
@@ -104,8 +117,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 1", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_1.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
             }
 
             // Setup for level 2
@@ -119,8 +131,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 2", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_2.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
             }
 
             // Setup for level 3
@@ -134,8 +145,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 3", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_3.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
             }
 
             // Setup for level 4
@@ -149,8 +159,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 4", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_4.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
             }
 
             // Setup for level 5
@@ -164,8 +173,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 5", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_5.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
             }
 
             // Setup for level 6
@@ -179,8 +187,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 6", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_6.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
             }
 
             // Setup for level 7
@@ -194,8 +201,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 7", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_7.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
             }
 
             // Setup for level 8
@@ -209,8 +215,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 8", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_8.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
             }
 
             // Setup for level 9
@@ -224,8 +229,7 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 9", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_9.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
             }
 
             // Setup for level 10
@@ -239,13 +243,12 @@
                 warps = [];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 10", 30);
-                music = new componentSound(soundSrcURL + "Super_Monkey_Ball_2_-_World_10.mp3");
-                music.play();
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
             }
 
             // Variables for all of the various objects within the game area
             var player, treasure = [], warps = [];
-            var hud, music;
+            var hud, music, sfx;
             var soundSrcURL = "https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/";
 
             // Variable for the playable game area
@@ -360,7 +363,11 @@
                     this.context.stroke();
                 }
 
-                this.disappear = function() { this.radius = 0; }
+                this.disappear = function()
+                {
+                    this.radius = 0;
+                    sfx.sound.src = soundSrcURL + "Super_Mario_64_-_Coin.wav"; sfx.play();
+                }
             }
 
             // Code for the warps
@@ -392,6 +399,7 @@
                 {
                     music.stop();
                     gameArea.frameNum = 0;
+                    sfx.sound.src = soundSrcURL + "Super_Mario_64_-_Enter_Course.wav"; sfx.play();
 
                     if (this.destination == "Title Screen") { titleScreen(); }
                     else if (this.destination == "Credits") { credits(); }
@@ -433,10 +441,10 @@
             function componentSound(source, type)
             {
                 this.sound = document.createElement("audio");
-                this.sound.src = source, this.sound.volume = 0.2;
+                this.sound.src = source;
 
-                if (type == "BGM") { this.sound.loop = true; }
-                else if (type == "SFX") { this.sound.loop = false; }
+                if (type == "BGM") { this.sound.loop = true; this.sound.volume = 0.2; }
+                else if (type == "SFX") { this.sound.loop = false; this.sound.volume = 0.5; }
 
                 this.sound.setAttribute("preload", "auto");
                 this.sound.setAttribute("controls", "none");
@@ -506,15 +514,51 @@
             function playerStop() { player.speedX = 0, player.speedY = 0; }
 
             // Code for the player's actions
-            function playerAction()
+            function playerAction() { player.action = true; }
+
+            // Code for pausing the game
+            function pauseGame()
             {
-                player.action = true;
+                const pauseButton = document.querySelector('#pauseButton');
+
+                if (gameArea.interval)
+                {
+                    pauseButton.innerHTML = "▶️";
+                    sfx.sound.src = soundSrcURL + "Super_Mario_64_-_Pause.wav"; sfx.play();
+                    clearInterval(gameArea.interval), gameArea.interval = null;
+                }
+                else if (!gameArea.interval)
+                {
+                    pauseButton.innerHTML = "⏸️";
+                    sfx.sound.src = soundSrcURL + "Super_Mario_64_-_Pause.wav"; sfx.play();
+                    gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+                }
+            }
+
+            // Code for muting and unmuting the audio
+            function muteUnmuteAudio()
+            {
+                const muteButton = document.querySelector('#muteButton');
+
+                if (music.sound.volume == 0.2 && sfx.sound.volume == 0.5)
+                {
+                    muteButton.innerHTML = "🔈";
+                    music.sound.volume = 0.0, sfx.sound.volume = 0.0;
+                }
+                else if (music.sound.volume == 0.0 && sfx.sound.volume == 0.0)
+                {
+                    muteButton.innerHTML = "🔊";
+                    music.sound.volume = 0.2, sfx.sound.volume = 0.5;
+                }
             }
         </script>
 
         <br>
 
         <div style = "text-align: center; width: 800px;" class = "prevent-select">
+            <button id = "muteButton"
+                onmousedown = "muteUnmuteAudio()" ontouchstart = "muteUnmuteAudio()"
+            ><b>🔊</b></button>
             <button id = "moveButton"
                 onmousedown = "playerMoveUpLeft()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUpLeft()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
@@ -527,6 +571,9 @@
                 onmousedown = "playerMoveUpRight()" onmouseup = "playerStop()" onmouseleave = "playerStop()"
                 ontouchstart = "playerMoveUpRight()" ontouchend = "playerStop()" ontouchcancel = "playerStop()"
             ><b>⬈</b></button>
+            <button id = "pauseButton"
+                onmousedown = "pauseGame()" ontouchstart = "pauseGame()"
+            ><b>⏸️</b></button>
 
             <br>
 
