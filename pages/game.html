@@ -57,6 +57,9 @@
             function startGame()
             {
                 gameArea.start(800, 600, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+                completion = [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
+                              ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
+                              ["Level A", 0], ["Level B", 0], ["Level C", 0]];
                 music = new componentSound(soundSrcURL, "BGM"), sfx = new componentSound(soundSrcURL, "SFX");
 
                 titleScreen();
@@ -91,19 +94,24 @@
                 player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                 treasure = [];
                 warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen")),
-                        (new componentWarp(100, 100, 30, 30, "green", 2, "black", "Level 1")),
-                        (new componentWarp(160, 100, 30, 30, "green", 2, "black", "Level 2")),
-                        (new componentWarp(220, 100, 30, 30, "green", 2, "black", "Level 3")),
-                        (new componentWarp(280, 100, 30, 30, "green", 2, "black", "Level 4")),
-                        (new componentWarp(340, 100, 30, 30, "green", 2, "black", "Level 5")),
-                        (new componentWarp(460, 100, 30, 30, "green", 2, "black", "Level 6")),
-                        (new componentWarp(520, 100, 30, 30, "green", 2, "black", "Level 7")),
-                        (new componentWarp(580, 100, 30, 30, "green", 2, "black", "Level 8")),
-                        (new componentWarp(640, 100, 30, 30, "green", 2, "black", "Level 9")),
-                        (new componentWarp(700, 100, 30, 30, "green", 2, "black", "Level 10"))];
+                         (new componentWarp(100, 100, 30, 30, "sienna", 2, "black", "Level 1", "Level 1")),
+                         (new componentWarp(160, 100, 30, 30, "sienna", 2, "black", "Level 2", "Level 2")),
+                         (new componentWarp(220, 100, 30, 30, "sienna", 2, "black", "Level 3", "Level 3")),
+                         (new componentWarp(280, 100, 30, 30, "sienna", 2, "black", "Level 4", "Level 4")),
+                         (new componentWarp(340, 100, 30, 30, "sienna", 2, "black", "Level 5", "Level 5")),
+                         (new componentWarp(460, 100, 30, 30, "sienna", 2, "black", "Level 6", "Level 6")),
+                         (new componentWarp(520, 100, 30, 30, "sienna", 2, "black", "Level 7", "Level 7")),
+                         (new componentWarp(580, 100, 30, 30, "sienna", 2, "black", "Level 8", "Level 8")),
+                         (new componentWarp(640, 100, 30, 30, "sienna", 2, "black", "Level 9", "Level 9")),
+                         (new componentWarp(700, 100, 30, 30, "sienna", 2, "black", "Level 10", "Level 10")),
+                         (new componentWarp(700, 200, 30, 30, "sienna", 2, "black", "Level A", "Level A")),
+                         (new componentWarp(700, 350, 30, 30, "sienna", 2, "black", "Level B", "Level B")),
+                         (new componentWarp(700, 500, 30, 30, "sienna", 2, "black", "Level C", "Level C"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Hub Level", 0);
-                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Menu.mp3"; music.play();
+
+                if (hud.calculateCompletion() == 100) { music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Clear.mp3"; }
+                else { music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
             }
 
             // Setup for level 1
@@ -114,7 +122,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 1", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
@@ -128,7 +136,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 2", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
@@ -142,7 +150,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 3", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
@@ -156,7 +164,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 4", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
@@ -170,7 +178,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 5", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
@@ -184,7 +192,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 6", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
@@ -198,7 +206,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 7", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
@@ -212,7 +220,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 8", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
@@ -226,7 +234,7 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 9", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
@@ -240,15 +248,57 @@
                             (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                             (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                warps = [];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                 hud = new componentHud("25px monospace", "black", 10, 30, "Level 10", 30);
                 music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
             }
 
+            // Setup for level A
+            function levelA()
+            {
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [(new componentTreasure(200, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+
+                hud = new componentHud("25px monospace", "black", 10, 30, "Level A", 30);
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
+            }
+
+            // Setup for level B
+            function levelB()
+            {
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [(new componentTreasure(200, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+
+                hud = new componentHud("25px monospace", "black", 10, 30, "Level B", 30);
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
+            }
+
+            // Setup for level C
+            function levelC()
+            {
+                player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
+                treasure = [(new componentTreasure(200, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
+                            (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
+                warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+
+                hud = new componentHud("25px monospace", "black", 10, 30, "Level C", 30);
+                music.sound.src = soundSrcURL + "Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
+            }
+
             // Variables for all of the various objects within the game area
             var player, treasure = [], warps = [];
-            var hud, music, sfx;
+            var completion = [[]], hud, music, sfx;
             var soundSrcURL = "https://github.com/SuperBro64/SuperBro64.github.io/raw/refs/heads/main/sounds/";
 
             // Variable for the playable game area
@@ -371,11 +421,22 @@
             }
 
             // Code for the warps
-            function componentWarp(x, y, width, height, fillColor, lineWidth, lineColor, destination)
+            function componentWarp(x, y, width, height, fillColor, lineWidth, lineColor, destination, type)
             {
                 this.x = x, this.y = y, this.width = width, this.height = height, this.angle = 0;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.rotationSpeed = 180, this.destination = destination;
+                this.rotationSpeed = 180, this.destination = destination, this.type = type;
+
+                for (i = 0; i < completion.length; i += 1)
+                {
+                    if (completion[i][0] == this.type)
+                    {
+                        if (completion[i][1] == 0) { this.fillColor = "sienna"; }
+                        else if (completion[i][1] == 1) { this.fillColor = "silver"; }
+                        else if (completion[i][1] == 2) { this.fillColor = "gold"; }
+                        break;
+                    }
+                }
 
                 this.update = function()
                 {
@@ -401,6 +462,18 @@
                     gameArea.frameNum = 0;
                     sfx.sound.src = soundSrcURL + "Super_Mario_64_-_Enter_Course.wav"; sfx.play();
 
+                    if (this.type == "Goal")
+                    {
+                        for (i = 0; i < completion.length; i += 1)
+                        {
+                            if (completion[i][0] == hud.currentLevel)
+                            {
+                                if (hud.treasureCollected == treasure.length) { completion[i][1] = 2; }
+                                else if (completion[i][1] != 2) { completion[i][1] = 1; } break;
+                            }
+                        }
+                    }
+
                     if (this.destination == "Title Screen") { titleScreen(); }
                     else if (this.destination == "Credits") { credits(); }
                     else if (this.destination == "Hub Level") { hubLevel(); }
@@ -414,6 +487,9 @@
                     else if (this.destination == "Level 8") { level8(); }
                     else if (this.destination == "Level 9") { level9(); }
                     else if (this.destination == "Level 10") { level10(); }
+                    else if (this.destination == "Level A") { levelA(); }
+                    else if (this.destination == "Level B") { levelB(); }
+                    else if (this.destination == "Level C") { levelC(); }
                 }
             }
 
@@ -434,6 +510,13 @@
                     this.context.font = this.font;
                     this.context.fillStyle = this.color;
                     this.context.fillText(this.text, this.x, this.y);
+                }
+
+                this.calculateCompletion = function()
+                {
+                    percentage = 0.00;
+                    for (i = 0; i < completion.length; i += 1) { percentage += completion[i][1]; }
+                    return Math.min(((percentage / (completion.length * 2)) * 100), 100).toFixed(2);
                 }
             }
 
@@ -486,6 +569,10 @@
                 }
 
                 hud.text = hud.currentLevel;
+                if (hud.currentLevel == "Hub Level")
+                {
+                    hud.text += " | Total Completion: " + hud.calculateCompletion() + "%";
+                }
 
                 if (treasure.length > 0) { hud.text += " | Treasure: " + hud.treasureCollected + "/" + treasure.length; }
                 if (hud.startingTime > 0) { hud.text += " | Time: " + hud.timeRemaining; }
@@ -551,6 +638,13 @@
                     music.sound.volume = 0.2, sfx.sound.volume = 0.5;
                 }
             }
+
+            // Walls + Bottomless Pits
+            // Door Switches + Door Blocks
+            // Toggle Switches + Toggle Blocks
+            // Shrinkers + Growers
+            // Big Door Switches + Big Toggle Switches
+            // Push Blocks
         </script>
 
         <br>
