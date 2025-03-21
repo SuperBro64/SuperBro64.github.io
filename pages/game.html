@@ -370,6 +370,35 @@
 
                 this.newPosition = function()
                 {
+                    var joystickAngle = Math.atan2(joystick.getY(), joystick.getX()) * 180 / Math.PI;
+
+                    if (joystickAngle < 0) { joystickAngle += 360; }
+
+                    if (joystick.getX() < 25 && joystick.getX() > -25 && joystick.getY() < 25 && joystick.getY() > -25) { stopMoving(); }
+                    else
+                    {
+                        if ((joystickAngle >= 0 && joystickAngle < 11.25) ||
+                            (joystickAngle >= 348.75 && joystickAngle < 360)) { moveRight(); }
+                        else if (joystickAngle >= 11.25 && joystickAngle < 33.75) { moveRightDownRight(); }
+                        else if (joystickAngle >= 33.75 && joystickAngle < 56.25) { moveDownRight(); }
+                        else if (joystickAngle >= 56.25 && joystickAngle < 78.75) { moveDownDownRight(); }
+                        else if (joystickAngle >= 78.75 && joystickAngle < 101.25) { moveDown(); }
+                        else if (joystickAngle >= 101.25 && joystickAngle < 123.75) { moveDownDownLeft(); }
+                        else if (joystickAngle >= 123.75 && joystickAngle < 146.25) { moveDownLeft(); }
+                        else if (joystickAngle >= 146.25 && joystickAngle < 168.75) { moveLeftDownLeft(); }
+                        else if (joystickAngle >= 168.75 && joystickAngle < 191.25) { moveLeft(); }
+                        else if (joystickAngle >= 191.25 && joystickAngle < 213.75) { moveLeftUpLeft(); }
+                        else if (joystickAngle >= 213.75 && joystickAngle < 236.25) { moveUpLeft(); }
+                        else if (joystickAngle >= 236.25 && joystickAngle < 258.75) { moveUpUpLeft(); }
+                        else if (joystickAngle >= 258.75 && joystickAngle < 281.25) { moveUp(); }
+                        else if (joystickAngle >= 281.25 && joystickAngle < 303.75) { moveUpUpRight(); }
+                        else if (joystickAngle >= 303.75 && joystickAngle < 326.25) { moveUpRight(); }
+                        else if (joystickAngle >= 326.25 && joystickAngle < 348.75) { moveRightUpRight(); }
+
+                        if (joystick.getX() < 75 && joystick.getX() > -75) { player.speedX /= 2; }
+                        if (joystick.getY() < 75 && joystick.getY() > -75) { player.speedY /= 2; }
+                    }
+
                     if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= gameArea.canvas.width) { this.x += this.speedX; }
                     if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= gameArea.canvas.height) { this.y += this.speedY; }
                 }
@@ -602,16 +631,24 @@
                 return false;
             }
 
-            // Code for the player's 8-directional movement
-            function playerMoveUpLeft() { player.speedY = -2.829, player.speedX = -2.829; }
-            function playerMoveUp() { player.speedY = -4; }
-            function playerMoveUpRight() { player.speedY = -2.829, player.speedX = 2.829; }
-            function playerMoveLeft() { player.speedX = -4; }
-            function playerMoveRight() { player.speedX = 4; }
-            function playerMoveDownLeft() { player.speedY = 2.829, player.speedX = -2.829; }
-            function playerMoveDown() { player.speedY = 4; }
-            function playerMoveDownRight() { player.speedY = 2.829, player.speedX = 2.829; }
-            function playerStop() { player.speedX = 0, player.speedY = 0; }
+            // Code for the player's 16-directional movement as well as stopping
+            function moveRight()          { player.speedX = 4, player.speedY = 0; }
+            function moveRightDownRight() { player.speedX = 3.464, player.speedY = -2; }
+            function moveDownRight()      { player.speedX = 2.828, player.speedY = -2.828; }
+            function moveDownDownRight()  { player.speedX = 2, player.speedY = -3.464; }
+            function moveDown()           { player.speedX = 0, player.speedY = -4; }
+            function moveDownDownLeft()   { player.speedX = -2, player.speedY = -3.464; }
+            function moveDownLeft()       { player.speedX = -2.828, player.speedY = -2.828; }
+            function moveLeftDownLeft()   { player.speedX = -3.464, player.speedY = -2; }
+            function moveLeft()           { player.speedX = -4, player.speedY = 0; }
+            function moveLeftUpLeft()     { player.speedX = -3.464, player.speedY = 2; }
+            function moveUpLeft()         { player.speedX = -2.828, player.speedY = 2.828; }
+            function moveUpUpLeft()       { player.speedX = -2, player.speedY = 3.464; }
+            function moveUp()             { player.speedX = 0, player.speedY = 4; }
+            function moveUpUpRight()      { player.speedX = 2, player.speedY = 3.464; }
+            function moveUpRight()        { player.speedX = 2.828, player.speedY = 2.828; }
+            function moveRightUpRight()   { player.speedX = 3.464, player.speedY = 2; }
+            function stopMoving()         { player.speedX = 0, player.speedY = 0; }
 
             // Code for the player's actions
             function playerAction() { if (gameArea.interval) { player.action = true; } }
@@ -905,13 +942,16 @@
         </h2>
 
         <p>
-            - Joystick: Hold-click on the central circle and drag it away from the center to move in that direction
+            - 🔘 Joystick: Hold-click on the central circle and drag it away from the center to move in that direction. Drag the
+            central circle a little away to move slowly and a lot away to move quickly. Drag the central circle back to the
+            center or release the click to stop moving.
             <br>
-            - 🅰️ Button: Click to perform situation-specific actions when positioned on top of certain objects
+            - 🅰️ Button: Click to perform situation-specific actions when positioned on top of certain objects, such as warp
+            zones or switch tiles.
             <br>
-            - ⏸️ Button: Click to toggle between pausing and resuming all gameplay functions
+            - ⏸️ Button: Click to toggle between pausing and resuming all gameplay functions.
             <br>
-            - 🔊 Button: Click to toggle between muting and unmuting all background music and sound effects
+            - 🔊 Button: Click to toggle between muting and unmuting all background music and sound effects.
         </p>
         
         <h2>
