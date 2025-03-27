@@ -26,13 +26,13 @@
                 padding: 20px 20px; border: 3px solid black;
             }
             #actionButton:active { background-color: seagreen; }
-            #muteButton
+            #audioButton
             {
                 background-color: slateblue; color: black; display: inline-block;
                 font-family: monospace; font-size: xx-large; text-align: center;
                 padding: 20px 20px; border: 3px solid black;
             }
-            #muteButton:active { background-color: darkslateblue; }
+            #audioButton:active { background-color: darkslateblue; }
             #pauseButton
             {
                 background-color: goldenrod; color: black; display: inline-block;
@@ -53,15 +53,9 @@
             <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
 
             <div id = "buttons" class = "prevent-select" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
-                <button id = "muteButton"
-                    onmousedown = "muteUnmuteAudio()" ontouchstart = "muteUnmuteAudio()"
-                ><b>🔊</b></button>
-                <button id = "actionButton" style = "margin-left: 5px; margin-right: 5px;"
-                    onmousedown = "playerAction()" ontouchstart = "playerAction()"
-                ><b>🅰️</b></button>
-                <button id = "pauseButton"
-                    onmousedown = "pauseGame()" ontouchstart = "pauseGame()"
-                ><b>⏸️</b></button>
+                <button id = "audioButton" onclick = "changeAudioVolume()"><b>🔊</b></button>
+                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🅰️</b></button>
+                <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
             </div>
         </div>
 
@@ -572,7 +566,7 @@
                 this.sound = document.createElement("audio");
                 this.sound.src = source;
 
-                if (type == "BGM") { this.sound.loop = true; this.sound.volume = 0.2; }
+                if (type == "BGM") { this.sound.loop = true; this.sound.volume = 0.3; }
                 else if (type == "SFX") { this.sound.loop = false; this.sound.volume = 0.5; }
 
                 this.sound.setAttribute("preload", "auto");
@@ -672,25 +666,30 @@
                 }
             }
 
-            // Code for muting and unmuting the audio
-            function muteUnmuteAudio()
+            // Code for changing the audio volume level of the background music and sound effects
+            function changeAudioVolume()
             {
-                const muteButton = document.querySelector('#muteButton');
+                const audioButton = document.querySelector('#audioButton');
 
-                if (music.sound.volume == 0.2 && sfx.sound.volume == 0.5)
+                if (music.sound.volume == 0.3 && sfx.sound.volume == 0.5)
                 {
-                    muteButton.innerHTML = "🔉";
-                    music.sound.volume = 0.1, sfx.sound.volume = 0.25;
+                    audioButton.innerHTML = "🔉";
+                    music.sound.volume = 0.2, sfx.sound.volume = 0.4;
                 }
-                else if (music.sound.volume == 0.1 && sfx.sound.volume == 0.25)
+                else if (music.sound.volume == 0.2 && sfx.sound.volume == 0.4)
                 {
-                    muteButton.innerHTML = "🔇";
+                    audioButton.innerHTML = "🔈";
+                    music.sound.volume = 0.1, sfx.sound.volume = 0.3;
+                }
+                else if (music.sound.volume == 0.1 && sfx.sound.volume == 0.3)
+                {
+                    audioButton.innerHTML = "🔇";
                     music.sound.volume = 0.0, sfx.sound.volume = 0.0;
                 }
                 else if (music.sound.volume == 0.0 && sfx.sound.volume == 0.0)
                 {
-                    muteButton.innerHTML = "🔊";
-                    music.sound.volume = 0.2, sfx.sound.volume = 0.5;
+                    audioButton.innerHTML = "🔊";
+                    music.sound.volume = 0.3, sfx.sound.volume = 0.5;
                 }
             }
 
