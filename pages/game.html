@@ -72,8 +72,6 @@
 
     <body onload = "beforeGame()">
 
-        <canvas id = "beforeGameCanvas" width = "800" height = "600" style = "border: 5px solid black;"></canvas>
-
         <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
             <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
 
@@ -88,22 +86,15 @@
             // Setup for the preliminary canvas that is shown before the game is officially started
             function beforeGame()
             {
-                const canvas = document.getElementById("beforeGameCanvas");
-                const context = canvas.getContext("2d");
+                gameArea.start(800, 600, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
 
-                context.fillStyle = "darkgray";
-                context.fillRect(0, 0, 800, 600);
-
-                context.font = "25px monospace";
-                context.fillStyle = "black";
-                context.text = "HEROIC TRIACONTAGON'S MYSTIFYING LEVELS";
-                context.fillText(context.text, 100, 300);
+                hud = new componentHud("25px monospace", "black", 100, 300, "HEROIC TRIACONTAGON'S MYSTIFYING LEVELS", 0);
             }
 
             // Setup for the start of the game
             function startGame()
             {
-                gameArea.start(800, 600, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+                gameArea.fillColor = "lightgray";
                 completion = [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
                               ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
                               ["Level A", 0], ["Level B", 0], ["Level C", 0]];
@@ -690,8 +681,6 @@
             {
                 if (!gameStarted)
                 {
-                    document.getElementById("beforeGameCanvas").remove();
-
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
                     document.querySelector("#audioButton").innerHTML = "🔊";
