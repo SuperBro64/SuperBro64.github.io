@@ -74,7 +74,7 @@
         <link rel = "preload" href = "../fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
-    <body onload = "beforeGame()">
+    <body onload = "titleScreen()">
 
         <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
             <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
@@ -87,8 +87,8 @@
         </div>
 
         <script>
-            // Setup for the preliminary canvas that is shown before the game is officially started
-            function beforeGame()
+            // Setup for the title screen
+            function titleScreen()
             {
                 gameArea.start(800, 600, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
 
@@ -105,7 +105,7 @@
                               ["Level A", 0], ["Level B", 0], ["Level C", 0]];
                 music = new componentSound("", "BGM"), sfx = new componentSound("", "SFX");
 
-                levelSetup.titleScreen();
+                levelSetup.menuScreen();
             }
 
             // Variables for all of the various objects within the game area
@@ -145,7 +145,7 @@
             var levelSetup =
             {
                 // Setup for the title screen
-                titleScreen: function()
+                menuScreen: function()
                 {
                     player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                     treasure = [];
@@ -161,7 +161,7 @@
                 {
                     player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen"))];
+                    warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Menu Screen"))];
 
                     hud = new componentHud("30px NewSuperMarioFontU", "white", "black", 10, 30, "Credits", 0);
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
@@ -172,7 +172,7 @@
                 {
                     player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen")),
+                    warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Menu Screen")),
                             (new componentWarp(100, 100, 30, 30, "sienna", 2, "black", "Level 1", "Level 1")),
                             (new componentWarp(160, 100, 30, 30, "sienna", 2, "black", "Level 2", "Level 2")),
                             (new componentWarp(220, 100, 30, 30, "sienna", 2, "black", "Level 3", "Level 3")),
@@ -551,7 +551,7 @@
                         }
                     }
 
-                    if (this.destination == "Title Screen") { levelSetup.titleScreen(); }
+                    if (this.destination == "Menu Screen") { levelSetup.menuScreen(); }
                     else if (this.destination == "Credits") { levelSetup.credits(); }
                     else if (this.destination == "Hub Level") { levelSetup.hubLevel(); }
                     else if (this.destination == "Level 1") { levelSetup.level1(); }
