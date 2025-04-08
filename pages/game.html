@@ -51,6 +51,8 @@
         <link rel = "preload" href = "../sounds/Super_Mario_64_-_Camera_Click.wav" as = "audio">
         <link rel = "preload" href = "../sounds/Super_Mario_64_-_Coin.wav" as = "audio">
         <link rel = "preload" href = "../sounds/Super_Mario_64_-_Enter_Course.wav" as = "audio">
+        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Falling.wav" as = "audio">
+        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Game_Over.wav" as = "audio">
         <link rel = "preload" href = "../sounds/Super_Mario_64_-_Pause.wav" as = "audio">
 
         <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Bonus.mp3" as = "audio">
@@ -90,10 +92,10 @@
             // Setup for the title screen
             function titleScreen()
             {
-                gameArea.start(800, 600, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
+                gameArea.start(1024, 768, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
 
                 player = new componentPlayer(400, 400, 20, 0, 2, "red", 2, "black");
-                hud = new componentHud("30px NewSuperMarioFontU", "white", "black", 60, 300, "HEROIC TRIACONTAGON'S MYSTIFYING LEVELS", 0);
+                hud = new componentHud("30px NewSuperMarioFontU", "white", "black", 60, 300, "HYPERION'S TREASURE-MAXED LABYRINTH", 0);
             }
 
             // Setup for the start of the game
@@ -152,7 +154,7 @@
                     warps = [(new componentWarp(100, 100, 30, 30, "green", 2, "black", "Credits")),
                             (new componentWarp(385, 100, 30, 30, "green", 2, "black", "Hub Level"))];
 
-                    hud = new componentHud("30px NewSuperMarioFontU", "white", "black", 10, 30, "HEROIC TRIACONTAGON'S MYSTIFYING LEVELS", 0);
+                    hud = new componentHud("30px NewSuperMarioFontU", "white", "black", 10, 30, "HYPERION'S TREASURE-MAXED LEVELS", 0);
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
                 },
 
@@ -984,7 +986,7 @@
         <br>
         
         <h1>
-            Heroic Triacontagon's Mystifying Levels (WIP)
+            Hyperion's Treasure-Maxed Labyrinth (WIP)
         </h1>
 
         <h2>
@@ -992,9 +994,11 @@
         </h2>
 
         <p>
-            Take control of your triacontagon (that's a polygon with 30 sides!) and make your way to the end of
-            each level before time runs out! Collect all of the treasure in a level to increase your completion
-            percentage! Can you finish every level and reach 100% completion? Good luck!
+            Take control of legendary explorer Hyperion and guide him through a dangerous labyrinth full of traps and treasure!
+            In each level you must solve puzzles and navigate obstacles to reach the goal before time runs out, collecting as
+            much treasure as you can along the way. Successfully clear a level in time to increase your overall completion
+            percentage. Collect all of the treasure in the level first to increase your completion percentage even more! Can you
+            clear every level and reach 100% total completion? Good luck!
             <br><br>
             When you're ready, click on 🚩 to begin the game!
         </p>
