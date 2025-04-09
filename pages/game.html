@@ -112,7 +112,8 @@
 
             // Variables for all of the various objects within the game area
             var player, treasure = [], warps = [];
-            var gameStarted = false, completion = [[]], hud, music, sfx;
+            var gameStarted = false, gameIsOver = false, completion = [[]];
+            var hud, music, sfx;
 
             // Variable for the playable game area
             var gameArea =
@@ -409,26 +410,29 @@
 
                     if (joystickAngle < 0) { joystickAngle += 360; }
 
-                    if (joystick.getX() < 25 && joystick.getX() > -25 && joystick.getY() < 25 && joystick.getY() > -25) { stopMoving(); }
+                    if (joystick.getX() < 25 && joystick.getX() > -25 && joystick.getY() < 25 && joystick.getY() > -25)
+                    {
+                        this.stopMoving();
+                    }
                     else
                     {
                         if ((joystickAngle >= 0 && joystickAngle < 11.25) ||
-                            (joystickAngle >= 348.75 && joystickAngle < 360)) { moveRight(); }
-                        else if (joystickAngle >= 11.25 && joystickAngle < 33.75) { moveRightDownRight(); }
-                        else if (joystickAngle >= 33.75 && joystickAngle < 56.25) { moveDownRight(); }
-                        else if (joystickAngle >= 56.25 && joystickAngle < 78.75) { moveDownDownRight(); }
-                        else if (joystickAngle >= 78.75 && joystickAngle < 101.25) { moveDown(); }
-                        else if (joystickAngle >= 101.25 && joystickAngle < 123.75) { moveDownDownLeft(); }
-                        else if (joystickAngle >= 123.75 && joystickAngle < 146.25) { moveDownLeft(); }
-                        else if (joystickAngle >= 146.25 && joystickAngle < 168.75) { moveLeftDownLeft(); }
-                        else if (joystickAngle >= 168.75 && joystickAngle < 191.25) { moveLeft(); }
-                        else if (joystickAngle >= 191.25 && joystickAngle < 213.75) { moveLeftUpLeft(); }
-                        else if (joystickAngle >= 213.75 && joystickAngle < 236.25) { moveUpLeft(); }
-                        else if (joystickAngle >= 236.25 && joystickAngle < 258.75) { moveUpUpLeft(); }
-                        else if (joystickAngle >= 258.75 && joystickAngle < 281.25) { moveUp(); }
-                        else if (joystickAngle >= 281.25 && joystickAngle < 303.75) { moveUpUpRight(); }
-                        else if (joystickAngle >= 303.75 && joystickAngle < 326.25) { moveUpRight(); }
-                        else if (joystickAngle >= 326.25 && joystickAngle < 348.75) { moveRightUpRight(); }
+                            (joystickAngle >= 348.75 && joystickAngle < 360)) { this.moveRight(); }
+                        else if (joystickAngle >= 11.25 && joystickAngle < 33.75) { this.moveRightDownRight(); }
+                        else if (joystickAngle >= 33.75 && joystickAngle < 56.25) { this.moveDownRight(); }
+                        else if (joystickAngle >= 56.25 && joystickAngle < 78.75) { this.moveDownDownRight(); }
+                        else if (joystickAngle >= 78.75 && joystickAngle < 101.25) { this.moveDown(); }
+                        else if (joystickAngle >= 101.25 && joystickAngle < 123.75) { this.moveDownDownLeft(); }
+                        else if (joystickAngle >= 123.75 && joystickAngle < 146.25) { this.moveDownLeft(); }
+                        else if (joystickAngle >= 146.25 && joystickAngle < 168.75) { this.moveLeftDownLeft(); }
+                        else if (joystickAngle >= 168.75 && joystickAngle < 191.25) { this.moveLeft(); }
+                        else if (joystickAngle >= 191.25 && joystickAngle < 213.75) { this.moveLeftUpLeft(); }
+                        else if (joystickAngle >= 213.75 && joystickAngle < 236.25) { this.moveUpLeft(); }
+                        else if (joystickAngle >= 236.25 && joystickAngle < 258.75) { this.moveUpUpLeft(); }
+                        else if (joystickAngle >= 258.75 && joystickAngle < 281.25) { this.moveUp(); }
+                        else if (joystickAngle >= 281.25 && joystickAngle < 303.75) { this.moveUpUpRight(); }
+                        else if (joystickAngle >= 303.75 && joystickAngle < 326.25) { this.moveUpRight(); }
+                        else if (joystickAngle >= 326.25 && joystickAngle < 348.75) { this.moveRightUpRight(); }
 
                         if (joystick.getX() < 75 && joystick.getX() > -75) { player.speedX /= 2; }
                         if (joystick.getY() < 75 && joystick.getY() > -75) { player.speedY /= 2; }
@@ -437,6 +441,24 @@
                     if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= gameArea.canvas.width) { this.x += this.speedX; }
                     if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= gameArea.canvas.height) { this.y += this.speedY; }
                 }
+
+                this.moveRight = function()          { this.speedX = 4,      this.speedY = 0; }
+                this.moveRightDownRight = function() { this.speedX = 3.464,  this.speedY = -2; }
+                this.moveDownRight = function()      { this.speedX = 2.828,  this.speedY = -2.828; }
+                this.moveDownDownRight = function()  { this.speedX = 2,      this.speedY = -3.464; }
+                this.moveDown = function()           { this.speedX = 0,      this.speedY = -4; }
+                this.moveDownDownLeft = function()   { this.speedX = -2,     this.speedY = -3.464; }
+                this.moveDownLeft = function()       { this.speedX = -2.828, this.speedY = -2.828; }
+                this.moveLeftDownLeft = function()   { this.speedX = -3.464, this.speedY = -2; }
+                this.moveLeft = function()           { this.speedX = -4,     this.speedY = 0; }
+                this.moveLeftUpLeft = function()     { this.speedX = -3.464, this.speedY = 2; }
+                this.moveUpLeft = function()         { this.speedX = -2.828, this.speedY = 2.828; }
+                this.moveUpUpLeft = function()       { this.speedX = -2,     this.speedY = 3.464; }
+                this.moveUp = function()             { this.speedX = 0,      this.speedY = 4; }
+                this.moveUpUpRight = function()      { this.speedX = 2,      this.speedY = 3.464; }
+                this.moveUpRight = function()        { this.speedX = 2.828,  this.speedY = 2.828; }
+                this.moveRightUpRight = function()   { this.speedX = 3.464,  this.speedY = 2; }
+                this.stopMoving = function()         { this.speedX = 0,      this.speedY = 0; }
 
                 this.collectTreasure = function(treasure)
                 {
@@ -553,22 +575,26 @@
                         }
                     }
 
-                    if (this.destination == "Menu Screen") { levelSetup.menuScreen(); }
-                    else if (this.destination == "Credits") { levelSetup.creditsScreen(); }
-                    else if (this.destination == "Hub Level") { levelSetup.hubLevel(); }
-                    else if (this.destination == "Level 1") { levelSetup.level1(); }
-                    else if (this.destination == "Level 2") { levelSetup.level2(); }
-                    else if (this.destination == "Level 3") { levelSetup.level3(); }
-                    else if (this.destination == "Level 4") { levelSetup.level4(); }
-                    else if (this.destination == "Level 5") { levelSetup.level5(); }
-                    else if (this.destination == "Level 6") { levelSetup.level6(); }
-                    else if (this.destination == "Level 7") { levelSetup.level7(); }
-                    else if (this.destination == "Level 8") { levelSetup.level8(); }
-                    else if (this.destination == "Level 9") { levelSetup.level9(); }
-                    else if (this.destination == "Level 10") { levelSetup.level10(); }
-                    else if (this.destination == "Level A") { levelSetup.levelA(); }
-                    else if (this.destination == "Level B") { levelSetup.levelB(); }
-                    else if (this.destination == "Level C") { levelSetup.levelC(); }
+                    switch (this.destination)
+                    {
+                        case "Menu Screen": levelSetup.menuScreen(); break;
+                        case "Credits":     levelSetup.creditsScreen(); break;
+                        case "Hub Level":   levelSetup.hubLevel(); break;
+                        case "Level 1":     levelSetup.level1(); break;
+                        case "Level 2":     levelSetup.level2(); break;
+                        case "Level 3":     levelSetup.level3(); break;
+                        case "Level 4":     levelSetup.level4(); break;
+                        case "Level 5":     levelSetup.level5(); break;
+                        case "Level 6":     levelSetup.level6(); break;
+                        case "Level 7":     levelSetup.level7(); break;
+                        case "Level 8":     levelSetup.level8(); break;
+                        case "Level 9":     levelSetup.level9(); break;
+                        case "Level 10":    levelSetup.level10(); break;
+                        case "Level A":     levelSetup.levelA(); break;
+                        case "Level B":     levelSetup.levelB(); break;
+                        case "Level C":     levelSetup.levelC(); break;
+                        default:            levelSetup.menuScreen(); break;
+                    }
                 }
             }
 
@@ -656,6 +682,8 @@
                 if (hud.startingTime > 0) { hud.text += " | ⏱️: " + hud.timeRemaining; }
                 hud.update();
 
+                if (hud.startingTime > 0 && hud.timeRemaining <= 0 && !gameIsOver) { gameOver(); }
+
                 if (gameStarted) { player.newPosition(); }
                 player.update();
             }
@@ -667,24 +695,43 @@
                 return false;
             }
 
-            // Code for the player's 16-directional movement as well as stopping
-            function moveRight()          { player.speedX = 4, player.speedY = 0; }
-            function moveRightDownRight() { player.speedX = 3.464, player.speedY = -2; }
-            function moveDownRight()      { player.speedX = 2.828, player.speedY = -2.828; }
-            function moveDownDownRight()  { player.speedX = 2, player.speedY = -3.464; }
-            function moveDown()           { player.speedX = 0, player.speedY = -4; }
-            function moveDownDownLeft()   { player.speedX = -2, player.speedY = -3.464; }
-            function moveDownLeft()       { player.speedX = -2.828, player.speedY = -2.828; }
-            function moveLeftDownLeft()   { player.speedX = -3.464, player.speedY = -2; }
-            function moveLeft()           { player.speedX = -4, player.speedY = 0; }
-            function moveLeftUpLeft()     { player.speedX = -3.464, player.speedY = 2; }
-            function moveUpLeft()         { player.speedX = -2.828, player.speedY = 2.828; }
-            function moveUpUpLeft()       { player.speedX = -2, player.speedY = 3.464; }
-            function moveUp()             { player.speedX = 0, player.speedY = 4; }
-            function moveUpUpRight()      { player.speedX = 2, player.speedY = 3.464; }
-            function moveUpRight()        { player.speedX = 2.828, player.speedY = 2.828; }
-            function moveRightUpRight()   { player.speedX = 3.464, player.speedY = 2; }
-            function stopMoving()         { player.speedX = 0, player.speedY = 0; }
+            // Code for the game over that occurs when the level time has run out
+            function gameOver()
+            {
+                gameIsOver = true; hud.fillColor = "red"; hud.x += 150; hud.y += 350;
+                hud.text = "GAME OVER! Click on 🔄️ to try again."; hud.update();
+
+                clearInterval(gameArea.interval); gameArea.interval = null;
+                music.stop(); sfx.sound.src = "../sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
+
+                document.querySelector("#actionButton").innerHTML = "🔄️";
+                document.querySelector("#pauseButton").innerHTML = "❌";
+            }
+
+            // Code for restarting the current level the player is on after a game over occurs
+            function levelRestart()
+            {
+                gameIsOver = false; gameArea.frameNum = 0; sfx.stop();
+                gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
+                switch (hud.currentLevel)
+                {
+                    case "Level 1":     levelSetup.level1(); break;
+                    case "Level 2":     levelSetup.level2(); break;
+                    case "Level 3":     levelSetup.level3(); break;
+                    case "Level 4":     levelSetup.level4(); break;
+                    case "Level 5":     levelSetup.level5(); break;
+                    case "Level 6":     levelSetup.level6(); break;
+                    case "Level 7":     levelSetup.level7(); break;
+                    case "Level 8":     levelSetup.level8(); break;
+                    case "Level 9":     levelSetup.level9(); break;
+                    case "Level 10":    levelSetup.level10(); break;
+                    case "Level A":     levelSetup.levelA(); break;
+                    case "Level B":     levelSetup.levelB(); break;
+                    case "Level C":     levelSetup.levelC(); break;
+                    default:            levelSetup.menuScreen(); break;
+                }
+            }
 
             // Code for the player's actions
             function playerAction()
@@ -696,13 +743,19 @@
                     document.querySelector("#audioButton").innerHTML = "🔊";
                     gameStarted = true; startGame();
                 }
+                else if (gameIsOver)
+                {
+                    document.querySelector("#actionButton").innerHTML = "🅰️";
+                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+                    levelRestart();
+                }
                 else if (gameArea.interval) { player.action = true; }
             }
 
             // Code for pausing the game
             function pauseGame()
             {
-                if (gameStarted)
+                if (gameStarted && !gameIsOver)
                 {
                     const pauseButton = document.querySelector("#pauseButton");
 
@@ -710,7 +763,7 @@
                     {
                         pauseButton.innerHTML = "▶️";
                         sfx.sound.src = "../sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
-                        clearInterval(gameArea.interval), gameArea.interval = null;
+                        clearInterval(gameArea.interval); gameArea.interval = null;
                     }
                     else if (!gameArea.interval)
                     {
