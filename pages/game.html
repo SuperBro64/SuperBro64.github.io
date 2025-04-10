@@ -406,36 +406,33 @@
 
                 this.newPosition = function()
                 {
-                    var joystickAngle = Math.atan2(joystick.getY(), joystick.getX()) * 180 / Math.PI;
+                    var stickX = joystick.getX(), stickY = joystick.getY();
+                    var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
 
-                    if (joystickAngle < 0) { joystickAngle += 360; }
+                    if (stickAngle < 0) { stickAngle += 360; }
 
-                    if (joystick.getX() < 25 && joystick.getX() > -25 && joystick.getY() < 25 && joystick.getY() > -25)
-                    {
-                        this.stopMoving();
-                    }
+                    if (stickX < 25 && stickX > -25 && stickY < 25 && stickY > -25) { this.stopMoving(); }
                     else
                     {
-                        if ((joystickAngle >= 0 && joystickAngle < 11.25) ||
-                            (joystickAngle >= 348.75 && joystickAngle < 360)) { this.moveRight(); }
-                        else if (joystickAngle >= 11.25 && joystickAngle < 33.75) { this.moveRightDownRight(); }
-                        else if (joystickAngle >= 33.75 && joystickAngle < 56.25) { this.moveDownRight(); }
-                        else if (joystickAngle >= 56.25 && joystickAngle < 78.75) { this.moveDownDownRight(); }
-                        else if (joystickAngle >= 78.75 && joystickAngle < 101.25) { this.moveDown(); }
-                        else if (joystickAngle >= 101.25 && joystickAngle < 123.75) { this.moveDownDownLeft(); }
-                        else if (joystickAngle >= 123.75 && joystickAngle < 146.25) { this.moveDownLeft(); }
-                        else if (joystickAngle >= 146.25 && joystickAngle < 168.75) { this.moveLeftDownLeft(); }
-                        else if (joystickAngle >= 168.75 && joystickAngle < 191.25) { this.moveLeft(); }
-                        else if (joystickAngle >= 191.25 && joystickAngle < 213.75) { this.moveLeftUpLeft(); }
-                        else if (joystickAngle >= 213.75 && joystickAngle < 236.25) { this.moveUpLeft(); }
-                        else if (joystickAngle >= 236.25 && joystickAngle < 258.75) { this.moveUpUpLeft(); }
-                        else if (joystickAngle >= 258.75 && joystickAngle < 281.25) { this.moveUp(); }
-                        else if (joystickAngle >= 281.25 && joystickAngle < 303.75) { this.moveUpUpRight(); }
-                        else if (joystickAngle >= 303.75 && joystickAngle < 326.25) { this.moveUpRight(); }
-                        else if (joystickAngle >= 326.25 && joystickAngle < 348.75) { this.moveRightUpRight(); }
+                        if ((stickAngle >= 0 && stickAngle < 11.25) || (stickAngle >= 348.75 && stickAngle < 360)) { this.moveRight(); }
+                        else if (stickAngle >= 11.25 && stickAngle < 33.75) { this.moveRightDownRight(); }
+                        else if (stickAngle >= 33.75 && stickAngle < 56.25) { this.moveDownRight(); }
+                        else if (stickAngle >= 56.25 && stickAngle < 78.75) { this.moveDownDownRight(); }
+                        else if (stickAngle >= 78.75 && stickAngle < 101.25) { this.moveDown(); }
+                        else if (stickAngle >= 101.25 && stickAngle < 123.75) { this.moveDownDownLeft(); }
+                        else if (stickAngle >= 123.75 && stickAngle < 146.25) { this.moveDownLeft(); }
+                        else if (stickAngle >= 146.25 && stickAngle < 168.75) { this.moveLeftDownLeft(); }
+                        else if (stickAngle >= 168.75 && stickAngle < 191.25) { this.moveLeft(); }
+                        else if (stickAngle >= 191.25 && stickAngle < 213.75) { this.moveLeftUpLeft(); }
+                        else if (stickAngle >= 213.75 && stickAngle < 236.25) { this.moveUpLeft(); }
+                        else if (stickAngle >= 236.25 && stickAngle < 258.75) { this.moveUpUpLeft(); }
+                        else if (stickAngle >= 258.75 && stickAngle < 281.25) { this.moveUp(); }
+                        else if (stickAngle >= 281.25 && stickAngle < 303.75) { this.moveUpUpRight(); }
+                        else if (stickAngle >= 303.75 && stickAngle < 326.25) { this.moveUpRight(); }
+                        else if (stickAngle >= 326.25 && stickAngle < 348.75) { this.moveRightUpRight(); }
 
-                        if (joystick.getX() < 75 && joystick.getX() > -75) { player.speedX /= 2; }
-                        if (joystick.getY() < 75 && joystick.getY() > -75) { player.speedY /= 2; }
+                        if (stickX < 75 && stickX > -75) { this.speedX /= 2; }
+                        if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
                     }
 
                     if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= gameArea.canvas.width) { this.x += this.speedX; }
@@ -605,19 +602,41 @@
                 this.startingTime = startingTime, this.timeRemaining = (this.startingTime - (gameArea.frameNum / 50)).toFixed(1);
                 this.font = font, this.fillColor = fillColor, this.outlineColor = outlineColor;
                 this.x = x, this.y = y;
+                this.levelText = "", this.completionText = "", this.treasureText = "", this.timerText = "";
 
                 this.update = function()
                 {
                     this.context = gameArea.context;
+                    this.context.font = this.font;
                     
                     if (this.timeRemaining > 0) { this.timeRemaining = (this.startingTime - (gameArea.frameNum / 50)).toFixed(1); }
 
-                    this.context.font = this.font;
                     this.context.fillStyle = this.fillColor;
-                    this.context.fillText(this.text, this.x, this.y);
-
+                    this.context.fillText(this.levelText, this.x, this.y);
                     this.context.strokeStyle = this.outlineColor;
-                    this.context.strokeText(this.text, this.x, this.y);
+                    this.context.strokeText(this.levelText, this.x, this.y);
+
+                    if (this.currentLevel == "Main Hub" && this.calculateCompletion() == 100) { this.context.fillStyle = "gold"; }
+                    else if (gameIsOver) { this.context.fillStyle = "red"; }
+                    else { this.context.fillStyle = this.fillColor; }
+
+                    this.context.fillText(this.completionText, this.x + 150, this.y + 720);
+                    this.context.strokeStyle = this.outlineColor;
+                    this.context.strokeText(this.completionText, this.x + 150, this.y + 720);
+
+                    if (this.treasureCollected == treasure.length) { this.context.fillStyle = "gold"; }
+                    else { this.context.fillStyle = this.fillColor; }
+
+                    this.context.fillText(this.treasureText, this.x + 400, this.y);
+                    this.context.strokeStyle = this.outlineColor;
+                    this.context.strokeText(this.treasureText, this.x + 400, this.y);
+
+                    if (this.timeRemaining < 10) { this.context.fillStyle = "red"; }
+                    else { this.context.fillStyle = this.fillColor; }
+
+                    this.context.fillText(this.timerText, this.x + 840, this.y);
+                    this.context.strokeStyle = this.outlineColor;
+                    this.context.strokeText(this.timerText, this.x + 840, this.y);
                 }
 
                 this.calculateCompletion = function()
@@ -649,9 +668,11 @@
             // Code for updating the game area and everything in it on every frame
             function updateGameArea()
             {
+                // Clearing the game area
                 gameArea.clear();
                 gameArea.frameNum += 1;
 
+                // Updating the treasure
                 for (i = 0; i < treasure.length; i += 1)
                 {
                     if (player.collectTreasure(treasure[i]) && treasure[i].radius != 0)
@@ -662,6 +683,7 @@
                     treasure[i].update();
                 }
 
+                // Updating the warps
                 for (i = 0; i < warps.length; i += 1)
                 {
                     if (player.enterWarp(warps[i]))
@@ -676,16 +698,39 @@
                     warps[i].update();
                 }
 
-                hud.text = hud.currentLevel;
-                if (hud.currentLevel == "Main Hub") { hud.text += " | Total Completion: " + hud.calculateCompletion() + "%"; }
-                if (treasure.length > 0) { hud.text += " | 🪙: " + hud.treasureCollected + "/" + treasure.length; }
-                if (hud.startingTime > 0) { hud.text += " | ⏱️: " + hud.timeRemaining; }
+                // Updating the HUD
+                hud.levelText = hud.currentLevel;
+
+                if (hud.currentLevel == "Main Hub")
+                {
+                    hud.completionText = "TOTAL GAME COMPLETION: ";
+                    if (hud.calculateCompletion() < 10) { hud.completionText += "00"; }
+                    else if (hud.calculateCompletion() < 100) { hud.completionText += "0"; }
+                    hud.completionText += hud.calculateCompletion() + "%";
+                }
+
+                if (treasure.length > 0)
+                {
+                    hud.treasureText = "🪙: ";
+                    if (treasure.length < 10) { hud.treasureText += " "; } hud.treasureText += hud.treasureCollected + "/";
+                    if (treasure.length < 10) { hud.treasureText += " "; } hud.treasureText += treasure.length;
+                }
+
+                if (hud.startingTime > 0)
+                {
+                    hud.timerText = "⏱️: ";
+                    if (hud.timeRemaining < 10) { hud.timerText += "00"; }
+                    else if (hud.timeRemaining < 100) { hud.timerText += "0"; }
+                    hud.timerText += hud.timeRemaining;
+                }
+                
                 hud.update();
 
-                if (hud.startingTime > 0 && hud.timeRemaining <= 0 && !gameIsOver) { gameOver(); }
-
+                // Updating the player
                 if (gameStarted) { player.newPosition(); }
                 player.update();
+
+                if (hud.startingTime > 0 && hud.timeRemaining <= 0 && !gameIsOver) { gameOver(); }
             }
 
             // Code for tracking if something is happening every n frames
@@ -698,8 +743,8 @@
             // Code for the game over that occurs when the level time has run out
             function gameOver()
             {
-                gameIsOver = true; hud.fillColor = "red"; hud.x += 150; hud.y += 350;
-                hud.text = "GAME OVER! Click on 🔄️ to try again."; hud.update();
+                gameIsOver = true; hud.completionText = "GAME OVER! Click on 🔄️ to try again.";
+                updateGameArea();
 
                 clearInterval(gameArea.interval); gameArea.interval = null;
                 music.stop(); sfx.sound.src = "../sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
@@ -716,6 +761,9 @@
 
                 switch (hud.currentLevel)
                 {
+                    case "Menu Screen": levelSetup.menuScreen(); break;
+                    case "Credits":     levelSetup.creditsScreen(); break;
+                    case "Hub Level":   levelSetup.hubLevel(); break;
                     case "Level 1":     levelSetup.level1(); break;
                     case "Level 2":     levelSetup.level2(); break;
                     case "Level 3":     levelSetup.level3(); break;
