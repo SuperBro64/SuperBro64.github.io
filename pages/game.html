@@ -76,43 +76,34 @@
         <link rel = "preload" href = "../fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
-    <body onload = "titleScreen()">
+    <body onload = "startGame()">
 
         <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
             <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
 
             <div id = "buttons" class = "prevent-select" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
-                <button id = "audioButton" onclick = "changeAudioVolume()"><b>❌</b></button>
-                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🚩</b></button>
-                <button id = "pauseButton" onclick = "pauseGame()"><b>❌</b></button>
+                <button id = "audioButton" onclick = "changeAudioVolume()"><b>🔊</b></button>
+                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🅰️</b></button>
+                <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
             </div>
         </div>
 
         <script>
-            // Setup for the title screen
-            function titleScreen()
-            {
-                gameArea.start(1024, 768, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
-
-                player = new componentPlayer(512, 400, 20, 0, 2, "red", 2, "black");
-                hud = new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 300, "HYPERION'S TREASURE-MAXED LABYRINTH", 0);
-            }
-
             // Setup for the start of the game
             function startGame()
             {
-                gameArea.fillColor = "lightgray";
+                gameArea.start(1024, 768, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
                 completion = [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
                               ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
                               ["Level A", 0], ["Level B", 0], ["Level C", 0]];
                 music = new componentSound("", "BGM"), sfx = new componentSound("", "SFX");
 
-                levelSetup.menuScreen();
+                levelSetup.titleScreen();
             }
 
             // Variables for all of the various objects within the game area
             var player, treasure = [], warps = [];
-            var gameStarted = false, gameIsOver = false, completion = [[]];
+            var gameIsOver = false, completion = [[]];
             var hud, music, sfx;
 
             // Variable for the playable game area
@@ -148,7 +139,7 @@
             var levelSetup =
             {
                 // Setup for the title screen
-                menuScreen: function()
+                titleScreen: function()
                 {
                     player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                     treasure = [];
@@ -574,7 +565,7 @@
 
                     switch (this.destination)
                     {
-                        case "Menu Screen": levelSetup.menuScreen(); break;
+                        case "Menu Screen": levelSetup.titleScreen(); break;
                         case "Credits":     levelSetup.creditsScreen(); break;
                         case "Hub Level":   levelSetup.hubLevel(); break;
                         case "Level 1":     levelSetup.level1(); break;
@@ -590,7 +581,7 @@
                         case "Level A":     levelSetup.levelA(); break;
                         case "Level B":     levelSetup.levelB(); break;
                         case "Level C":     levelSetup.levelC(); break;
-                        default:            levelSetup.menuScreen(); break;
+                        default:            levelSetup.titleScreen(); break;
                     }
                 }
             }
@@ -727,7 +718,7 @@
                 hud.update();
 
                 // Updating the player
-                if (gameStarted) { player.newPosition(); }
+                player.newPosition();
                 player.update();
 
                 if (hud.startingTime > 0 && hud.timeRemaining <= 0 && !gameIsOver) { gameOver(); }
@@ -761,7 +752,7 @@
 
                 switch (hud.currentLevel)
                 {
-                    case "Menu Screen": levelSetup.menuScreen(); break;
+                    case "Menu Screen": levelSetup.titleScreen(); break;
                     case "Credits":     levelSetup.creditsScreen(); break;
                     case "Hub Level":   levelSetup.hubLevel(); break;
                     case "Level 1":     levelSetup.level1(); break;
@@ -777,21 +768,14 @@
                     case "Level A":     levelSetup.levelA(); break;
                     case "Level B":     levelSetup.levelB(); break;
                     case "Level C":     levelSetup.levelC(); break;
-                    default:            levelSetup.menuScreen(); break;
+                    default:            levelSetup.titleScreen(); break;
                 }
             }
 
             // Code for the player's actions
             function playerAction()
             {
-                if (!gameStarted)
-                {
-                    document.querySelector("#actionButton").innerHTML = "🅰️";
-                    document.querySelector("#pauseButton").innerHTML = "⏸️";
-                    document.querySelector("#audioButton").innerHTML = "🔊";
-                    gameStarted = true; startGame();
-                }
-                else if (gameIsOver)
+                if (gameIsOver)
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -803,7 +787,7 @@
             // Code for pausing the game
             function pauseGame()
             {
-                if (gameStarted && !gameIsOver)
+                if (!gameIsOver)
                 {
                     const pauseButton = document.querySelector("#pauseButton");
 
@@ -825,30 +809,27 @@
             // Code for changing the audio volume level of the background music and sound effects
             function changeAudioVolume()
             {
-                if (gameStarted)
-                {
-                    const audioButton = document.querySelector("#audioButton");
+                const audioButton = document.querySelector("#audioButton");
 
-                    if (music.sound.volume == 0.3)
-                    {
-                        audioButton.innerHTML = "🔉";
-                        document.querySelectorAll("audio").forEach((element) => element.volume = 0.2);
-                    }
-                    else if (music.sound.volume == 0.2)
-                    {
-                        audioButton.innerHTML = "🔈";
-                        document.querySelectorAll("audio").forEach((element) => element.volume = 0.1);
-                    }
-                    else if (music.sound.volume == 0.1)
-                    {
-                        audioButton.innerHTML = "🔇";
-                        document.querySelectorAll("audio").forEach((element) => element.volume = 0.0);
-                    }
-                    else if (music.sound.volume == 0.0)
-                    {
-                        audioButton.innerHTML = "🔊";
-                        document.querySelectorAll("audio").forEach((element) => element.volume = 0.3);
-                    }
+                if (music.sound.volume == 0.3)
+                {
+                    audioButton.innerHTML = "🔉";
+                    document.querySelectorAll("audio").forEach((element) => element.volume = 0.2);
+                }
+                else if (music.sound.volume == 0.2)
+                {
+                    audioButton.innerHTML = "🔈";
+                    document.querySelectorAll("audio").forEach((element) => element.volume = 0.1);
+                }
+                else if (music.sound.volume == 0.1)
+                {
+                    audioButton.innerHTML = "🔇";
+                    document.querySelectorAll("audio").forEach((element) => element.volume = 0.0);
+                }
+                else if (music.sound.volume == 0.0)
+                {
+                    audioButton.innerHTML = "🔊";
+                    document.querySelectorAll("audio").forEach((element) => element.volume = 0.3);
                 }
             }
 
@@ -1100,8 +1081,6 @@
             much treasure as you can along the way. Successfully clear a level in time to increase your overall completion
             percentage. Collect all of the treasure in the level first to increase your completion percentage even more! Can you
             clear every level and reach 100% total completion? Good luck!
-            <br><br>
-            When you're ready, click on 🚩 to begin the game!
         </p>
 
         <h2>
