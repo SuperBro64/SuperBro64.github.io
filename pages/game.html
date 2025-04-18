@@ -76,34 +76,44 @@
         <link rel = "preload" href = "../fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
-    <body onload = "startGame()">
+    <body onload = "titleScreen()">
 
         <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
             <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
 
             <div id = "buttons" class = "prevent-select" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
-                <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
-                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🅰️</b></button>
-                <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
+                <button id = "audioButton" onclick = "toggleAudioMuting()"><b>❌</b></button>
+                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🚩</b></button>
+                <button id = "pauseButton" onclick = "pauseGame()"><b>❌</b></button>
             </div>
         </div>
 
         <script>
+            // Setup for the title screen
+            function titleScreen()
+            {
+                gameArea.start(1024, 768, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
+
+                player = new componentPlayer(512, 400, 20, 0, 2, "red", 2, "black");
+                hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
+                                        90, 300, 0, 0, 0, 0, 0, 0, "HYPERION'S TREASURE-MAXED LABYRINTH", 0);
+            }
+
             // Setup for the start of the game
             function startGame()
             {
-                gameArea.start(1024, 768, "border: 5px solid black", "lightgray", 0, 0, 0, 20);
+                gameArea.fillColor = "lightgray";
                 completion = [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
                               ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
                               ["Level A", 0], ["Level B", 0], ["Level C", 0]];
                 music = new componentSound("", "BGM"), sfx = new componentSound("", "SFX");
 
-                levelSetup.titleScreen();
+                levelSetup.menuScreen();
             }
 
             // Variables for all of the various objects within the game area
             var player, treasure = [], warps = [];
-            var gameIsOver = false, completion = [[]];
+            var gameStarted = false, gameIsOver = false, completion = [[]];
             var hud, music, sfx;
 
             // Variable for the playable game area
@@ -138,13 +148,13 @@
             // Variable containing the object setup for every level in the game
             var levelSetup =
             {
-                // Setup for the title screen
-                titleScreen: function()
+                // Setup for the menu screen
+                menuScreen: function()
                 {
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(100, 100, 30, 30, "green", 2, "black", "Credits")),
-                            (new componentWarp(385, 100, 30, 30, "green", 2, "black", "Hub Level"))];
+                    warps = [(new componentWarp(100, 100, 30, 30, 0, "green", 2, "black", "Credits")),
+                             (new componentWarp(385, 100, 30, 30, 0, "green", 2, "black", "Hub Level"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             90, 35, 0, 0, 0, 0, 0, 0, "HYPERION'S TREASURE-MAXED LABYRINTH", 0);
@@ -156,7 +166,7 @@
                 {
                     player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen"))];
+                    warps = [(new componentWarp(385, 500, 30, 30, 0, "green", 2, "black", "Menu Screen"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             430, 35, 0, 0, 0, 0, 0, 0, "CREDITS", 0);
@@ -168,20 +178,20 @@
                 {
                     player = new componentPlayer(400, 300, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(385, 500, 30, 30, "green", 2, "black", "Title Screen")),
-                            (new componentWarp(100, 100, 30, 30, "sienna", 2, "black", "Level 1", "Level 1")),
-                            (new componentWarp(160, 100, 30, 30, "sienna", 2, "black", "Level 2", "Level 2")),
-                            (new componentWarp(220, 100, 30, 30, "sienna", 2, "black", "Level 3", "Level 3")),
-                            (new componentWarp(280, 100, 30, 30, "sienna", 2, "black", "Level 4", "Level 4")),
-                            (new componentWarp(340, 100, 30, 30, "sienna", 2, "black", "Level 5", "Level 5")),
-                            (new componentWarp(460, 100, 30, 30, "sienna", 2, "black", "Level 6", "Level 6")),
-                            (new componentWarp(520, 100, 30, 30, "sienna", 2, "black", "Level 7", "Level 7")),
-                            (new componentWarp(580, 100, 30, 30, "sienna", 2, "black", "Level 8", "Level 8")),
-                            (new componentWarp(640, 100, 30, 30, "sienna", 2, "black", "Level 9", "Level 9")),
-                            (new componentWarp(700, 100, 30, 30, "sienna", 2, "black", "Level 10", "Level 10")),
-                            (new componentWarp(700, 200, 30, 30, "sienna", 2, "black", "Level A", "Level A")),
-                            (new componentWarp(700, 350, 30, 30, "sienna", 2, "black", "Level B", "Level B")),
-                            (new componentWarp(700, 500, 30, 30, "sienna", 2, "black", "Level C", "Level C"))];
+                    warps = [(new componentWarp(385, 500, 30, 30, 0, "green", 2, "black", "Menu Screen")),
+                             (new componentWarp(100, 100, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
+                             (new componentWarp(160, 100, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
+                             (new componentWarp(220, 100, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
+                             (new componentWarp(280, 100, 30, 30, 0, "sienna", 2, "black", "Level 4", "Level 4")),
+                             (new componentWarp(340, 100, 30, 30, 0, "sienna", 2, "black", "Level 5", "Level 5")),
+                             (new componentWarp(460, 100, 30, 30, 0, "sienna", 2, "black", "Level 6", "Level 6")),
+                             (new componentWarp(520, 100, 30, 30, 0, "sienna", 2, "black", "Level 7", "Level 7")),
+                             (new componentWarp(580, 100, 30, 30, 0, "sienna", 2, "black", "Level 8", "Level 8")),
+                             (new componentWarp(640, 100, 30, 30, 0, "sienna", 2, "black", "Level 9", "Level 9")),
+                             (new componentWarp(700, 100, 30, 30, 0, "sienna", 2, "black", "Level 10", "Level 10")),
+                             (new componentWarp(700, 200, 30, 30, 0, "sienna", 2, "black", "Level A", "Level A")),
+                             (new componentWarp(700, 350, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
+                             (new componentWarp(700, 500, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 0, 0, 0, 0, "Main Hub", 0);
@@ -198,7 +208,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 1", 30);
@@ -213,7 +223,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 2", 30);
@@ -228,7 +238,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 3", 30);
@@ -243,7 +253,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 4", 30);
@@ -258,7 +268,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 5", 30);
@@ -273,7 +283,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 6", 30);
@@ -288,7 +298,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 7", 30);
@@ -303,7 +313,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 8", 30);
@@ -318,7 +328,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 9", 30);
@@ -333,7 +343,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level 10", 30);
@@ -348,7 +358,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level A", 30);
@@ -363,7 +373,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level B", 30);
@@ -378,7 +388,7 @@
                                 (new componentTreasure(200, 450, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 150, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(600, 450, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(385, 100, 30, 30, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(385, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
 
                     hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                             10, 35, 160, 755, 410, 35, 850, 35, "Level C", 30);
@@ -525,9 +535,9 @@
             }
 
             // Code for the warps
-            function componentWarp(x, y, width, height, fillColor, lineWidth, lineColor, destination, type)
+            function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineColor, destination, type)
             {
-                this.x = x, this.y = y, this.width = width, this.height = height, this.angle = 0;
+                this.x = x, this.y = y, this.width = width, this.height = height, this.angle = angle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
                 this.rotationSpeed = 180, this.destination = destination, this.type = type;
                 this.sfx = new componentSound("", "SFX");
@@ -581,7 +591,7 @@
 
                     switch (this.destination)
                     {
-                        case "Title Screen": levelSetup.titleScreen(); break;
+                        case "Menu Screen": levelSetup.menuScreen(); break;
                         case "Credits":     levelSetup.creditsScreen(); break;
                         case "Hub Level":   levelSetup.hubLevel(); break;
                         case "Level 1":     levelSetup.level1(); break;
@@ -597,7 +607,7 @@
                         case "Level A":     levelSetup.levelA(); break;
                         case "Level B":     levelSetup.levelB(); break;
                         case "Level C":     levelSetup.levelC(); break;
-                        default:            levelSetup.titleScreen(); break;
+                        default:            levelSetup.menuScreen(); break;
                     }
                 }
             }
@@ -764,7 +774,7 @@
                 hud.updateTimer();
 
                 // Updating the player
-                player.newPosition();
+                if (gameStarted) { player.newPosition(); }
                 player.update();
 
                 if (hud.startingTime > 0 && hud.timeRemaining <= 0 && !gameIsOver) { gameOver(); }
@@ -811,14 +821,21 @@
                     case "Level A":     levelSetup.levelA(); break;
                     case "Level B":     levelSetup.levelB(); break;
                     case "Level C":     levelSetup.levelC(); break;
-                    default:            levelSetup.titleScreen(); break;
+                    default:            levelSetup.menuScreen(); break;
                 }
             }
 
             // Code for the player's actions
             function playerAction()
             {
-                if (gameIsOver)
+                if (!gameStarted)
+                {
+                    document.querySelector("#actionButton").innerHTML = "🅰️";
+                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+                    document.querySelector("#audioButton").innerHTML = "🔊";
+                    gameStarted = true; startGame();
+                }
+                else if (gameIsOver)
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -830,7 +847,7 @@
             // Code for pausing the game
             function pauseGame()
             {
-                if (!gameIsOver)
+                if (gameStarted && !gameIsOver)
                 {
                     const pauseButton = document.querySelector("#pauseButton");
 
@@ -852,17 +869,20 @@
             // Code for muting and unmuting the background music and all sound effects
             function toggleAudioMuting()
             {
-                const audioButton = document.querySelector("#audioButton");
+                if (gameStarted)
+                {
+                    const audioButton = document.querySelector("#audioButton");
 
-                if (music.sound.muted == false)
-                {
-                    audioButton.innerHTML = "🔇";
-                    document.querySelectorAll("audio").forEach((element) => element.muted = true);
-                }
-                else if (music.sound.muted == true)
-                {
-                    audioButton.innerHTML = "🔊";
-                    document.querySelectorAll("audio").forEach((element) => element.muted = false);
+                    if (music.sound.muted == false)
+                    {
+                        audioButton.innerHTML = "🔇";
+                        document.querySelectorAll("audio").forEach((element) => element.muted = true);
+                    }
+                    else if (music.sound.muted == true)
+                    {
+                        audioButton.innerHTML = "🔊";
+                        document.querySelectorAll("audio").forEach((element) => element.muted = false);
+                    }
                 }
             }
 
@@ -1114,6 +1134,8 @@
             much treasure as you can along the way. Successfully clear a level in time to increase your overall completion
             percentage. Collect all of the treasure in the level first to increase your completion percentage even more! Can you
             clear every level and reach 100% total completion? Good luck!
+            <br><br>
+            When you're ready, click on 🚩 to begin the game!
         </p>
 
         <h2>
