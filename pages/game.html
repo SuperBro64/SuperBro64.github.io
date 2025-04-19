@@ -82,7 +82,7 @@
             <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
 
             <div id = "buttons" class = "prevent-select" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
-                <button id = "audioButton" onclick = "toggleAudioMuting()"><b>❌</b></button>
+                <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
                 <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🚩</b></button>
                 <button id = "pauseButton" onclick = "pauseGame()"><b>❌</b></button>
             </div>
@@ -98,6 +98,7 @@
                 hud = new componentHud("40px NewSuperMarioFontU", "white", "white", "white", "white", "black",
                                         90, 300, 310, 500, 300, 755, 0, 0, "HYPERION'S TREASURE-MAXED LABYRINTH",
                                         "Click on 🚩 to play!", "©️ 2025 SuperBro64", "", 0);
+                music = new componentSound("", "BGM"), sfx = new componentSound("", "SFX");
             }
 
             // Setup for the start of the game
@@ -107,7 +108,6 @@
                 completion = [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
                               ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
                               ["Level A", 0], ["Level B", 0], ["Level C", 0]];
-                music = new componentSound("", "BGM"), sfx = new componentSound("", "SFX");
 
                 levelSetup.menuScreen();
             }
@@ -809,7 +809,6 @@
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
-                    document.querySelector("#audioButton").innerHTML = "🔊";
                     gameStarted = true; startGame();
                 }
                 else if (gameIsOver)
@@ -817,6 +816,13 @@
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
                     levelRestart();
+                }
+                else if (!gameArea.interval)
+                {
+                    document.querySelector("#actionButton").innerHTML = "🅰️";
+                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+                    gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+                    levelSetup.hubLevel();
                 }
                 else if (gameArea.interval) { player.action = true; }
             }
@@ -826,17 +832,19 @@
             {
                 if (gameStarted && !gameIsOver)
                 {
-                    const pauseButton = document.querySelector("#pauseButton");
-
                     if (gameArea.interval)
                     {
-                        pauseButton.innerHTML = "▶️";
+                        document.querySelector("#actionButton").innerHTML = "🏠";
+                        document.querySelector("#pauseButton").innerHTML = "▶️";
+
                         sfx.sound.src = "../sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
                         clearInterval(gameArea.interval); gameArea.interval = null;
                     }
                     else if (!gameArea.interval)
                     {
-                        pauseButton.innerHTML = "⏸️";
+                        document.querySelector("#actionButton").innerHTML = "🅰️";
+                        document.querySelector("#pauseButton").innerHTML = "⏸️";
+
                         sfx.sound.src = "../sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
                         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
                     }
@@ -846,20 +854,15 @@
             // Code for muting and unmuting the background music and all sound effects
             function toggleAudioMuting()
             {
-                if (gameStarted)
+                if (music.sound.muted == false)
                 {
-                    const audioButton = document.querySelector("#audioButton");
-
-                    if (music.sound.muted == false)
-                    {
-                        audioButton.innerHTML = "🔇";
-                        document.querySelectorAll("audio").forEach((element) => element.muted = true);
-                    }
-                    else if (music.sound.muted == true)
-                    {
-                        audioButton.innerHTML = "🔊";
-                        document.querySelectorAll("audio").forEach((element) => element.muted = false);
-                    }
+                    document.querySelector("#audioButton").innerHTML = "🔇";
+                    document.querySelectorAll("audio").forEach((element) => element.muted = true);
+                }
+                else if (music.sound.muted == true)
+                {
+                    document.querySelector("#audioButton").innerHTML = "🔊";
+                    document.querySelectorAll("audio").forEach((element) => element.muted = false);
                 }
             }
 
