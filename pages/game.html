@@ -669,10 +669,10 @@
             function componentSound(source, type)
             {
                 this.sound = document.createElement("audio");
-                this.sound.src = source;
+                this.sound.src = source; this.type = type;
 
-                if (type == "BGM") { this.sound.loop = true; this.sound.volume = 0.3; }
-                else if (type == "SFX") { this.sound.loop = false; this.sound.volume = 0.5; }
+                if (this.type == "BGM") { this.sound.loop = true; this.sound.volume = 0.3; }
+                else if (this.type == "SFX") { this.sound.loop = false; this.sound.volume = 0.5; }
 
                 this.sound.setAttribute("preload", "auto");
                 this.sound.setAttribute("controls", "none");
