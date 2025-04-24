@@ -113,7 +113,7 @@
                 gameArea.frameNum = 0; levelSetup.menuScreen();
             }
 
-            // Variables for all of the various objects within the game area
+            // Variables for all game objects along with important global variables
             var player, treasure = [], warps = [];
             var gameStarted = false, gameIsOver = false, completion = [[]];
             var hud = [], music, sfx;
@@ -530,7 +530,7 @@
                 this.x = x, this.y = y, this.radius = radius;
                 this.startAngle = startAngle, this.endAngle = endAngle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.sfx = new componentSound("", "SFX");
+                this.sfx = new componentSound("../sounds/Super_Mario_64_-_Coin.wav", "SFX");
 
                 this.update = function()
                 {
@@ -546,11 +546,7 @@
                     this.context.stroke();
                 }
 
-                this.disappear = function()
-                {
-                    this.radius = 0;
-                    this.sfx.sound.src = "../sounds/Super_Mario_64_-_Coin.wav"; this.sfx.play();
-                }
+                this.disappear = function() { this.radius = 0; this.sfx.play(); }
             }
 
             // Code for the warps
@@ -559,7 +555,7 @@
                 this.x = x, this.y = y, this.width = width, this.height = height, this.angle = angle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
                 this.rotationSpeed = 180, this.destination = destination, this.type = type;
-                this.sfx = new componentSound("", "SFX");
+                this.sfx = new componentSound("../sounds/Super_Mario_64_-_Enter_Course.wav", "SFX");
 
                 for (i = 0; i < completion.length - 1; i += 1)
                 {
@@ -592,9 +588,7 @@
 
                 this.toDestination = function()
                 {
-                    music.stop();
-                    gameArea.frameNum = 0;
-                    this.sfx.sound.src = "../sounds/Super_Mario_64_-_Enter_Course.wav"; this.sfx.play();
+                    music.stop(); this.sfx.play(); gameArea.frameNum = 0;
 
                     if (this.type == "Goal")
                     {
@@ -742,6 +736,10 @@
                     hud[i].update();
                 }
 
+                // Updating the music and sound effects
+                if (!music.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = false); }
+                else if (music.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = true); }
+
                 // Updating the player
                 if (gameStarted) { player.newPosition(); }
                 player.update();
@@ -778,9 +776,6 @@
             // Code for restarting the current level the player is on after a game over occurs
             function levelRestart()
             {
-                gameIsOver = false; gameArea.frameNum = 0; sfx.stop();
-                gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
-
                 switch (hud[0].text)
                 {
                     case "Level 1":     levelSetup.level1(); break;
@@ -800,7 +795,7 @@
                 }
             }
 
-            // Code for the player's actions
+            // Code for the player's actions during normal gameplay, or for returning to the hub level during a pause or Game Over
             function playerAction()
             {
                 if (!gameStarted)
@@ -818,6 +813,7 @@
                     gameIsOver = false; gameArea.frameNum = 0; sfx.stop();
                     gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
+                    sfx.sound.src = "../sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
                     levelSetup.hubLevel();
                 }
                 else if (!gameArea.interval && !gameIsOver)
@@ -825,6 +821,7 @@
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
 
+                    sfx.sound.src = "../sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
                     gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
                     gameArea.frameNum = 0; levelSetup.hubLevel();
@@ -832,7 +829,7 @@
                 else if (gameArea.interval && !gameIsOver) { player.action = true; }
             }
 
-            // Code for pausing the game
+            // Code for pausing the game during normal gameplay, or for restarting the current level after getting a Game Over
             function pauseGame()
             {
                 if (gameStarted && !gameIsOver)
@@ -866,6 +863,9 @@
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
 
+                    gameIsOver = false; gameArea.frameNum = 0; sfx.stop();
+                    gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
                     levelRestart();
                 }
             }
@@ -873,16 +873,8 @@
             // Code for muting and unmuting the background music and all sound effects
             function toggleAudioMuting()
             {
-                if (music.sound.muted == false)
-                {
-                    document.querySelector("#audioButton").innerHTML = "🔇";
-                    document.querySelectorAll("audio").forEach((element) => element.muted = true);
-                }
-                else if (music.sound.muted == true)
-                {
-                    document.querySelector("#audioButton").innerHTML = "🔊";
-                    document.querySelectorAll("audio").forEach((element) => element.muted = false);
-                }
+                if (!music.sound.muted) { document.querySelector("#audioButton").innerHTML = "🔇"; music.sound.muted = true; }
+                else if (music.sound.muted) { document.querySelector("#audioButton").innerHTML = "🔊"; music.sound.muted = false; }
             }
 
             // IDEAS TO IMPLEMENT
