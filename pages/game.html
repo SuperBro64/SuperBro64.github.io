@@ -155,8 +155,8 @@
                 {
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(100, 100, 30, 30, 0, "green", 2, "black", "Credits")),
-                             (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Hub Level"))];
+                    warps = [(new componentWarp(100, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
+                             (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Hub Level", "N/A"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 35,
                                 "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
@@ -170,7 +170,7 @@
                 {
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen"))];
+                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "CREDITS", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Item 1", 0, "N/A")),
@@ -183,7 +183,7 @@
                 {
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
-                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen")),
+                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
                              (new componentWarp(50, 100, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
                              (new componentWarp(150, 100, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
                              (new componentWarp(250, 100, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
@@ -218,8 +218,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 1", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
                 },
 
@@ -235,8 +234,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 2", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
                 },
 
@@ -252,8 +250,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
                 },
 
@@ -269,8 +266,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 4", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
                 },
 
@@ -286,8 +282,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 5", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
                 },
 
@@ -303,8 +298,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 6", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
                 },
 
@@ -320,8 +314,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 7", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
                 },
 
@@ -337,8 +330,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 8", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
                 },
 
@@ -354,8 +346,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 9", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
                 },
 
@@ -371,8 +362,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 10", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
                 },
 
@@ -388,8 +378,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level A", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
                 },
 
@@ -405,8 +394,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level B", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Target.mp3"; music.play();
                 },
 
@@ -422,8 +410,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level C", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 160, 755, "", 0, "Game Over"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 20, "Timer"))];
                     music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Soccer.mp3"; music.play();
                 }
             }
@@ -772,14 +759,20 @@
             // Code for the game over that occurs when the level time has run out
             function gameOver()
             {
-                gameIsOver = true; hud[3].text = "GAME OVER! Click on 🔄️ to try again.";
-                updateGameArea();
-
-                clearInterval(gameArea.interval); gameArea.interval = null;
-                music.stop(); sfx.sound.src = "../sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
+                gameIsOver = true;
 
                 document.querySelector("#actionButton").innerHTML = "🏠";
                 document.querySelector("#pauseButton").innerHTML = "🔄️";
+                
+                var gameOverText = [(new componentHud("60px NewSuperMarioFontU", "red", "black", 350, 364, "GAME OVER", 0, "N/A")),
+                                    (new componentHud("40px NewSuperMarioFontU", "red", "black", 220, 414,
+                                        "Click 🔄️ to restart the level.", 0, "N/A")),
+                                    (new componentHud("40px NewSuperMarioFontU", "red", "black", 215, 464,
+                                        "Click 🏠 to return to the hub.", 0, "N/A"))];
+                for (i = 0; i < gameOverText.length; i += 1) { gameOverText[i].update(); }
+
+                music.stop(); sfx.sound.src = "../sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
+                clearInterval(gameArea.interval); gameArea.interval = null;
             }
 
             // Code for restarting the current level the player is on after a game over occurs
