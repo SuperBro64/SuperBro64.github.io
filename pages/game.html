@@ -110,7 +110,7 @@
                               ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
                               ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Total", (0).toFixed(2)]];
 
-                levelSetup.menuScreen();
+                gameArea.frameNum = 0; levelSetup.menuScreen();
             }
 
             // Variables for all of the various objects within the game area
@@ -778,8 +778,8 @@
                 clearInterval(gameArea.interval); gameArea.interval = null;
                 music.stop(); sfx.sound.src = "../sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
 
-                document.querySelector("#actionButton").innerHTML = "🔄️";
-                document.querySelector("#pauseButton").innerHTML = "❌";
+                document.querySelector("#actionButton").innerHTML = "🏠";
+                document.querySelector("#pauseButton").innerHTML = "🔄️";
             }
 
             // Code for restarting the current level the player is on after a game over occurs
@@ -814,22 +814,29 @@
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
+
                     gameStarted = true; startGame();
                 }
-                else if (gameIsOver)
+                else if (!gameArea.interval && gameIsOver)
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
-                    levelRestart();
-                }
-                else if (!gameArea.interval)
-                {
-                    document.querySelector("#actionButton").innerHTML = "🅰️";
-                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+
+                    gameIsOver = false; gameArea.frameNum = 0; sfx.stop();
                     gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
                     levelSetup.hubLevel();
                 }
-                else if (gameArea.interval) { player.action = true; }
+                else if (!gameArea.interval && !gameIsOver)
+                {
+                    document.querySelector("#actionButton").innerHTML = "🅰️";
+                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+
+                    gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
+                    gameArea.frameNum = 0; levelSetup.hubLevel();
+                }
+                else if (gameArea.interval && !gameIsOver) { player.action = true; }
             }
 
             // Code for pausing the game
@@ -860,6 +867,13 @@
                         sfx.sound.src = "../sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
                         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
                     }
+                }
+                else if (gameStarted && gameIsOver && !gameArea.interval)
+                {
+                    document.querySelector("#actionButton").innerHTML = "🅰️";
+                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+
+                    levelRestart();
                 }
             }
 
