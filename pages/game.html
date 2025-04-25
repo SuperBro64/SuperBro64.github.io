@@ -105,18 +105,68 @@
             // Setup for the start of the game
             function startGame()
             {
-                gameArea.fillColor = "lightgray";
-                completion = [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
-                              ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
-                              ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Total", (0).toFixed(2)]];
-
+                //saveProgress.loadCookie("saveProgress");
                 gameArea.frameNum = 0; levelSetup.menuScreen();
             }
 
             // Variables for all game objects along with important global variables
             var player, treasure = [], warps = [];
-            var gameStarted = false, gameIsOver = false, completion = [[]];
+            var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
+
+            // Variable for storing and manipulating the player's game completion progress through the use of web cookies
+            var saveProgress =
+            {
+                completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
+                             ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
+                             ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Total", (0).toFixed(2)]],
+
+                saveCompletion: function()
+                {
+                    for (i = 0; i < this.completion.length - 1; i += 1)
+                    {
+                        if (this.completion[i][0] == hud[0].text)
+                        {
+                            if (hud[1].treasureCollected == treasure.length) { this.completion[i][1] = 2; }
+                            else if (this.completion[i][1] != 2) { this.completion[i][1] = 1; } break;
+                        }
+                    }
+                    this.completion[13][1] = 0.00;
+                    for (i = 0; i < this.completion.length - 1; i += 1) { this.completion[13][1] += this.completion[i][1]; }
+                    this.completion[13][1] = Math.min(((this.completion[13][1] / (13 * 2)) * 100), 100).toFixed(2);
+                },
+
+                deleteCompletion: function()
+                {
+                    for (i = 0; i < this.completion.length - 1; i += 1) { this.completion[i][1] = 0; }
+                    this.completion[13][1] = (0).toFixed(2);
+                },
+
+                saveCookie: function(cookieName)
+                {
+                    var expiration = "expires=" + new Date(8.64e15).toUTCString(); // Saturday, September 13, 275760 AD, 00:00:00 GMT
+                    document.cookie = cookieName + "=" + this.completion + ";" + expiration + ";path=/";
+                },
+
+                loadCookie: function(cookieName)
+                {
+                    var fullName = cookieName + "=", decodedCookie = decodeURIComponent(document.cookie);
+                    var cookieArray = decodedCookie.split(';'), cookieValue;
+
+                    for (i = 0; i < cookieArray.length; i += 1)
+                    {
+                        var cookie = cookieArray[i];
+                        while (cookie[0] == ' ') { cookie = cookie.substring(1); }
+                        if (cookie.indexOf(fullName) == 0) { cookieValue = cookie.substring(fullName.length, cookie.length); }
+                    }
+                },
+
+                deleteCookie: function(cookieName)
+                {
+                    var expiration = "expires=" + new Date(-8.64e15).toUTCString(); // Tuesday, April 20, 271821 BC, 00:00:00 GMT
+                    document.cookie = cookieName + "=" + this.completion + ";" + expiration + ";path=/";
+                }
+            }
 
             // Variable for the playable game area
             var gameArea =
@@ -153,10 +203,12 @@
                 // Setup for the menu screen
                 menuScreen: function()
                 {
+                    gameArea.fillColor = "lightgray";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
                     warps = [(new componentWarp(100, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
-                             (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Hub Level", "N/A"))];
+                             (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Hub Level", "N/A")),
+                             (new componentWarp(974, 718, 30, 30, 0, "dimgray", 2, "black", "Menu Screen", "Deletion"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 35,
                                 "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
@@ -168,6 +220,7 @@
                 // Setup for the credits screen
                 creditsScreen: function()
                 {
+                    gameArea.fillColor = "lightgray";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
@@ -181,6 +234,7 @@
                 // Setup for the hub level
                 hubLevel: function()
                 {
+                    gameArea.fillColor = "lightgray";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
@@ -202,13 +256,14 @@
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 880, 35, "000.00%", 0, "Completion"))];
 
-                    if (completion[13][1] == 100) { music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
+                    if (saveProgress.completion[13][1] == 100) { music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
                     else { music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
                 },
 
                 // Setup for level 1
                 level1: function()
                 {
+                    gameArea.fillColor = "yellowgreen";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -225,6 +280,7 @@
                 // Setup for level 2
                 level2: function()
                 {
+                    gameArea.fillColor = "lightcoral";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -241,6 +297,7 @@
                 // Setup for level 3
                 level3: function()
                 {
+                    gameArea.fillColor = "lightskyblue";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -257,6 +314,7 @@
                 // Setup for level 4
                 level4: function()
                 {
+                    gameArea.fillColor = "steelblue";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -273,6 +331,7 @@
                 // Setup for level 5
                 level5: function()
                 {
+                    gameArea.fillColor = "pink";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -289,6 +348,7 @@
                 // Setup for level 6
                 level6: function()
                 {
+                    gameArea.fillColor = "sandybrown";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -305,6 +365,7 @@
                 // Setup for level 7
                 level7: function()
                 {
+                    gameArea.fillColor = "plum";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -321,6 +382,7 @@
                 // Setup for level 8
                 level8: function()
                 {
+                    gameArea.fillColor = "darkorange";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -337,6 +399,7 @@
                 // Setup for level 9
                 level9: function()
                 {
+                    gameArea.fillColor = "gray";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -353,6 +416,7 @@
                 // Setup for level 10
                 level10: function()
                 {
+                    gameArea.fillColor = "slategray";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -369,6 +433,7 @@
                 // Setup for level A
                 levelA: function()
                 {
+                    gameArea.fillColor = "khaki";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -385,6 +450,7 @@
                 // Setup for level B
                 levelB: function()
                 {
+                    gameArea.fillColor = "cornsilk";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -401,6 +467,7 @@
                 // Setup for level C
                 levelC: function()
                 {
+                    gameArea.fillColor = "mediumseagreen";
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -557,13 +624,13 @@
                 this.rotationSpeed = 180, this.destination = destination, this.type = type;
                 this.sfx = new componentSound("../sounds/Super_Mario_64_-_Enter_Course.wav", "SFX");
 
-                for (i = 0; i < completion.length - 1; i += 1)
+                for (i = 0; i < saveProgress.completion.length - 1; i += 1)
                 {
-                    if (completion[i][0] == this.type)
+                    if (saveProgress.completion[i][0] == this.type)
                     {
-                        if (completion[i][1] == 0) { this.fillColor = "sienna"; }
-                        else if (completion[i][1] == 1) { this.fillColor = "silver"; }
-                        else if (completion[i][1] == 2) { this.fillColor = "gold"; }
+                        if (saveProgress.completion[i][1] == 0) { this.fillColor = "sienna"; }
+                        else if (saveProgress.completion[i][1] == 1) { this.fillColor = "silver"; }
+                        else if (saveProgress.completion[i][1] == 2) { this.fillColor = "gold"; }
                         break;
                     }
                 }
@@ -592,21 +659,8 @@
                 {
                     music.stop(); this.sfx.play(); gameArea.frameNum = 0;
 
-                    if (this.type == "Goal")
-                    {
-                        for (i = 0; i < completion.length - 1; i += 1)
-                        {
-                            if (completion[i][0] == hud[0].text)
-                            {
-                                if (hud[1].treasureCollected == treasure.length) { completion[i][1] = 2; }
-                                else if (completion[i][1] != 2) { completion[i][1] = 1; } break;
-                            }
-                        }
-
-                        completion[13][1] = 0.00;
-                        for (i = 0; i < completion.length - 1; i += 1) { completion[13][1] += completion[i][1]; }
-                        completion[13][1] = Math.min(((completion[13][1] / ((completion.length - 1) * 2)) * 100), 100).toFixed(2);
-                    }
+                    if (this.type == "Goal") { saveProgress.saveCompletion(); } // saveProgress.saveCookie("saveProgress"); }
+                    else if (this.type == "Deletion") { saveProgress.deleteCompletion(); } // saveProgress.deleteCookie("saveProgress"); }
 
                     switch (this.destination)
                     {
@@ -715,12 +769,12 @@
                     }
                     else if (hud[i].type == "Completion")
                     {
-                        if (completion[13][1] == 100) { hud[i].fillColor = "gold"; }
+                        if (saveProgress.completion[13][1] == 100) { hud[i].fillColor = "gold"; }
 
                         hud[i].text = "";
-                        if (completion[13][1] < 10) { hud[i].text += "00"; }
-                        else if (completion[13][1] < 100) { hud[i].text += "0"; }
-                        hud[i].text += completion[13][1] + "%";
+                        if (saveProgress.completion[13][1] < 10) { hud[i].text += "00"; }
+                        else if (saveProgress.completion[13][1] < 100) { hud[i].text += "0"; }
+                        hud[i].text += saveProgress.completion[13][1] + "%";
                     }
                     else if (hud[i].type == "Timer" && hud[i].startingTime > 0)
                     {
