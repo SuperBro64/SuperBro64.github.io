@@ -45,35 +45,8 @@
             .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
             .row { display: inline-block; clear: both; }
 
-            @font-face { font-family: "NewSuperMarioFontU"; src: url("../fonts/New_Super_Mario_Font_U.ttf"); }
+            @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.ttf"); }
         </style>
-
-        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Camera_Click.wav" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Coin.wav" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Enter_Course.wav" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Falling.wav" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Game_Over.wav" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Mario_64_-_Pause.wav" as = "audio">
-
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Bonus.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Clear.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Credits.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Menu.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Soccer.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Target.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_Title.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_1.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_2.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_3.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_4.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_5.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_6.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_7.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_8.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_9.mp3" as = "audio">
-        <link rel = "preload" href = "../sounds/Super_Monkey_Ball_2_-_World_10.mp3" as = "audio">
-
-        <link rel = "preload" href = "../fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
     <body onload = "titleScreen()">
@@ -92,10 +65,10 @@
             // Setup for the title screen
             function titleScreen()
             {
-                gameArea.start(1024, 768, "border: 5px solid black", "darkgray", 0, 0, 0, 20);
+                gameArea.start(1024, 768, "border: 5px solid black", "darkgray", 0, 0, 0, 20); gameArea.currentLevel = "Title Screen";
 
                 player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 300,
+                hud = [(new componentHud("45px NewSuperMarioFontU", "white", "black", 40, 300,
                             "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
                        (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500, "Click on 🚩 to play!", 0, "N/A")),
                        (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755, "©️ 2025 SuperBro64", 0, "N/A"))];
@@ -105,7 +78,7 @@
             // Setup for the start of the game
             function startGame()
             {
-                //saveProgress.loadCookie("saveProgress");
+                saveProgress.load("saveProgress");
                 gameArea.frameNum = 0; levelSetup.menuScreen();
             }
 
@@ -114,64 +87,56 @@
             var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
 
-            // Variable for storing and manipulating the player's game completion progress through the use of web cookies
+            // Variable for storing and manipulating the player's game completion progress through the use of web storage
             var saveProgress =
             {
-                completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
-                             ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
-                             ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Total", (0).toFixed(2)]],
+                completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0], ["Level 6", 0],
+                             ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0],
+                             ["Level C", 0], ["Percentage", (0).toFixed(2)]],
 
-                saveCompletion: function()
+                save: function(storageName)
                 {
-                    for (i = 0; i < this.completion.length - 1; i += 1)
+                    for (i = 0; i < this.completion.length - 1; i++)
                     {
-                        if (this.completion[i][0] == hud[0].text)
+                        if (this.completion[i][0] == gameArea.currentLevel)
                         {
                             if (hud[1].treasureCollected == treasure.length) { this.completion[i][1] = 2; }
                             else if (this.completion[i][1] != 2) { this.completion[i][1] = 1; } break;
                         }
                     }
                     this.completion[13][1] = 0.00;
-                    for (i = 0; i < this.completion.length - 1; i += 1) { this.completion[13][1] += this.completion[i][1]; }
+                    for (i = 0; i < this.completion.length - 1; i++) { this.completion[13][1] += this.completion[i][1]; }
                     this.completion[13][1] = Math.min(((this.completion[13][1] / (13 * 2)) * 100), 100).toFixed(2);
+
+                    if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
                 },
 
-                deleteCompletion: function()
+                load: function(storageName)
                 {
-                    for (i = 0; i < this.completion.length - 1; i += 1) { this.completion[i][1] = 0; }
-                    this.completion[13][1] = (0).toFixed(2);
-                },
-
-                saveCookie: function(cookieName)
-                {
-                    var expiration = "expires=" + new Date(8.64e15).toUTCString(); // Saturday, September 13, 275760 AD, 00:00:00 GMT
-                    document.cookie = cookieName + "=" + this.completion + ";" + expiration + ";path=/";
-                },
-
-                loadCookie: function(cookieName)
-                {
-                    var fullName = cookieName + "=", decodedCookie = decodeURIComponent(document.cookie);
-                    var cookieArray = decodedCookie.split(';'), cookieValue;
-
-                    for (i = 0; i < cookieArray.length; i += 1)
+                    if (typeof(Storage) !== "undefined" && localStorage.getItem(storageName) != null)
                     {
-                        var cookie = cookieArray[i];
-                        while (cookie[0] == ' ') { cookie = cookie.substring(1); }
-                        if (cookie.indexOf(fullName) == 0) { cookieValue = cookie.substring(fullName.length, cookie.length); }
+                        var decodedStorage = localStorage.getItem(storageName).split(',');
+
+                        for (i = 0, j = 1; i < this.completion.length && j < decodedStorage.length; i++, j += 2)
+                        {
+                            this.completion[i][1] = Number(decodedStorage[j]);
+                        }
                     }
                 },
 
-                deleteCookie: function(cookieName)
+                delete: function(storageName)
                 {
-                    var expiration = "expires=" + new Date(-8.64e15).toUTCString(); // Tuesday, April 20, 271821 BC, 00:00:00 GMT
-                    document.cookie = cookieName + "=" + this.completion + ";" + expiration + ";path=/";
+                    for (i = 0; i < this.completion.length - 1; i++) { this.completion[i][1] = 0; }
+                    this.completion[13][1] = (0).toFixed(2);
+
+                    if (typeof(Storage) !== "undefined") { localStorage.removeItem(storageName); }
                 }
             }
 
             // Variable for the playable game area
             var gameArea =
             {
-                canvas: document.createElement("canvas"),
+                canvas: document.createElement("canvas"), currentLevel: "",
 
                 start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
                 {
@@ -203,24 +168,26 @@
                 // Setup for the menu screen
                 menuScreen: function()
                 {
-                    gameArea.fillColor = "lightgray";
+                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Menu Screen";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
                     warps = [(new componentWarp(100, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
-                             (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Hub Level", "N/A")),
+                             (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
                              (new componentWarp(974, 718, 30, 30, 0, "dimgray", 2, "black", "Menu Screen", "Deletion"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 35,
                                 "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Main Hub", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Credits", 0, "N/A"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
                 },
 
                 // Setup for the credits screen
                 creditsScreen: function()
                 {
-                    gameArea.fillColor = "lightgray";
+                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Credits Screen";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
@@ -228,13 +195,14 @@
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "CREDITS", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Item 1", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Credit 1", 0, "N/A"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
                 },
 
-                // Setup for the hub level
-                hubLevel: function()
+                // Setup for the main hub
+                mainHub: function()
                 {
-                    gameArea.fillColor = "lightgray";
+                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Main Hub";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
@@ -256,229 +224,242 @@
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 880, 35, "000.00%", 0, "Completion"))];
 
-                    if (saveProgress.completion[13][1] == 100) { music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
-                    else { music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
+                    if (saveProgress.completion[13][1] == 100) { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
+                    else { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
                 },
 
                 // Setup for level 1
                 level1: function()
                 {
-                    gameArea.fillColor = "yellowgreen";
+                    gameArea.fillColor = "yellowgreen"; gameArea.currentLevel = "Level 1";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 1", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
                 },
 
                 // Setup for level 2
                 level2: function()
                 {
-                    gameArea.fillColor = "lightcoral";
+                    gameArea.fillColor = "lightcoral"; gameArea.currentLevel = "Level 2";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 2", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
                 },
 
                 // Setup for level 3
                 level3: function()
                 {
-                    gameArea.fillColor = "lightskyblue";
+                    gameArea.fillColor = "lightskyblue"; gameArea.currentLevel = "Level 3";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
                 },
 
                 // Setup for level 4
                 level4: function()
                 {
-                    gameArea.fillColor = "steelblue";
+                    gameArea.fillColor = "steelblue"; gameArea.currentLevel = "Level 4";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 4", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
                 },
 
                 // Setup for level 5
                 level5: function()
                 {
-                    gameArea.fillColor = "pink";
+                    gameArea.fillColor = "pink"; gameArea.currentLevel = "Level 5";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 5", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
                 },
 
                 // Setup for level 6
                 level6: function()
                 {
-                    gameArea.fillColor = "sandybrown";
+                    gameArea.fillColor = "sandybrown"; gameArea.currentLevel = "Level 6";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 6", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
                 },
 
                 // Setup for level 7
                 level7: function()
                 {
-                    gameArea.fillColor = "plum";
+                    gameArea.fillColor = "plum"; gameArea.currentLevel = "Level 7";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 7", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
                 },
 
                 // Setup for level 8
                 level8: function()
                 {
-                    gameArea.fillColor = "darkorange";
+                    gameArea.fillColor = "darkorange"; gameArea.currentLevel = "Level 8";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 8", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
                 },
 
                 // Setup for level 9
                 level9: function()
                 {
-                    gameArea.fillColor = "gray";
+                    gameArea.fillColor = "gray"; gameArea.currentLevel = "Level 9";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 9", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
                 },
 
                 // Setup for level 10
                 level10: function()
                 {
-                    gameArea.fillColor = "slategray";
+                    gameArea.fillColor = "slategray"; gameArea.currentLevel = "Level 10";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 10", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
                 },
 
                 // Setup for level A
                 levelA: function()
                 {
-                    gameArea.fillColor = "khaki";
+                    gameArea.fillColor = "khaki"; gameArea.currentLevel = "Level A";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level A", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
                 },
 
                 // Setup for level B
                 levelB: function()
                 {
-                    gameArea.fillColor = "cornsilk";
+                    gameArea.fillColor = "cornsilk"; gameArea.currentLevel = "Level B";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level B", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Target.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Target.mp3"; music.play();
                 },
 
                 // Setup for level C
                 levelC: function()
                 {
-                    gameArea.fillColor = "mediumseagreen";
+                    gameArea.fillColor = "mediumseagreen"; gameArea.currentLevel = "Level C";
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Hub Level", "Goal"))];
+                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level C", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 120, "Timer"))];
-                    music.sound.src = "../sounds/Super_Monkey_Ball_2_-_Soccer.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3"; music.play();
                 }
             }
 
@@ -597,7 +578,7 @@
                 this.x = x, this.y = y, this.radius = radius;
                 this.startAngle = startAngle, this.endAngle = endAngle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.sfx = new componentSound("../sounds/Super_Mario_64_-_Coin.wav", "SFX");
+                this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Coin.wav", "SFX");
 
                 this.update = function()
                 {
@@ -622,9 +603,9 @@
                 this.x = x, this.y = y, this.width = width, this.height = height, this.angle = angle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
                 this.rotationSpeed = 180, this.destination = destination, this.type = type;
-                this.sfx = new componentSound("../sounds/Super_Mario_64_-_Enter_Course.wav", "SFX");
+                this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Enter_Course.wav", "SFX");
 
-                for (i = 0; i < saveProgress.completion.length - 1; i += 1)
+                for (i = 0; i < saveProgress.completion.length - 1; i++)
                 {
                     if (saveProgress.completion[i][0] == this.type)
                     {
@@ -659,14 +640,14 @@
                 {
                     music.stop(); this.sfx.play(); gameArea.frameNum = 0;
 
-                    if (this.type == "Goal") { saveProgress.saveCompletion(); } // saveProgress.saveCookie("saveProgress"); }
-                    else if (this.type == "Deletion") { saveProgress.deleteCompletion(); } // saveProgress.deleteCookie("saveProgress"); }
+                    if (this.type == "Goal") { saveProgress.save("saveProgress"); }
+                    else if (this.type == "Deletion") { saveProgress.delete("saveProgress"); }
 
                     switch (this.destination)
                     {
                         case "Menu Screen": levelSetup.menuScreen(); break;
                         case "Credits":     levelSetup.creditsScreen(); break;
-                        case "Hub Level":   levelSetup.hubLevel(); break;
+                        case "Main Hub":    levelSetup.mainHub(); break;
                         case "Level 1":     levelSetup.level1(); break;
                         case "Level 2":     levelSetup.level2(); break;
                         case "Level 3":     levelSetup.level3(); break;
@@ -732,7 +713,7 @@
                 gameArea.frameNum += 1;
 
                 // Updating the treasure
-                for (i = 0; i < treasure.length; i += 1)
+                for (i = 0; i < treasure.length; i++)
                 {
                     if (player.collectTreasure(treasure[i]) && treasure[i].radius != 0)
                     {
@@ -744,7 +725,7 @@
                 }
 
                 // Updating the warps
-                for (i = 0; i < warps.length; i += 1)
+                for (i = 0; i < warps.length; i++)
                 {
                     if (player.enterWarp(warps[i]))
                     {
@@ -758,7 +739,7 @@
                 }
 
                 // Updating the HUD
-                for (i = 0; i < hud.length; i += 1)
+                for (i = 0; i < hud.length; i++)
                 {
                     if (hud[i].type == "Treasure" && treasure.length > 0)
                     {
@@ -824,17 +805,20 @@
                                         "Click 🔄️ to restart the level.", 0, "N/A")),
                                     (new componentHud("40px NewSuperMarioFontU", "red", "black", 215, 464,
                                         "Click 🏠 to return to the hub.", 0, "N/A"))];
-                for (i = 0; i < gameOverText.length; i += 1) { gameOverText[i].update(); }
+                for (i = 0; i < gameOverText.length; i++) { gameOverText[i].update(); }
 
-                music.stop(); sfx.sound.src = "../sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
+                music.stop(); sfx.sound.src = "resources/sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
                 clearInterval(gameArea.interval); gameArea.interval = null;
             }
 
             // Code for restarting the current level the player is on after a game over occurs
             function levelRestart()
             {
-                switch (hud[0].text)
+                switch (gameArea.currentLevel)
                 {
+                    case "Menu Screen": levelSetup.menuScreen(); break;
+                    case "Credits":     levelSetup.creditsScreen(); break;
+                    case "Main Hub":    levelSetup.mainHub(); break;
                     case "Level 1":     levelSetup.level1(); break;
                     case "Level 2":     levelSetup.level2(); break;
                     case "Level 3":     levelSetup.level3(); break;
@@ -852,7 +836,7 @@
                 }
             }
 
-            // Code for the player's actions during normal gameplay, or for returning to the hub level during a pause or Game Over
+            // Code for the player's actions during normal gameplay, or for returning to the main hub during a pause or Game Over
             function playerAction()
             {
                 if (!gameStarted)
@@ -870,18 +854,18 @@
                     gameIsOver = false; gameArea.frameNum = 0; sfx.stop();
                     gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
-                    sfx.sound.src = "../sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
-                    levelSetup.hubLevel();
+                    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
+                    levelSetup.mainHub();
                 }
                 else if (!gameArea.interval && !gameIsOver)
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
 
-                    sfx.sound.src = "../sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
+                    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
                     gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
-                    gameArea.frameNum = 0; levelSetup.hubLevel();
+                    gameArea.frameNum = 0; levelSetup.mainHub();
                 }
                 else if (gameArea.interval && !gameIsOver) { player.action = true; }
             }
@@ -901,9 +885,9 @@
                                             "Click ▶️ to resume the game.", 0, "N/A")),
                                          (new componentHud("40px NewSuperMarioFontU", "white", "black", 215, 464,
                                             "Click 🏠 to return to the hub.", 0, "N/A"))];
-                        for (i = 0; i < pauseText.length; i += 1) { pauseText[i].update(); }
+                        for (i = 0; i < pauseText.length; i++) { pauseText[i].update(); }
 
-                        sfx.sound.src = "../sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
+                        sfx.sound.src = "resources/sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
                         clearInterval(gameArea.interval); gameArea.interval = null;
                     }
                     else if (!gameArea.interval)
@@ -911,7 +895,7 @@
                         document.querySelector("#actionButton").innerHTML = "🅰️";
                         document.querySelector("#pauseButton").innerHTML = "⏸️";
 
-                        sfx.sound.src = "../sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
+                        sfx.sound.src = "resources/sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
                         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
                     }
                 }
@@ -1223,12 +1207,12 @@
             <a href = "https://themushroomkingdom.net/media/sm64/wav">Source</a>
             <br><br>
             - Font: New Super Mario Bros. U
-            <a href = "https://fontmeme.com/fonts/new-super-mario-font-u-font/">Source</a>
+            <a href = "https://fontmeme.com/fonts/new-super-mario-font-u-font">Source</a>
             <br><br>
             - Joystick Code: Bobboteck (Roberto D'Amico)
             <a href = "https://github.com/bobboteck/JoyStick">Source</a>
             <br><br>
-            <a href = "https://superbro64.github.io/">Back to Homepage</a>
+            <a href = "https://superbro64.github.io">Back to Homepage</a>
         </p>
 
     </body>
