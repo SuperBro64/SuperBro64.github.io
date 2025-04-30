@@ -47,6 +47,8 @@
 
             @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.ttf"); }
         </style>
+
+        <link rel = "preload" href = "resources/fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
     <body onload = "titleScreen()">
@@ -92,7 +94,7 @@
             {
                 completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0], ["Level 6", 0],
                              ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0],
-                             ["Level C", 0], ["Percentage", (0).toFixed(2)]],
+                             ["Level C", 0], ["Percentage", 0]],
 
                 save: function(storageName)
                 {
@@ -106,7 +108,7 @@
                     }
                     this.completion[13][1] = 0.00;
                     for (i = 0; i < this.completion.length - 1; i++) { this.completion[13][1] += this.completion[i][1]; }
-                    this.completion[13][1] = Math.min(((this.completion[13][1] / (13 * 2)) * 100), 100).toFixed(2);
+                    this.completion[13][1] = Math.min(Math.round((this.completion[13][1] / (13 * 2)) * 100), 100);
 
                     if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
                 },
@@ -127,7 +129,7 @@
                 delete: function(storageName)
                 {
                     for (i = 0; i < this.completion.length - 1; i++) { this.completion[i][1] = 0; }
-                    this.completion[13][1] = (0).toFixed(2);
+                    this.completion[13][1] = 0;
 
                     if (typeof(Storage) !== "undefined") { localStorage.removeItem(storageName); }
                 }
@@ -222,7 +224,7 @@
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Main Hub", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 880, 35, "000.00%", 0, "Completion"))];
+                           (new componentHud("60px NewSuperMarioFontU", "white", "black", 880, 45, "000%", 0, "Completion"))];
 
                     if (saveProgress.completion[13][1] == 100) { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
                     else { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
