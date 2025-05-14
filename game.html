@@ -85,7 +85,7 @@
             }
 
             // Variables for all game objects along with important global variables
-            var player, treasure = [], warps = [];
+            var player, walls = [], treasure = [], warps = [];
             var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
 
@@ -173,15 +173,19 @@
                     gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Menu Screen";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black")),
+                             (new componentWall(342, 310, 50, 240, "gray", 2, "black")),
+                             (new componentWall(632, 310, 50, 240, "gray", 2, "black"))];
                     treasure = [];
-                    warps = [(new componentWarp(100, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
+                    warps = [(new componentWarp(120, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
                              (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
                              (new componentWarp(974, 718, 30, 30, 0, "dimgray", 2, "black", "Menu Screen", "Deletion"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 35,
                                 "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Main Hub", 0, "N/A")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Credits", 0, "N/A"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 160, "To Main Hub", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 160, "To Credits", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 710, 730, "Erase Game", 0, "N/A"))];
                     music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
                 },
 
@@ -191,6 +195,7 @@
                     gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Credits Screen";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
 
@@ -206,6 +211,7 @@
                     gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Main Hub";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
                              (new componentWarp(50, 100, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
@@ -236,6 +242,7 @@
                     gameArea.fillColor = "yellowgreen"; gameArea.currentLevel = "Level 1";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -254,6 +261,7 @@
                     gameArea.fillColor = "lightcoral"; gameArea.currentLevel = "Level 2";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -272,6 +280,7 @@
                     gameArea.fillColor = "lightskyblue"; gameArea.currentLevel = "Level 3";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -290,6 +299,7 @@
                     gameArea.fillColor = "steelblue"; gameArea.currentLevel = "Level 4";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -308,6 +318,7 @@
                     gameArea.fillColor = "pink"; gameArea.currentLevel = "Level 5";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -326,6 +337,7 @@
                     gameArea.fillColor = "sandybrown"; gameArea.currentLevel = "Level 6";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -344,6 +356,7 @@
                     gameArea.fillColor = "plum"; gameArea.currentLevel = "Level 7";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -362,6 +375,7 @@
                     gameArea.fillColor = "darkorange"; gameArea.currentLevel = "Level 8";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -380,6 +394,7 @@
                     gameArea.fillColor = "gray"; gameArea.currentLevel = "Level 9";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -398,6 +413,7 @@
                     gameArea.fillColor = "slategray"; gameArea.currentLevel = "Level 10";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -416,6 +432,7 @@
                     gameArea.fillColor = "khaki"; gameArea.currentLevel = "Level A";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -434,6 +451,7 @@
                     gameArea.fillColor = "cornsilk"; gameArea.currentLevel = "Level B";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -452,6 +470,7 @@
                     gameArea.fillColor = "mediumseagreen"; gameArea.currentLevel = "Level C";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -521,8 +540,14 @@
                         if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
                     }
 
-                    if ((this.x + this.speedX) >= 0 && (this.x + this.speedX) <= gameArea.canvas.width) { this.x += this.speedX; }
-                    if ((this.y + this.speedY) >= 0 && (this.y + this.speedY) <= gameArea.canvas.height) { this.y += this.speedY; }
+                    if ((this.x + this.speedX - this.radius) >= 0 && (this.x + this.speedX + this.radius) <= gameArea.canvas.width)
+                    {
+                        this.x += this.speedX;
+                    }
+                    if ((this.y + this.speedY - this.radius) >= 0 && (this.y + this.speedY + this.radius) <= gameArea.canvas.height)
+                    {
+                        this.y += this.speedY;
+                    }
                 }
 
                 this.moveRight = function()          { this.speedX = 4,      this.speedY = 0; }
@@ -543,34 +568,61 @@
                 this.moveRightUpRight = function()   { this.speedX = 3.464,  this.speedY = 2; }
                 this.stopMoving = function()         { this.speedX = 0,      this.speedY = 0; }
 
-                this.collectTreasure = function(treasure)
+                this.objectCollision = function(object)
                 {
                     var left = this.x - this.radius, right = this.x + this.radius;
                     var top = this.y - this.radius, bottom = this.y + this.radius;
 
-                    var treasLeft = treasure.x - treasure.radius, treasRight = treasure.x + treasure.radius;
-                    var treasTop = treasure.y - treasure.radius, treasBottom = treasure.y + treasure.radius;
+                    var objLeft, objRight, objTop, objBottom;
 
-                    var collected = true;
+                    if (object.radius > 0)
+                    {
+                        objLeft = object.x - object.radius, objRight = object.x + object.radius;
+                        objTop = object.y - object.radius, objBottom = object.y + object.radius;
+                    }
+                    else
+                    {
+                        objLeft = object.x, objRight = object.x + object.width;
+                        objTop = object.y, objBottom = object.y + object.height;
+                    }
 
-                    if ((bottom < treasTop) || (top > treasBottom) || (right < treasLeft) || (left > treasRight)) { collected = false; }
-
-                    return collected;
+                    return ((bottom > objTop) && (top < objBottom) && (right > objLeft) && (left < objRight));
                 }
 
-                this.enterWarp = function(warp)
+                this.handleWallCollision = function(wall)
                 {
-                    var left = this.x - this.radius, right = this.x + this.radius;
-                    var top = this.y - this.radius, bottom = this.y + this.radius;
+                    var overlapX = Math.min(this.x + this.radius, wall.x + wall.width) - Math.max(this.x - this.radius, wall.x);
+                    var overlapY = Math.min(this.y + this.radius, wall.y + wall.height) - Math.max(this.y - this.radius, wall.y);
 
-                    var warpLeft = warp.x, warpRight = warp.x + warp.width;
-                    var warpTop = warp.y, warpBottom = warp.y + warp.height;
+                    if (overlapX < overlapY)
+                    {
+                        if (this.x < wall.x) { this.x -= overlapX; }
+                        else { this.x += overlapX; }
+                    }
+                    else
+                    {
+                        if (this.y < wall.y) { this.y -= overlapY; }
+                        else { this.y += overlapY; }
+                    }
+                }
+            }
 
-                    var entered = true;
+            // Code for the walls
+            function componentWall(x, y, width, height, fillColor, lineWidth, lineColor)
+            {
+                this.x = x, this.y = y, this.width = width, this.height = height;
+                this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
 
-                    if ((bottom < warpTop) || (top > warpBottom) || (right < warpLeft) || (left > warpRight)) { entered = false; }
+                this.update = function()
+                {
+                    this.context = gameArea.context;
 
-                    return entered;
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.width, this.height);
+
+                    this.context.lineWidth = this.lineWidth;
+                    this.context.strokeStyle = this.lineColor;
+                    this.context.strokeRect(this.x, this.y, this.width, this.height);
                 }
             }
 
@@ -714,10 +766,18 @@
                 gameArea.clear();
                 gameArea.frameNum += 1;
 
+                // Updating the walls
+                for (i = 0; i < walls.length; i++)
+                {
+                    if (player.objectCollision(walls[i])) { player.handleWallCollision(walls[i]); }
+
+                    if (walls[i]) { walls[i].update(); }
+                }
+
                 // Updating the treasure
                 for (i = 0; i < treasure.length; i++)
                 {
-                    if (player.collectTreasure(treasure[i]) && treasure[i].radius != 0)
+                    if (player.objectCollision(treasure[i]) && treasure[i].radius != 0)
                     {
                         treasure[i].disappear();
                         hud[1].treasureCollected += 1;
@@ -729,7 +789,7 @@
                 // Updating the warps
                 for (i = 0; i < warps.length; i++)
                 {
-                    if (player.enterWarp(warps[i]))
+                    if (player.objectCollision(warps[i]))
                     {
                         warps[i].rotationSpeed = 45;
 
