@@ -509,6 +509,7 @@
                     this.action = false;
                 }
 
+                // Calculates each frame the new x and y positions of the player as they move around
                 this.newPosition = function()
                 {
                     var stickX = joystick.getX(), stickY = joystick.getY();
@@ -540,16 +541,13 @@
                         if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
                     }
 
-                    if ((this.x + this.speedX - this.radius) >= 0 && (this.x + this.speedX + this.radius) <= gameArea.canvas.width)
-                    {
-                        this.x += this.speedX;
-                    }
-                    if ((this.y + this.speedY - this.radius) >= 0 && (this.y + this.speedY + this.radius) <= gameArea.canvas.height)
-                    {
-                        this.y += this.speedY;
-                    }
+                    this.x += this.speedX; this.y += this.speedY;
+
+                    this.x = Math.max(0 + this.radius, Math.min(this.x, gameArea.canvas.width - this.radius));
+                    this.y = Math.max(0 + this.radius, Math.min(this.y, gameArea.canvas.height - this.radius));
                 }
 
+                // The speed values associated with all 16 movement directions as well as no direction
                 this.moveRight = function()          { this.speedX = 4,      this.speedY = 0; }
                 this.moveRightDownRight = function() { this.speedX = 3.464,  this.speedY = -2; }
                 this.moveDownRight = function()      { this.speedX = 2.828,  this.speedY = -2.828; }
@@ -568,6 +566,7 @@
                 this.moveRightUpRight = function()   { this.speedX = 3.464,  this.speedY = 2; }
                 this.stopMoving = function()         { this.speedX = 0,      this.speedY = 0; }
 
+                // Check for collision with any object
                 this.objectCollision = function(object)
                 {
                     var left = this.x - this.radius, right = this.x + this.radius;
@@ -589,6 +588,7 @@
                     return ((bottom > objTop) && (top < objBottom) && (right > objLeft) && (left < objRight));
                 }
 
+                // Handle collision with solid walls, pushing the player away from them
                 this.handleWallCollision = function(wall)
                 {
                     var overlapX = Math.min(this.x + this.radius, wall.x + wall.width) - Math.max(this.x - this.radius, wall.x);
