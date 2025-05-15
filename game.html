@@ -85,7 +85,7 @@
             }
 
             // Variables for all game objects along with important global variables
-            var player, walls = [], treasure = [], warps = [];
+            var player, walls = [], pits = [], treasure = [], warps = [];
             var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
 
@@ -176,6 +176,9 @@
                     walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black")),
                              (new componentWall(342, 310, 50, 240, "gray", 2, "black")),
                              (new componentWall(632, 310, 50, 240, "gray", 2, "black"))];
+                    pits = [(new componentPit(200, 300, 40, 40, "black", 2, "black")),
+                            (new componentPit(200, 342, 40, 40, "black", 2, "black")),
+                            (new componentPit(200, 384, 40, 40, "black", 2, "black"))];
                     treasure = [];
                     warps = [(new componentWarp(120, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
                              (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
@@ -196,6 +199,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
 
@@ -212,6 +216,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [];
                     warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
                              (new componentWarp(50, 100, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
@@ -243,6 +248,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -262,6 +268,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -281,6 +288,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -300,6 +308,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -319,6 +328,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -338,6 +348,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -357,6 +368,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -376,6 +388,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -395,6 +408,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -414,6 +428,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -433,6 +448,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -452,6 +468,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -471,6 +488,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
+                    pits = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -491,7 +509,8 @@
                 this.x = x, this.y = y, this.radius = radius;
                 this.startAngle = startAngle, this.endAngle = endAngle;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.action = false;
+                this.action = false, this.falling = false;
+                this.originalX = x, this.originalY = y, this.originalRadius = radius;
 
                 this.update = function()
                 {
@@ -507,11 +526,24 @@
                     this.context.stroke();
 
                     this.action = false;
+
+                    if (this.falling)
+                    {
+                        this.radius -= 0.15;
+
+                        if (this.radius <= 0)
+                        {
+                            this.falling = false;
+                            this.x = this.originalX; this.y = this.originalY; this.radius = this.originalRadius;
+                        }
+                    }
                 }
 
                 // Calculates each frame the new x and y positions of the player as they move around
                 this.newPosition = function()
                 {
+                    if (!gameStarted || this.falling) { return; }
+
                     var stickX = joystick.getX(), stickY = joystick.getY();
                     var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
 
@@ -605,6 +637,13 @@
                         else { this.y += overlapY; }
                     }
                 }
+
+                // Handle the player falling into a bottomless pit
+                this.pitFalling = function(pit)
+                {
+                    this.falling = true; pit.sfx.play();
+                    this.x = pit.x + (pit.width / 2); this.y = pit.y + (pit.height / 2);
+                }
             }
 
             // Code for the walls
@@ -612,6 +651,26 @@
             {
                 this.x = x, this.y = y, this.width = width, this.height = height;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+
+                this.update = function()
+                {
+                    this.context = gameArea.context;
+
+                    this.context.fillStyle = this.fillColor;
+                    this.context.fillRect(this.x, this.y, this.width, this.height);
+
+                    this.context.lineWidth = this.lineWidth;
+                    this.context.strokeStyle = this.lineColor;
+                    this.context.strokeRect(this.x, this.y, this.width, this.height);
+                }
+            }
+
+            // Code for the bottomless pits
+            function componentPit(x, y, width, height, fillColor, lineWidth, lineColor)
+            {
+                this.x = x, this.y = y, this.width = width, this.height = height;
+                this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+                this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Falling.wav", "SFX");
 
                 this.update = function()
                 {
@@ -774,6 +833,14 @@
                     if (walls[i]) { walls[i].update(); }
                 }
 
+                // Updating the bottomless pits
+                for (i = 0; i < pits.length; i++)
+                {
+                    if (player.objectCollision(pits[i])) { player.pitFalling(pits[i]); }
+
+                    if (pits[i]) { pits[i].update(); }
+                }
+
                 // Updating the treasure
                 for (i = 0; i < treasure.length; i++)
                 {
@@ -841,7 +908,7 @@
                 else if (music.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = true); }
 
                 // Updating the player
-                if (gameStarted) { player.newPosition(); }
+                player.newPosition();
                 if (player) { player.update(); }
 
                 if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameIsOver) { gameOver(); }
@@ -981,7 +1048,6 @@
             }
 
             // IDEAS TO IMPLEMENT
-            // Walls + Bottomless Pits
             // Door Switches + Door Blocks
             // Toggle Switches + Toggle Blocks
             // Shrinkers + Growers
