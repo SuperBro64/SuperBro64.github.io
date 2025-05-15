@@ -173,12 +173,8 @@
                     gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Menu Screen";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black")),
-                             (new componentWall(342, 310, 50, 240, "gray", 2, "black")),
-                             (new componentWall(632, 310, 50, 240, "gray", 2, "black"))];
-                    pits = [(new componentPit(200, 300, 40, 40, "black", 2, "black")),
-                            (new componentPit(200, 342, 40, 40, "black", 2, "black")),
-                            (new componentPit(200, 384, 40, 40, "black", 2, "black"))];
+                    walls = [];
+                    pits = [];
                     treasure = [];
                     warps = [(new componentWarp(120, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
                              (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
@@ -247,8 +243,12 @@
                     gameArea.fillColor = "yellowgreen"; gameArea.currentLevel = "Level 1";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [];
-                    pits = [];
+                    walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black")),
+                             (new componentWall(342, 310, 50, 240, "gray", 2, "black")),
+                             (new componentWall(632, 310, 50, 240, "gray", 2, "black"))];
+                    pits = [(new componentPit(200, 300, 40, 40, "black", 2, "black")),
+                            (new componentPit(200, 342, 40, 40, "black", 2, "black")),
+                            (new componentPit(200, 384, 40, 40, "black", 2, "black"))];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -535,6 +535,9 @@
                         {
                             this.falling = false;
                             this.x = this.originalX; this.y = this.originalY; this.radius = this.originalRadius;
+
+                            document.querySelector("#actionButton").innerHTML = "🅰️";
+                            document.querySelector("#pauseButton").innerHTML = "⏸️";
                         }
                     }
                 }
@@ -643,6 +646,9 @@
                 {
                     this.falling = true; pit.sfx.play();
                     this.x = pit.x + (pit.width / 2); this.y = pit.y + (pit.height / 2);
+
+                    document.querySelector("#actionButton").innerHTML = "❌";
+                    document.querySelector("#pauseButton").innerHTML = "❌";
                 }
             }
 
@@ -823,7 +829,7 @@
             {
                 // Clearing the game area
                 gameArea.clear();
-                gameArea.frameNum += 1;
+                if (!player.falling) { gameArea.frameNum += 1; }
 
                 // Updating the walls
                 for (i = 0; i < walls.length; i++)
@@ -1002,7 +1008,7 @@
             // Code for pausing the game during normal gameplay, or for restarting the current level after getting a Game Over
             function pauseGame()
             {
-                if (gameStarted && !gameIsOver)
+                if (gameStarted && !gameIsOver && !player.falling)
                 {
                     if (gameArea.interval)
                     {
