@@ -210,28 +210,74 @@
                 {
                     gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Main Hub";
 
-                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [];
+                    player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(328, 272, 40, 224, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(328, 232, 368, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(328, 496, 368, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(0, 384, 328, 30, "crimson", 2, "black", true, "Progression", 2)),
+                             (new componentWall(452, 0, 30, 232, "crimson", 2, "black", true, "Progression", 4)),
+                             (new componentWall(666, 272, 30, 224, "crimson", 2, "black", true, "Progression", 7)),
+                             (new componentWall(696, 496, 328, 30, "crimson", 2, "black", true, "Progression", 10)),
+                             (new componentWall(666, 536, 30, 232, "crimson", 2, "black", true, "Progression", 10))];
                     pits = [];
                     treasure = [];
-                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
-                             (new componentWarp(50, 100, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
-                             (new componentWarp(150, 100, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
-                             (new componentWarp(250, 100, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
-                             (new componentWarp(400, 100, 30, 30, 0, "sienna", 2, "black", "Level 4", "Level 4")),
-                             (new componentWarp(500, 100, 30, 30, 0, "sienna", 2, "black", "Level 5", "Level 5")),
-                             (new componentWarp(600, 100, 30, 30, 0, "sienna", 2, "black", "Level 6", "Level 6")),
-                             (new componentWarp(750, 100, 30, 30, 0, "sienna", 2, "black", "Level 7", "Level 7")),
-                             (new componentWarp(850, 100, 30, 30, 0, "sienna", 2, "black", "Level 8", "Level 8")),
-                             (new componentWarp(950, 100, 30, 30, 0, "sienna", 2, "black", "Level 9", "Level 9")),
-                             (new componentWarp(500, 300, 30, 30, 0, "sienna", 2, "black", "Level 10", "Level 10")),
-                             (new componentWarp(150, 200, 30, 30, 0, "sienna", 2, "black", "Level A", "Level A")),
-                             (new componentWarp(500, 200, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
-                             (new componentWarp(850, 200, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
+                    warps = [(new componentWarp(512, 688, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
+                             (new componentWarp(370, 644, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
+                             (new componentWarp(45, 728, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
+                             (new componentWarp(150, 504, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
+                             (new componentWarp(240, 310, 30, 30, 0, "sienna", 2, "black", "Level 4", "Level 4")),
+                             (new componentWarp(75, 90, 30, 30, 0, "sienna", 2, "black", "Level 5", "Level 5")),
+                             (new componentWarp(390, 170, 30, 30, 0, "sienna", 2, "black", "Level 6", "Level 6")),
+                             (new componentWarp(700, 110, 30, 30, 0, "sienna", 2, "black", "Level 7", "Level 7")),
+                             (new componentWarp(940, 230, 30, 30, 0, "sienna", 2, "black", "Level 8", "Level 8")),
+                             (new componentWarp(830, 430, 30, 30, 0, "sienna", 2, "black", "Level 9", "Level 9")),
+                             (new componentWarp(512, 384, 30, 30, 0, "sienna", 2, "black", "Level 10", "Level 10")),
+                             (new componentWarp(865, 604, 30, 30, 0, "sienna", 2, "black", "Level A", "Level A")),
+                             (new componentWarp(765, 704, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
+                             (new componentWarp(965, 704, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Main Hub", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
-                           (new componentHud("60px NewSuperMarioFontU", "white", "black", 880, 45, "000%", 0, "Completion"))];
+                           (new componentHud("60px NewSuperMarioFontU", "white", "black", 880, 45, "000%", 0, "Completion")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 465, 750, "EXIT", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 360, 637, "1", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 35, 721, "2", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 140, 497, "3", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 230, 303, "4", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 65, 83, "5", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 380, 163, "6", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 690, 103, "7", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 930, 223, "8", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 820, 423, "9", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 494, 377, "10", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 852, 597, "A", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 752, 697, "B", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 952, 697, "C", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 80, 411, "2 Levels", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 456, 40, "4", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 456, 90, "L", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 456, 113, "e", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 456, 136, "v", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 456, 159, "e", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 461, 188, "l", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 456, 211, "s", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 310, "7", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 360, "L", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 383, "e", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 406, "v", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 429, "e", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 675, 458, "l", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 481, "s", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 672, 564, "1", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 672, 592, "0", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 642, "L", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 665, "e", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 688, "v", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 711, "e", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 675, 740, "l", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 670, 763, "s", 0, "N/A")),
+
+                           (new componentHud("40px NewSuperMarioFontU", "tomato", "black", 775, 523, "10 Levels", 0, "N/A"))];
 
                     if (saveProgress.completion[13][1] == 100) { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
                     else { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
@@ -243,9 +289,9 @@
                     gameArea.fillColor = "yellowgreen"; gameArea.currentLevel = "Level 1";
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black")),
-                             (new componentWall(342, 310, 50, 240, "gray", 2, "black")),
-                             (new componentWall(632, 310, 50, 240, "gray", 2, "black"))];
+                    walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(342, 310, 50, 240, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(632, 310, 50, 240, "gray", 2, "black", true, "N/A", 0))];
                     pits = [(new componentPit(200, 300, 40, 40, "black", 2, "black")),
                             (new componentPit(200, 342, 40, 40, "black", 2, "black")),
                             (new componentPit(200, 384, 40, 40, "black", 2, "black"))];
@@ -626,6 +672,8 @@
                 // Handle collision with solid walls, pushing the player away from them
                 this.handleWallCollision = function(wall)
                 {
+                    if (!wall.tangibility) { return; }
+                    
                     var overlapX = Math.min(this.x + this.radius, wall.x + wall.width) - Math.max(this.x - this.radius, wall.x);
                     var overlapY = Math.min(this.y + this.radius, wall.y + wall.height) - Math.max(this.y - this.radius, wall.y);
 
@@ -653,17 +701,34 @@
             }
 
             // Code for the walls
-            function componentWall(x, y, width, height, fillColor, lineWidth, lineColor)
+            function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tangibility, type, levels)
             {
                 this.x = x, this.y = y, this.width = width, this.height = height;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+                this.tangibility = tangibility, this.type = type, this.levels = levels;
+
+                if (this.type == "Progression" && this.levels > 0)
+                {
+                    var levelsCompleted = 0;
+
+                    for (i = 0; i < saveProgress.completion.length - 1; i++)
+                    {
+                        if (saveProgress.completion[i][1] >= 1) { levelsCompleted++; }
+                    }
+
+                    if (levelsCompleted >= this.levels) { this.tangibility = false; }
+                }
 
                 this.update = function()
                 {
                     this.context = gameArea.context;
 
+                    if (!this.tangibility) { this.context.globalAlpha = 0.5; }
+
                     this.context.fillStyle = this.fillColor;
                     this.context.fillRect(this.x, this.y, this.width, this.height);
+
+                    this.context.globalAlpha = 1.0;
 
                     this.context.lineWidth = this.lineWidth;
                     this.context.strokeStyle = this.lineColor;
@@ -676,7 +741,7 @@
             {
                 this.x = x, this.y = y, this.width = width, this.height = height;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Falling.wav", "SFX");
+                this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Falling.mp3", "SFX");
 
                 this.update = function()
                 {
