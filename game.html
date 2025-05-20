@@ -58,8 +58,8 @@
 
             <div id = "buttons" class = "prevent-select" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
                 <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
-                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🅰️</b></button>
-                <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
+                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🚩</b></button>
+                <button id = "pauseButton" onclick = "pauseGame()"><b>❌</b></button>
             </div>
         </div>
 
@@ -76,7 +76,7 @@
 
             // Variables for all game objects along with important global variables
             var player, walls = [], pits = [], treasure = [], warps = [];
-            var gameIsOver = false;
+            var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
 
             // Variable for storing and manipulating the player's game completion progress through the use of web storage
@@ -176,7 +176,7 @@
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 420, 160, "Main Hub", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "red", "black", 780, 680, "Erase Game", 0, "N/A"))];
-                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; if (gameStarted) { music.play(); }
                 },
 
                 // Setup for the credits screen
@@ -973,6 +973,7 @@
                 if (player) { player.update(); }
 
                 if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameIsOver) { gameOver(); }
+                if (!gameStarted) { waitForStart(); }
             }
 
             // Code for tracking if something is happening every n frames
@@ -982,6 +983,26 @@
                 return false;
             }
 
+            // Code for before the game starts, waiting for player input
+            function waitForStart()
+            { 
+                var gameStartOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
+                                        "gray", 0, "black", false, "N/A", 0))];
+                for (i = 0; i < gameStartOverlay.length; i++) { gameStartOverlay[i].update(); }
+
+                var gameStartText = [(new componentHud("45px NewSuperMarioFontU", "white", "black", 40, 40,
+                                        "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
+                                     (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755,
+                                        "©️ 2025 SuperBro64", 0, "N/A")),
+                                     (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500,
+                                        "Click on 🚩 to play!", 0, "N/A"))];
+                for (i = 0; i < gameStartText.length; i++) { gameStartText[i].update(); }
+                
+                var gameStartPlayer = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black"); gameStartPlayer.update();
+
+                clearInterval(gameArea.interval); gameArea.interval = null;
+            }
+
             // Code for the game over that occurs when the level time has run out
             function gameOver()
             {
@@ -989,6 +1010,10 @@
 
                 document.querySelector("#actionButton").innerHTML = "🏠";
                 document.querySelector("#pauseButton").innerHTML = "🔄️";
+
+                var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
+                                        "gray", 0, "black", false, "N/A", 0))];
+                for (i = 0; i < gameOverOverlay.length; i++) { gameOverOverlay[i].update(); }
                 
                 var gameOverText = [(new componentHud("60px NewSuperMarioFontU", "red", "black", 350, 364, "GAME OVER", 0, "N/A")),
                                     (new componentHud("40px NewSuperMarioFontU", "red", "black", 220, 414,
@@ -1029,7 +1054,17 @@
             // Code for the player's actions during normal gameplay, or for returning to the main hub during a pause or Game Over
             function playerAction()
             {
-                if (!gameArea.interval && gameIsOver)
+                if (!gameStarted)
+                {
+                    document.querySelector("#actionButton").innerHTML = "🅰️";
+                    document.querySelector("#pauseButton").innerHTML = "⏸️";
+
+                    gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
+                    music.play();
+                    gameStarted = true;
+                }
+                else if (!gameArea.interval && gameIsOver)
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -1057,12 +1092,16 @@
             // Code for pausing the game during normal gameplay, or for restarting the current level after getting a Game Over
             function pauseGame()
             {
-                if (!gameIsOver && !player.falling)
+                if (gameStarted && !gameIsOver && !player.falling)
                 {
                     if (gameArea.interval)
                     {
                         document.querySelector("#actionButton").innerHTML = "🏠";
                         document.querySelector("#pauseButton").innerHTML = "▶️";
+
+                        var pauseOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
+                                                "gray", 0, "black", false, "N/A", 0))];
+                        for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
                         var pauseText = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 400, 364, "PAUSED", 0, "N/A")),
                                          (new componentHud("40px NewSuperMarioFontU", "white", "black", 220, 414,
@@ -1083,7 +1122,7 @@
                         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
                     }
                 }
-                else if (gameIsOver && !gameArea.interval)
+                else if (gameStarted && gameIsOver && !gameArea.interval)
                 {
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -1103,11 +1142,14 @@
             }
 
             // IDEAS TO IMPLEMENT
-            // Door Switches + Door Blocks
-            // Toggle Switches + Toggle Blocks
-            // Shrinkers + Growers
-            // Big Door Switches + Big Toggle Switches
-            // Push Blocks
+            // - Door Switches + Door Blocks
+            // - Toggle Switches + Toggle Blocks
+            // - Shrinkers + Growers
+            // - Big Door Switches + Big Toggle Switches
+            // - Push Blocks
+
+            // ISSUES
+            // - Music not muting when game interval is paused
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
@@ -1367,6 +1409,8 @@
             <br>
             - 🔊 Button: Click to toggle between muting and unmuting the background music and all sound effects.
             <br><br>
+            - 🚩 Button: Click while on the title screen to begin the game.
+            <br>
             - 🏠 Button: Click while the game is paused or after getting a Game Over to return immediately to the main level hub.
             <br>
             - 🔄️ Button: Click after getting a Game Over to restart the current level.
