@@ -51,7 +51,6 @@
         <link rel = "preload" href = "resources/fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
-<div>
     <body onload = "startGame()">
 
         <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
@@ -821,22 +820,22 @@
                     switch (this.destination)
                     {
                         case "Title Screen": levelSetup.titleScreen(); break;
-                        case "Credits":     levelSetup.credits(); break;
-                        case "Main Hub":    levelSetup.mainHub(); break;
-                        case "Level 1":     levelSetup.level1(); break;
-                        case "Level 2":     levelSetup.level2(); break;
-                        case "Level 3":     levelSetup.level3(); break;
-                        case "Level 4":     levelSetup.level4(); break;
-                        case "Level 5":     levelSetup.level5(); break;
-                        case "Level 6":     levelSetup.level6(); break;
-                        case "Level 7":     levelSetup.level7(); break;
-                        case "Level 8":     levelSetup.level8(); break;
-                        case "Level 9":     levelSetup.level9(); break;
-                        case "Level 10":    levelSetup.level10(); break;
-                        case "Level A":     levelSetup.levelA(); break;
-                        case "Level B":     levelSetup.levelB(); break;
-                        case "Level C":     levelSetup.levelC(); break;
-                        default:            levelSetup.titleScreen(); break;
+                        case "Credits":      levelSetup.credits(); break;
+                        case "Main Hub":     levelSetup.mainHub(); break;
+                        case "Level 1":      levelSetup.level1(); break;
+                        case "Level 2":      levelSetup.level2(); break;
+                        case "Level 3":      levelSetup.level3(); break;
+                        case "Level 4":      levelSetup.level4(); break;
+                        case "Level 5":      levelSetup.level5(); break;
+                        case "Level 6":      levelSetup.level6(); break;
+                        case "Level 7":      levelSetup.level7(); break;
+                        case "Level 8":      levelSetup.level8(); break;
+                        case "Level 9":      levelSetup.level9(); break;
+                        case "Level 10":     levelSetup.level10(); break;
+                        case "Level A":      levelSetup.levelA(); break;
+                        case "Level B":      levelSetup.levelB(); break;
+                        case "Level C":      levelSetup.levelC(); break;
+                        default:             levelSetup.titleScreen(); break;
                     }
                 }
             }
@@ -1023,7 +1022,7 @@
                                         "Click 🏠 to return to the hub.", 0, "N/A"))];
                 for (i = 0; i < gameOverText.length; i++) { gameOverText[i].update(); }
 
-                music.stop(); sfx.sound.src = "resources/sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
+                sfx.sound.src = "resources/sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
                 clearInterval(gameArea.interval); gameArea.interval = null;
             }
 
@@ -1033,22 +1032,22 @@
                 switch (gameArea.currentLevel)
                 {
                     case "Title Screen": levelSetup.titleScreen(); break;
-                    case "Credits":     levelSetup.credits(); break;
-                    case "Main Hub":    levelSetup.mainHub(); break;
-                    case "Level 1":     levelSetup.level1(); break;
-                    case "Level 2":     levelSetup.level2(); break;
-                    case "Level 3":     levelSetup.level3(); break;
-                    case "Level 4":     levelSetup.level4(); break;
-                    case "Level 5":     levelSetup.level5(); break;
-                    case "Level 6":     levelSetup.level6(); break;
-                    case "Level 7":     levelSetup.level7(); break;
-                    case "Level 8":     levelSetup.level8(); break;
-                    case "Level 9":     levelSetup.level9(); break;
-                    case "Level 10":    levelSetup.level10(); break;
-                    case "Level A":     levelSetup.levelA(); break;
-                    case "Level B":     levelSetup.levelB(); break;
-                    case "Level C":     levelSetup.levelC(); break;
-                    default:            levelSetup.titleScreen(); break;
+                    case "Credits":      levelSetup.credits(); break;
+                    case "Main Hub":     levelSetup.mainHub(); break;
+                    case "Level 1":      levelSetup.level1(); break;
+                    case "Level 2":      levelSetup.level2(); break;
+                    case "Level 3":      levelSetup.level3(); break;
+                    case "Level 4":      levelSetup.level4(); break;
+                    case "Level 5":      levelSetup.level5(); break;
+                    case "Level 6":      levelSetup.level6(); break;
+                    case "Level 7":      levelSetup.level7(); break;
+                    case "Level 8":      levelSetup.level8(); break;
+                    case "Level 9":      levelSetup.level9(); break;
+                    case "Level 10":     levelSetup.level10(); break;
+                    case "Level A":      levelSetup.levelA(); break;
+                    case "Level B":      levelSetup.levelB(); break;
+                    case "Level C":      levelSetup.levelC(); break;
+                    default:             levelSetup.titleScreen(); break;
                 }
             }
 
@@ -1443,5 +1442,4 @@
         </p>
 
     </body>
-</div>
 </html>
