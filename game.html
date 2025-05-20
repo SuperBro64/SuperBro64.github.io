@@ -51,6 +51,7 @@
         <link rel = "preload" href = "resources/fonts/New_Super_Mario_Font_U.ttf" as = "font">
     </head>
 
+<div>
     <body onload = "startGame()">
 
         <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
@@ -1150,6 +1151,7 @@
 
             // ISSUES
             // - Music not muting when game interval is paused
+            // - Text on game start overlay not using custom font
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
@@ -1441,4 +1443,5 @@
         </p>
 
     </body>
+</div>
 </html>
