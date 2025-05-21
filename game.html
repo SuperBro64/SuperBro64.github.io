@@ -1141,7 +1141,7 @@
                 else if (music.sound.muted) { document.querySelector("#audioButton").innerHTML = "🔊"; music.sound.muted = false; }
             }
 
-            // IDEAS TO IMPLEMENT
+            // IDEAS
             // - Door Switches + Door Blocks
             // - Toggle Switches + Toggle Blocks
             // - Shrinkers + Growers
@@ -1158,15 +1158,15 @@
             var JoyStick = (function (container, parameters, callback)
             {
                 parameters = parameters || {};
-                var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title),
-                    width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
-                    height = (typeof parameters.height === "undefined" ? 0 : parameters.height),
-                    internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "darkgray" : parameters.internalFillColor),
-                    internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 3 : parameters.internalLineWidth),
-                    internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "dimgray" : parameters.internalStrokeColor),
-                    externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 3 : parameters.externalLineWidth),
-                    externalStrokeColor = (typeof parameters.externalStrokeColor === "undefined" ? "dimgray" : parameters.externalStokeColor),
-                    autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
+                var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title);
+                var width = (typeof parameters.width === "undefined" ? 0 : parameters.width);
+                var height = (typeof parameters.height === "undefined" ? 0 : parameters.height);
+                var innerFillColor = (typeof parameters.innerFillColor === "undefined" ? "darkgray" : parameters.innerFillColor);
+                var innerLineWidth = (typeof parameters.innerLineWidth === "undefined" ? 3 : parameters.innerLineWidth);
+                var innerStrokeColor = (typeof parameters.innerStrokeColor === "undefined" ? "dimgray" : parameters.innerStrokeColor);
+                var outerLineWidth = (typeof parameters.outerLineWidth === "undefined" ? 3 : parameters.outerLineWidth);
+                var outerStrokeColor = (typeof parameters.outerStrokeColor === "undefined" ? "dimgray" : parameters.outerStokeColor);
+                var autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
                 
                 callback = callback || function(StickStatus) {};
 
@@ -1185,15 +1185,15 @@
 
                 var pressed = 0;
                 var circumference = 2 * Math.PI;
-                var internalRadius = (canvas.width - ((canvas.width / 2) + 10)) / 2;
-                var maxMoveStick = internalRadius + 5;
-                var externalRadius = internalRadius + 30;
+                var innerRadius = (canvas.width - ((canvas.width / 2) + 10)) / 2;
+                var maxMoveStick = innerRadius + 5;
+                var outerRadius = innerRadius + 30;
                 var centerX = canvas.width / 2;
                 var centerY = canvas.height / 2;
-                var directionHorizontalLimitPos = canvas.width / 10;
-                var directionHorizontalLimitNeg = directionHorizontalLimitPos * -1;
-                var directionVerticalLimitPos = canvas.height / 10;
-                var directionVerticalLimitNeg = directionVerticalLimitPos * -1;
+                var dirHorizontalLimitPos = canvas.width / 10;
+                var dirHorizontalLimitNeg = dirHorizontalLimitPos * -1;
+                var dirVerticalLimitPos = canvas.height / 10;
+                var dirVerticalLimitNeg = dirVerticalLimitPos * -1;
 
                 var movedX = centerX, movedY = centerY;
 
@@ -1210,33 +1210,33 @@
                     document.addEventListener("mouseup", onMouseUp, false);
                 }
 
-                drawExternal(); drawInternal();
+                drawOuter(); drawInner();
 
-                function drawExternal()
+                function drawOuter()
                 {
                     context.beginPath();
-                    context.arc(centerX, centerY, externalRadius, 0, circumference, false);
-                    context.lineWidth = externalLineWidth;
-                    context.strokeStyle = externalStrokeColor;
+                    context.arc(centerX, centerY, outerRadius, 0, circumference, false);
+                    context.lineWidth = outerLineWidth;
+                    context.strokeStyle = outerStrokeColor;
                     context.stroke();
                 }
 
-                function drawInternal()
+                function drawInner()
                 {
                     context.beginPath();
-                    if (movedX < internalRadius) { movedX = maxMoveStick; }
-                    if ((movedX + internalRadius) > canvas.width) { movedX = canvas.width - maxMoveStick; }
-                    if (movedY < internalRadius) { movedY = maxMoveStick; }
-                    if ((movedY + internalRadius) > canvas.height) { movedY = canvas.height - maxMoveStick; }
-                    context.arc(movedX, movedY, internalRadius, 0, circumference, false);
+                    if (movedX < innerRadius) { movedX = maxMoveStick; }
+                    if ((movedX + innerRadius) > canvas.width) { movedX = canvas.width - maxMoveStick; }
+                    if (movedY < innerRadius) { movedY = maxMoveStick; }
+                    if ((movedY + innerRadius) > canvas.height) { movedY = canvas.height - maxMoveStick; }
+                    context.arc(movedX, movedY, innerRadius, 0, circumference, false);
 
                     var grd = context.createRadialGradient(centerX, centerY, 5, centerX, centerY, 200);
-                    grd.addColorStop(0, internalFillColor);
-                    grd.addColorStop(1, internalStrokeColor);
+                    grd.addColorStop(0, innerFillColor);
+                    grd.addColorStop(1, innerStrokeColor);
                     context.fillStyle = grd;
                     context.fill();
-                    context.lineWidth = internalLineWidth;
-                    context.strokeStyle = internalStrokeColor;
+                    context.lineWidth = innerLineWidth;
+                    context.strokeStyle = innerStrokeColor;
                     context.stroke();
                 }
 
@@ -1259,7 +1259,7 @@
                         }
 
                         context.clearRect(0, 0, canvas.width, canvas.height);
-                        drawExternal(); drawInternal();
+                        drawOuter(); drawInner();
 
                         StickStatus.xPosition = movedX, StickStatus.yPosition = momveY;
                         StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
@@ -1278,7 +1278,7 @@
                     if (autoReturnToCenter) { movedX = centerX, movedY = centerY; }
 
                     context.clearRect(0, 0, canvas.width, canvas.height);
-                    drawExternal(); drawInternal();
+                    drawOuter(); drawInner();
 
                     StickStatus.xPosition = movedX, StickStatus.yPosition = movedY;
                     StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
@@ -1305,7 +1305,7 @@
                         }
 
                         context.clearRect(0, 0, canvas.width, canvas.height);
-                        drawExternal(); drawInternal();
+                        drawOuter(); drawInner();
 
                         StickStatus.xPosition = movedX, StickStatus.yPosition = movedY;
                         StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
@@ -1322,7 +1322,7 @@
                     if (autoReturnToCenter) { movedX = centerX, movedY = centerY; }
 
                     context.clearRect(0, 0, canvas.width, canvas.height);
-                    drawExternal(); drawInternal();
+                    drawOuter(); drawInner();
 
                     StickStatus.xPosition = movedX, StickStatus.yPosition = movedY;
                     StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
@@ -1337,20 +1337,12 @@
                     let horizontal = movedX - centerX;
                     let vertical = movedY - centerY;
 
-                    if (vertical >= directionVerticalLimitNeg && vertical <= directionVerticalLimitPos) { result = "C"; }
-                    if (vertical < directionVerticalLimitNeg) { result = "N"; }
-                    if (vertical > directionVerticalLimitPos) { result = "S"; }
+                    if (vertical >= dirVerticalLimitNeg && vertical <= dirVerticalLimitPos) { result = "C"; }
+                    if (vertical < dirVerticalLimitNeg) { result = "N"; }
+                    if (vertical > dirVerticalLimitPos) { result = "S"; }
 
-                    if (horizontal < directionHorizontalLimitNeg)
-                    {
-                        if (result === "C") { result = "W"; }
-                        else { result += "W"; }
-                    }
-                    if (horizontal > directionHorizontalLimitPos)
-                    {
-                        if (result === "C") { result = "E"; }
-                        else { result += "E"; }
-                    }
+                    if (horizontal < dirHorizontalLimitNeg) { if (result === "C") { result = "W"; } else { result += "W"; } }
+                    if (horizontal > dirHorizontalLimitPos) { if (result === "C") { result = "E"; } else { result += "E"; } }
 
                     return result;
                 }
