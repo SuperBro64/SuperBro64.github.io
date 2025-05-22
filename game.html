@@ -69,7 +69,7 @@
             // Setup for the start of the game
             function startGame()
             {
-                gameArea.start(1024, 768, "border: 5px solid black", "darkgray", 0, 0, 0, 20); 
+                gameArea.start(1024, 768, "border: 5px solid black", "lightgray", 0, 0, 0, 20); 
                 saveProgress.load("saveProgress");
                 music = new componentSound("", "BGM"), sfx = new componentSound("", "SFX");
 
@@ -165,12 +165,30 @@
                     gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
+                                "gray", 0, "black", false, "N/A", 0))];
+                    pits = [];
+                    treasure = [];
+                    warps = [];
+
+                    hud = [(new componentHud("45px NewSuperMarioFontU", "white", "black", 40, 40,
+                            "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755, "©️ 2025 SuperBro64", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500, "Click on 🚩 to play!", 0, "N/A"))];;
+                },
+
+                // Setup for the menu screen
+                menuScreen: function()
+                {
+                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
+
+                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
                     pits = [];
                     treasure = [];
                     warps = [(new componentWarp(120, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
                              (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
-                             (new componentWarp(974, 718, 30, 30, 0, "dimgray", 2, "black", "Title Screen", "Deletion"))];
+                             (new componentWarp(974, 718, 30, 30, 0, "dimgray", 2, "black", "Menu Screen", "Deletion"))];
 
                     hud = [(new componentHud("45px NewSuperMarioFontU", "white", "black", 40, 40,
                                 "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
@@ -178,7 +196,7 @@
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 420, 160, "Main Hub", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "red", "black", 780, 680, "Erase Game", 0, "N/A"))];
-                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; if (gameStarted) { music.play(); }
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
                 },
 
                 // Setup for the credits screen
@@ -190,7 +208,7 @@
                     walls = [];
                     pits = [];
                     treasure = [];
-                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Title Screen", "N/A"))];
+                    warps = [(new componentWarp(512, 718, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "CREDITS", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 0, 0, "Item 1", 0, "N/A")),
@@ -214,7 +232,7 @@
                              (new componentWall(666, 536, 30, 232, "crimson", 2, "black", true, "Progression", 10))];
                     pits = [];
                     treasure = [];
-                    warps = [(new componentWarp(512, 688, 30, 30, 0, "green", 2, "black", "Title Screen", "N/A")),
+                    warps = [(new componentWarp(512, 688, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
                              (new componentWarp(370, 644, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
                              (new componentWarp(45, 728, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
                              (new componentWarp(150, 504, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
@@ -583,7 +601,7 @@
                 // Calculates each frame the new x and y positions of the player as they move around
                 this.newPosition = function()
                 {
-                    if (this.falling) { return; }
+                    if (!gameStarted || this.falling) { return; }
 
                     var stickX = joystick.getX(), stickY = joystick.getY();
                     var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
@@ -822,6 +840,7 @@
                     switch (this.destination)
                     {
                         case "Title Screen": levelSetup.titleScreen(); break;
+                        case "Menu Screen":  levelSetup.menuScreen(); break;
                         case "Credits":      levelSetup.credits(); break;
                         case "Main Hub":     levelSetup.mainHub(); break;
                         case "Level 1":      levelSetup.level1(); break;
@@ -974,9 +993,8 @@
                 player.newPosition();
                 if (player) { player.update(); }
 
-                // Checking conditions for a Game Over occuring or for the player starting the game
+                // Checking conditions for a Game Over occuring
                 if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameIsOver) { gameOver(); }
-                if (!gameStarted) { waitForStart(); }
             }
 
             // Code for tracking if something is happening every n frames
@@ -984,26 +1002,6 @@
             {
                 if ((gameArea.frameNum / n) % 1 == 0) { return true; }
                 return false;
-            }
-
-            // Code for before the game starts, waiting for player input
-            function waitForStart()
-            { 
-                var gameStartOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                        "gray", 0, "black", false, "N/A", 0))];
-                for (i = 0; i < gameStartOverlay.length; i++) { gameStartOverlay[i].update(); }
-
-                var gameStartText = [(new componentHud("45px NewSuperMarioFontU", "white", "black", 40, 40,
-                                        "HYPERION'S TREASURE-MAXED LABYRINTH", 0, "Level")),
-                                     (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755,
-                                        "©️ 2025 SuperBro64", 0, "N/A")),
-                                     (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500,
-                                        "Click on 🚩 to play!", 0, "N/A"))];
-                for (i = 0; i < gameStartText.length; i++) { gameStartText[i].update(); }
-                
-                var gameStartPlayer = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black"); gameStartPlayer.update();
-
-                clearInterval(gameArea.interval); gameArea.interval = null;
             }
 
             // Code for the game over that occurs when the level time has run out
@@ -1035,6 +1033,7 @@
                 switch (gameArea.currentLevel)
                 {
                     case "Title Screen": levelSetup.titleScreen(); break;
+                    case "Menu Screen":  levelSetup.menuScreen(); break;
                     case "Credits":      levelSetup.credits(); break;
                     case "Main Hub":     levelSetup.mainHub(); break;
                     case "Level 1":      levelSetup.level1(); break;
@@ -1062,10 +1061,9 @@
                     document.querySelector("#actionButton").innerHTML = "🅰️";
                     document.querySelector("#pauseButton").innerHTML = "⏸️";
 
-                    gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
-
-                    music.play();
                     gameStarted = true;
+                    
+                    levelSetup.menuScreen();
                 }
                 else if (!gameArea.interval && gameIsOver)
                 {
