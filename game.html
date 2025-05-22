@@ -45,10 +45,12 @@
             .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
             .row { display: inline-block; clear: both; }
 
-            @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.ttf"); }
+            @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.woff"); }
+            @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.woff2"); }
         </style>
 
-        <link rel = "preload" href = "resources/fonts/New_Super_Mario_Font_U.ttf" as = "font">
+        <link rel = "preload" href = "resources/fonts/New_Super_Mario_Font_U.woff" as = "font">
+        <link rel = "preload" href = "resources/fonts/New_Super_Mario_Font_U.woff2" as = "font">
     </head>
 
     <body onload = "startGame()">
