@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <script crossorigin = "anonymous">
+        <script>
             // Setup for the start of the game
             function startGame()
             {
@@ -972,6 +972,7 @@
                 player.newPosition();
                 if (player) { player.update(); }
 
+                // Checking conditions for a Game Over occuring or for the player starting the game
                 if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameIsOver) { gameOver(); }
                 if (!gameStarted) { waitForStart(); }
             }
@@ -987,7 +988,7 @@
             function waitForStart()
             { 
                 var gameStartOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                        "gray", 0, "black", false, "N/A", 0))];
+                                        "black", 0, "black", false, "N/A", 0))];
                 for (i = 0; i < gameStartOverlay.length; i++) { gameStartOverlay[i].update(); }
 
                 var gameStartText = [(new componentHud("45px NewSuperMarioFontU", "white", "black", 40, 40,
