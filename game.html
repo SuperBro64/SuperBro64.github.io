@@ -153,6 +153,20 @@
                     this.context.clearRect(this.x, this.y, this.canvas.width, this.canvas.height);
                     this.context.fillStyle = this.fillColor;
                     this.context.fillRect(this.x, this.y, this.canvas.width, this.canvas.height);
+                },
+
+                // Applies a diagonal gradient to the canvas background, using the given color and a darker shade of the color
+                gradient: function(color)
+                {
+                    var grad = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+
+                    // Following three lines originally by Chalarangelo (Angelos Chalaris) on GitHub
+                    var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
+                    var newLightness = Math.max(0, Math.min(100, lightness + Number.parseFloat(-25)));
+                    var shade = "hsl(" + hue + ", " + saturation + "%, " + newLightness + "%)";
+
+                    grad.addColorStop(0.0, shade); grad.addColorStop(0.5, color); grad.addColorStop(1.0, shade);
+                    this.fillColor = grad;
                 }
             }
 
@@ -162,11 +176,11 @@
                 // Setup for the title screen
                 titleScreen: function()
                 {
-                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(0, 0%, 66%)"); // HTML Color Name: "darkgray"
+                    gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                "gray", 0, "black", false, "N/A", 0))];
+                    walls = [];
                     pits = [];
                     treasure = [];
                     warps = [];
@@ -185,7 +199,8 @@
                 // Setup for the menu screen
                 menuScreen: function()
                 {
-                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(0, 0%, 83%)"); // HTML Color Name: "lightgray"
+                    gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -194,20 +209,21 @@
                     warps = [(new componentWarp(120, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
                              (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
                              (new componentWarp(50, 718, 30, 30, 0, "royalblue", 2, "black", "Title Screen", "N/A")),
-                             (new componentWarp(974, 718, 30, 30, 0, "dimgray", 2, "black", "Menu Screen", "Deletion"))];
+                             (new componentWarp(974, 718, 30, 30, 0, "crimson", 2, "black", "Menu Screen", "Deletion"))];
 
                     hud = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 360, 50, "MAIN MENU", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 400, 160, "Start Game!", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 730, "Quit Game", 0, "N/A")),
-                           (new componentHud("40px NewSuperMarioFontU", "red", "black", 710, 730, "Erase Game", 0, "N/A"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 710, 730, "Erase Game", 0, "N/A"))];
                     music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
                 },
 
                 // Setup for the credits screen
                 credits: function()
                 {
-                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(248, 39%, 39%)"); // HTML Color Name: "darkslateblue"
+                    gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -226,14 +242,17 @@
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 270,
                                 "Font . . . . . . . . . . . . . . . . . . . . New Super Mario Bros. U", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 320,
-                                "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A"))];
+                                "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 370,
+                                "Color Gradient Code . . . . Chalarangelo", 0, "N/A"))];
                     music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
                 },
 
                 // Setup for the main hub
                 mainHub: function()
                 {
-                    gameArea.fillColor = "lightgray"; gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(34, 78%, 91%)"); // HTML Color Name: "antiquewhite"
+                    gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
                     walls = [(new componentWall(328, 272, 40, 224, "gray", 2, "black", true, "N/A", 0)),
@@ -310,7 +329,8 @@
                 // Setup for level 1
                 level1: function()
                 {
-                    gameArea.fillColor = "yellowgreen"; gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(80, 61%, 50%)"); // HTML Color Name: "yellowgreen"
+                    gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black", true, "N/A", 0)),
@@ -334,7 +354,8 @@
                 // Setup for level 2
                 level2: function()
                 {
-                    gameArea.fillColor = "lightcoral"; gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(0, 79%, 72%)"); // HTML Color Name: "lightcoral"
+                    gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -354,7 +375,8 @@
                 // Setup for level 3
                 level3: function()
                 {
-                    gameArea.fillColor = "lightskyblue"; gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(181, 100%, 41%)"); // HTML Color Name: "darkturquoise"
+                    gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -374,7 +396,8 @@
                 // Setup for level 4
                 level4: function()
                 {
-                    gameArea.fillColor = "steelblue"; gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(210, 100%, 56%)"); // HTML Color Name: "dodgerblue"
+                    gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -394,7 +417,8 @@
                 // Setup for level 5
                 level5: function()
                 {
-                    gameArea.fillColor = "pink"; gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(330, 100%, 71%)"); // HTML Color Name: "hotpink"
+                    gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -414,7 +438,8 @@
                 // Setup for level 6
                 level6: function()
                 {
-                    gameArea.fillColor = "sandybrown"; gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(34, 44%, 69%)"); // HTML Color Name: "tan"
+                    gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -434,7 +459,8 @@
                 // Setup for level 7
                 level7: function()
                 {
-                    gameArea.fillColor = "plum"; gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(260, 60%, 65%)"); // HTML Color Name: "mediumpurple"
+                    gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -454,7 +480,8 @@
                 // Setup for level 8
                 level8: function()
                 {
-                    gameArea.fillColor = "darkorange"; gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(33, 100%, 50%)"); // HTML Color Name: "darkorange"
+                    gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -474,7 +501,8 @@
                 // Setup for level 9
                 level9: function()
                 {
-                    gameArea.fillColor = "gray"; gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(0, 0%, 41%)"); // HTML Color Name: "dimgray"
+                    gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -494,7 +522,8 @@
                 // Setup for level 10
                 level10: function()
                 {
-                    gameArea.fillColor = "slategray"; gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(210, 13%, 50%)"); // HTML Color Name: "slategray""
+                    gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -514,7 +543,8 @@
                 // Setup for level A
                 levelA: function()
                 {
-                    gameArea.fillColor = "khaki"; gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(54, 77%, 75%)"); // HTML Color Name: "khaki"
+                    gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -534,7 +564,8 @@
                 // Setup for level B
                 levelB: function()
                 {
-                    gameArea.fillColor = "cornsilk"; gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(302, 59%, 65%)"); // HTML Color Name: "orchid"
+                    gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -554,7 +585,8 @@
                 // Setup for level C
                 levelC: function()
                 {
-                    gameArea.fillColor = "mediumseagreen"; gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
+                    gameArea.gradient("hsl(147, 50%, 47%)"); // HTML Color Name: "mediumseagreen"
+                    gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
@@ -1163,7 +1195,6 @@
             // - Shrinkers + Growers
             // - Big Door Switches + Big Toggle Switches
             // - Push Blocks
-            // - Change level backgrounds to gradients
 
             // ISSUES
             // - Music not muting when game interval is paused
@@ -1445,6 +1476,9 @@
             <br><br>
             - Joystick Code: Bobboteck (Roberto D'Amico)
             <a href = "https://github.com/bobboteck/JoyStick">Source</a>
+            <br><br>
+            - Color Gradient Code: Chalarangelo (Angelos Chalaris)
+            <a href = "https://github.com/Chalarangelo/30-seconds-of-code/blob/master/content/snippets/js/s/change-lightness.md">Source</a>
             <br><br>
             <a href = "https://superbro64.github.io">Back to Homepage</a>
         </p>
