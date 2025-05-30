@@ -77,7 +77,7 @@
             }
 
             // Variables for all game objects along with important global variables
-            var player, walls = [], pits = [], treasure = [], warps = [];
+            var player, walls = [], holes = [], treasure = [], warps = [];
             var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
 
@@ -181,7 +181,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [];
                     warps = [];
 
@@ -204,7 +204,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [];
                     warps = [(new componentWarp(120, 100, 30, 30, 0, "green", 2, "black", "Credits", "N/A")),
                              (new componentWarp(512, 100, 30, 30, 0, "green", 2, "black", "Main Hub", "N/A")),
@@ -227,7 +227,7 @@
 
                     player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [];
                     warps = [(new componentWarp(512, 688, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A"))];
 
@@ -263,7 +263,7 @@
                              (new componentWall(666, 272, 30, 224, "crimson", 2, "black", true, "Progression", 7)),
                              (new componentWall(696, 496, 328, 30, "crimson", 2, "black", true, "Progression", 10)),
                              (new componentWall(666, 536, 30, 232, "crimson", 2, "black", true, "Progression", 10))];
-                    pits = [];
+                    holes = [];
                     treasure = [];
                     warps = [(new componentWarp(512, 688, 30, 30, 0, "green", 2, "black", "Menu Screen", "N/A")),
                              (new componentWarp(370, 644, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
@@ -342,10 +342,10 @@
                              (new componentWall(550, 460, 175, 40, "gray", 2, "black", true, "N/A", 0)),
                              (new componentWall(685, 340, 40, 120, "gray", 2, "black", true, "N/A", 0)),
                              (new componentWall(550, 150, 175, 40, "gray", 2, "black", true, "N/A", 0))];
-                    pits = [(new componentPit(727, 150, 180, 40, "black", 2, "black")),
-                            (new componentPit(843, 300, 180, 40, "black", 2, "black")),
-                            (new componentPit(727, 460, 180, 40, "black", 2, "black")),
-                            (new componentPit(867, 500, 40, 160, "black", 2, "black"))];
+                    holes = [(new componentHole(727, 150, 180, 40, "black", 2, "black")),
+                             (new componentHole(843, 300, 180, 40, "black", 2, "black")),
+                             (new componentHole(727, 460, 180, 40, "black", 2, "black")),
+                             (new componentHole(867, 500, 40, 160, "black", 2, "black"))];
                     treasure = [(new componentTreasure(110, 220, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(110, 546, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(300, 80, 10, 0, 2, "gold", 2, "black")),
@@ -377,7 +377,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -398,7 +398,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -419,7 +419,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -440,7 +440,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -461,7 +461,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -482,7 +482,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -503,7 +503,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -524,7 +524,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -545,7 +545,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -566,7 +566,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -587,7 +587,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -608,7 +608,7 @@
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [];
-                    pits = [];
+                    holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
@@ -763,11 +763,18 @@
                     }
                 }
 
-                // Handle the player falling into a bottomless pit
-                this.pitFalling = function(pit)
+                // Handle the player falling into a bottomless hole
+                this.handleHoleFalling = function(hole)
                 {
-                    this.falling = true; pit.sfx.play();
-                    this.x = pit.x + (pit.width / 2); this.y = pit.y + (pit.height / 2);
+                    if (this.falling) { return; }
+
+                    var overlapX = Math.min(this.x + this.radius, hole.x + hole.width) - Math.max(this.x - this.radius, hole.x);
+                    var overlapY = Math.min(this.y + this.radius, hole.y + hole.height) - Math.max(this.y - this.radius, hole.y);
+
+                    if (this.x < hole.x) { this.x -= (overlapX - (this.radius * 2)); } else { this.x += (overlapX - (this.radius * 2)); }
+                    if (this.y < hole.y) { this.y -= (overlapY - (this.radius * 2)); } else { this.y += (overlapY - (this.radius * 2)); }
+
+                    this.falling = true; hole.sfx.play();
 
                     document.querySelector("#actionButton").innerHTML = "❌";
                     document.querySelector("#pauseButton").innerHTML = "❌";
@@ -810,8 +817,8 @@
                 }
             }
 
-            // Code for the bottomless pits
-            function componentPit(x, y, width, height, fillColor, lineWidth, lineColor)
+            // Code for the bottomless holes
+            function componentHole(x, y, width, height, fillColor, lineWidth, lineColor)
             {
                 this.x = x, this.y = y, this.width = width, this.height = height;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
@@ -979,12 +986,12 @@
                     if (walls[i]) { walls[i].update(); }
                 }
 
-                // Updating the bottomless pits
-                for (i = 0; i < pits.length; i++)
+                // Updating the bottomless holes
+                for (i = 0; i < holes.length; i++)
                 {
-                    if (player.objectCollision(pits[i])) { player.pitFalling(pits[i]); }
+                    if (player.objectCollision(holes[i])) { player.handleHoleFalling(holes[i]); }
 
-                    if (pits[i]) { pits[i].update(); }
+                    if (holes[i]) { holes[i].update(); }
                 }
 
                 // Updating the treasure
@@ -1218,7 +1225,6 @@
 
             // ISSUES
             // - Sound effects not muting when game interval is paused
-            // - Playing snapping directly to the center of a pit when falling
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
