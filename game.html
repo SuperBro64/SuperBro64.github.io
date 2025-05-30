@@ -332,22 +332,40 @@
                     gameArea.gradient("hsl(80, 61%, 50%)"); // HTML Color Name: "yellowgreen"
                     gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
 
-                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [(new componentWall(392, 500, 240, 50, "gray", 2, "black", true, "N/A", 0)),
-                             (new componentWall(342, 310, 50, 240, "gray", 2, "black", true, "N/A", 0)),
-                             (new componentWall(632, 310, 50, 240, "gray", 2, "black", true, "N/A", 0))];
-                    pits = [(new componentPit(200, 300, 40, 40, "black", 2, "black")),
-                            (new componentPit(200, 342, 40, 40, "black", 2, "black")),
-                            (new componentPit(200, 384, 40, 40, "black", 2, "black"))];
-                    treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
+                    player = new componentPlayer(110, 384, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(350, 0, 40, 150, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(215, 150, 175, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(215, 190, 40, 450, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(550, 190, 40, 110, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(550, 500, 40, 267, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(550, 300, 175, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(550, 460, 175, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(685, 340, 40, 120, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(550, 150, 175, 40, "gray", 2, "black", true, "N/A", 0))];
+                    pits = [(new componentPit(727, 150, 180, 40, "black", 2, "black")),
+                            (new componentPit(843, 300, 180, 40, "black", 2, "black")),
+                            (new componentPit(727, 460, 180, 40, "black", 2, "black")),
+                            (new componentPit(867, 500, 40, 160, "black", 2, "black"))];
+                    treasure = [(new componentTreasure(110, 220, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(110, 546, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(300, 80, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(234, 700, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(300, 230, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(510, 730, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(400, 520, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(635, 400, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(635, 245, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(635, 545, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(780, 80, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(886, 245, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(886, 400, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(886, 715, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(965, 580, 10, 0, 2, "gold", 2, "black"))];
+                    warps = [(new componentWarp(730, 620, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 1", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 60, "Timer"))];
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
                     music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
                 },
 
@@ -1195,9 +1213,12 @@
             // - Shrinkers + Growers
             // - Big Door Switches + Big Toggle Switches
             // - Push Blocks
+            // - Mirror Mode
+            // - Time Trials
 
             // ISSUES
-            // - Music not muting when game interval is paused
+            // - Sound effects not muting when game interval is paused
+            // - Playing snapping directly to the center of a pit when falling
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
