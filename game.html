@@ -380,6 +380,54 @@
                     gameArea.gradient("hsl(0, 79%, 72%)"); // HTML Color Name: "lightcoral"
                     gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
 
+                    player = new componentPlayer(964, 710, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(865, 622, 158, 30, "saddlebrown", 2, "black", true, "Door", 1)),
+                             (new componentWall(667, 157, 158, 30, "saddlebrown", 2, "black", true, "Door", 2)),
+                             (new componentWall(0, 157, 158, 30, "saddlebrown", 2, "black", true, "Door", 3)),
+                             (new componentWall(168, 352, 30, 145, "saddlebrown", 2, "black", true, "Door", 4)),
+                             (new componentWall(0, 612, 158, 30, "saddlebrown", 2, "black", true, "Door", 5)),
+                             (new componentWall(158, 497, 40, 270, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(425, 612, 40, 155, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(465, 612, 360, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(825, 157, 40, 495, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(158, 157, 509, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(0, 312, 425, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(158, 197, 40, 115, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(425, 312, 40, 205, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(627, 312, 40, 205, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(465, 392, 162, 40, "gray", 2, "black", true, "N/A", 0))];
+                    holes = [];
+                    treasure = [(new componentTreasure(700, 710, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(990, 476, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(900, 292, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(990, 76, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(545, 126, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(260, 76, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(80, 246, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(790, 575, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(545, 356, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(390, 386, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(230, 575, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(80, 436, 10, 0, 2, "gold", 2, "black"))];
+                    warps = [(new componentWarp(80, 710, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
+                    switches = [(new componentSwitch(507, 690, 40, 40, "white", 2, "black", "Door", "OFF", 1)),
+                                (new componentSwitch(60, 80, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
+                                (new componentSwitch(292, 690, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
+                                (new componentSwitch(240, 235, 40, 40, "white", 2, "black", "Door", "OFF", 4)),
+                                (new componentSwitch(525, 455, 40, 40, "white", 2, "black", "Door", "OFF", 5)),];
+
+                    hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 2", 0, "Level")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
+                },
+
+                // Setup for level 3
+                level3: function()
+                {
+                    gameArea.gradient("hsl(181, 100%, 41%)"); // HTML Color Name: "darkturquoise"
+                    gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [(new componentWall(328, 272, 40, 224, "saddlebrown", 2, "black", true, "Door", 1)),
                              (new componentWall(728, 272, 224, 40, "saddlebrown", 2, "black", true, "Door", 2)),
@@ -401,28 +449,6 @@
                                 (new componentSwitch(500, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(900, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(100, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
-
-                    hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 2", 0, "Level")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
-                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
-                },
-
-                // Setup for level 3
-                level3: function()
-                {
-                    gameArea.gradient("hsl(181, 100%, 41%)"); // HTML Color Name: "darkturquoise"
-                    gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
-
-                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [];
-                    holes = [];
-                    treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
-                    switches = [];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -1332,8 +1358,7 @@
             }
 
             // IDEAS
-            // - Door Switches + Door Blocks
-            // - Toggle Switches + Toggle Blocks
+            // - Add visual indicators to door and toggle switches
             // - Shrinkers + Growers
             // - Big Door Switches + Big Toggle Switches
             // - Push Blocks
