@@ -428,6 +428,60 @@
                     gameArea.gradient("hsl(181, 100%, 41%)"); // HTML Color Name: "darkturquoise"
                     gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
 
+                    player = new componentPlayer(512, 100, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(412, 172, 200, 30, "saddlebrown", 2, "black", true, "Door", 1)),
+                             (new componentWall(412, 322, 200, 30, "saddlebrown", 2, "black", true, "Door", 2)),
+                             (new componentWall(412, 472, 200, 30, "saddlebrown", 2, "black", true, "Door", 3)),
+                             (new componentWall(412, 622, 200, 30, "saddlebrown", 2, "black", true, "Door", 4)),
+                             (new componentWall(372, 172, 40, 595, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(612, 172, 40, 595, "gray", 2, "black", true, "N/A", 0))];
+                    holes = [(new componentHole(100, 172, 270, 40, "black", 2, "black")),
+                             (new componentHole(250, 322, 120, 40, "black", 2, "black")),
+                             (new componentHole(250, 472, 120, 40, "black", 2, "black")),
+                             (new componentHole(250, 622, 120, 40, "black", 2, "black")),
+                             (new componentHole(100, 212, 40, 450, "black", 2, "black")),
+                             (new componentHole(654, 172, 130, 40, "black", 2, "black")),
+                             (new componentHole(893, 172, 130, 40, "black", 2, "black")),
+                             (new componentHole(744, 212, 40, 350, "black", 2, "black")),
+                             (new componentHole(893, 212, 40, 350, "black", 2, "black")),
+                             (new componentHole(744, 667, 40, 100, "black", 2, "black")),
+                             (new componentHole(893, 667, 40, 100, "black", 2, "black"))];
+                    treasure = [(new componentTreasure(172, 100, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(322, 100, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(702, 100, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(980, 100, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 270, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 420, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 570, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(326, 420, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(326, 715, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(120, 715, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(839, 215, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(839, 365, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(839, 515, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(699, 420, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(699, 715, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(980, 420, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(980, 715, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(839, 715, 10, 0, 2, "gold", 2, "black"))];
+                    warps = [(new componentWarp(512, 710, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
+                    switches = [(new componentSwitch(679, 250, 40, 40, "white", 2, "black", "Door", "OFF", 1)),
+                                (new componentSwitch(306, 550, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
+                                (new componentSwitch(960, 250, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
+                                (new componentSwitch(306, 250, 40, 40, "white", 2, "black", "Door", "OFF", 4))];
+
+                    hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
+                },
+
+                // Setup for level 4
+                level4: function()
+                {
+                    gameArea.gradient("hsl(210, 100%, 56%)"); // HTML Color Name: "dodgerblue"
+                    gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
+
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
                     walls = [(new componentWall(328, 272, 40, 224, "saddlebrown", 2, "black", true, "Door", 1)),
                              (new componentWall(728, 272, 224, 40, "saddlebrown", 2, "black", true, "Door", 2)),
@@ -449,28 +503,6 @@
                                 (new componentSwitch(500, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(900, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(100, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
-
-                    hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                           (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
-                    music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
-                },
-
-                // Setup for level 4
-                level4: function()
-                {
-                    gameArea.gradient("hsl(210, 100%, 56%)"); // HTML Color Name: "dodgerblue"
-                    gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
-
-                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [];
-                    holes = [];
-                    treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
-                    switches = [];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 4", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -1170,7 +1202,7 @@
                     {
                         if (hud[i].treasureCollected == treasure.length) { hud[i].fillColor = "gold"; }
 
-                        hud[i].text = "🪙";
+                        hud[i].text = "💰";
                         hud[i].text += hud[i].treasureCollected + "/" + treasure.length;
                     }
                     else if (hud[i].type == "Completion")
@@ -1366,8 +1398,10 @@
             // - Time Trials
 
             // ISSUES
-            // - Sound effects not muting when game interval is paused
-            // - Switch sounds not playing every press if switch is pressed quickly
+            // - Sound effects not properly muting when the game interval is paused
+            // - Switch sound effect not playing on every press if the switch is pressed quickly
+            // - Wonkiness with updating wall variant types, with them sometimes dissapearing depending on placement order
+            // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
