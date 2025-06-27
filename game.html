@@ -648,15 +648,72 @@
                     gameArea.gradient("hsl(54, 77%, 75%)"); // HTML Color Name: "khaki"
                     gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
 
-                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [];
+                    player = new componentPlayer(512, 504, 20, 0, 2, "red", 2, "black");
+                    walls = [(new componentWall(462, 300, 100, 10, "saddlebrown", 2, "black", true, "Door", 1)),
+                             (new componentWall(462, 310, 100, 10, "saddlebrown", 2, "black", true, "Door", 2)),
+                             (new componentWall(462, 320, 100, 10, "saddlebrown", 2, "black", true, "Door", 3)),
+                             (new componentWall(462, 330, 100, 10, "saddlebrown", 2, "black", true, "Door", 4)),
+                             (new componentWall(422, 420, 180, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(422, 300, 40, 120, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(562, 300, 40, 120, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(282, 546, 460, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(492, 667, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(342, 586, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(642, 586, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(112, 646, 120, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(792, 646, 120, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(112, 546, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(872, 546, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(0, 420, 292, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(732, 420, 292, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(282, 300, 140, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(602, 300, 140, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(112, 146, 40, 194, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(872, 146, 40, 154, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(152, 146, 300, 40, "gray", 2, "black", true, "N/A", 0)),
+                             (new componentWall(572, 146, 300, 40, "gray", 2, "black", true, "N/A", 0))];
                     holes = [];
-                    treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
-                                (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
-                    warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
-                    switches = [];
+                    treasure = [(new componentTreasure(215, 90, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(355, 90, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(512, 90, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(669, 90, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(809, 90, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(215, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(355, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(512, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(669, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(809, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(974, 240, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 375, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(215, 375, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(355, 375, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(669, 375, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(809, 375, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(974, 375, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 504, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(215, 504, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(355, 504, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(669, 504, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(809, 504, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(974, 504, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(50, 604, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(215, 604, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(440, 624, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(584, 624, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(809, 604, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(974, 604, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(165, 725, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(285, 725, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(440, 725, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(584, 725, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(739, 725, 10, 0, 2, "gold", 2, "black")),
+                                (new componentTreasure(859, 725, 10, 0, 2, "gold", 2, "black"))];
+                    warps = [(new componentWarp(512, 380, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
+                    switches = [(new componentSwitch(30, 70, 40, 40, "white", 2, "black", "Door", "OFF", 1)),
+                                (new componentSwitch(954, 70, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
+                                (new componentSwitch(30, 698, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
+                                (new componentSwitch(954, 698, 40, 40, "white", 2, "black", "Door", "OFF", 4))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level A", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
