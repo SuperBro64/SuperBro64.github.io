@@ -379,10 +379,10 @@
                              (new componentWall(550, 460, 175, 40, "gray", 2, "black", true, "N/A", 0)),
                              (new componentWall(685, 340, 40, 120, "gray", 2, "black", true, "N/A", 0)),
                              (new componentWall(550, 150, 175, 40, "gray", 2, "black", true, "N/A", 0))];
-                    holes = [(new componentHole(727, 150, 180, 40, "black", 2, "black")),
-                             (new componentHole(843, 300, 180, 40, "black", 2, "black")),
-                             (new componentHole(727, 460, 180, 40, "black", 2, "black")),
-                             (new componentHole(867, 500, 40, 160, "black", 2, "black"))];
+                    holes = [(new componentHole(727, 150, 180, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(843, 300, 180, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(727, 460, 180, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(867, 500, 40, 160, "black", 2, "black", false, "N/A", 0))];
                     treasure = [(new componentTreasure(110, 220, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(110, 546, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(300, 80, 10, 0, 2, "gold", 2, "black")),
@@ -468,17 +468,17 @@
                              (new componentWall(412, 622, 200, 30, "saddlebrown", 2, "black", true, "Door", 4)),
                              (new componentWall(372, 172, 40, 595, "gray", 2, "black", true, "N/A", 0)),
                              (new componentWall(612, 172, 40, 595, "gray", 2, "black", true, "N/A", 0))];
-                    holes = [(new componentHole(100, 172, 270, 40, "black", 2, "black")),
-                             (new componentHole(250, 322, 120, 40, "black", 2, "black")),
-                             (new componentHole(250, 472, 120, 40, "black", 2, "black")),
-                             (new componentHole(250, 622, 120, 40, "black", 2, "black")),
-                             (new componentHole(100, 212, 40, 450, "black", 2, "black")),
-                             (new componentHole(654, 172, 130, 40, "black", 2, "black")),
-                             (new componentHole(893, 172, 130, 40, "black", 2, "black")),
-                             (new componentHole(744, 212, 40, 350, "black", 2, "black")),
-                             (new componentHole(893, 212, 40, 350, "black", 2, "black")),
-                             (new componentHole(744, 667, 40, 100, "black", 2, "black")),
-                             (new componentHole(893, 667, 40, 100, "black", 2, "black"))];
+                    holes = [(new componentHole(100, 172, 270, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(250, 322, 120, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(250, 472, 120, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(250, 622, 120, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(100, 212, 40, 450, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(654, 172, 130, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(893, 172, 130, 40, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(744, 212, 40, 350, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(893, 212, 40, 350, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(744, 667, 40, 100, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(893, 667, 40, 100, "black", 2, "black", false, "N/A", 0))];
                     treasure = [(new componentTreasure(172, 100, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(322, 100, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(702, 100, 10, 0, 2, "gold", 2, "black")),
@@ -515,21 +515,25 @@
                     gameArea.gradient(colors.DodgerBlue);
                     gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
 
-                    player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+                    player = new componentPlayer(512, 500, 20, 0, 2, "red", 2, "black");
                     walls = [(new componentWall(628, 372, 40, 224, "skyblue", 2, "black", true, "Flip", -2)),
-                             (new componentWall(428, 272, 224, 40, "orange", 2, "black", false, "Flip", -1)),
+                             (new componentWall(628, 272, 224, 40, "orange", 2, "black", false, "Flip", -1)),
                              (new componentWall(228, 672, 224, 40, "skyblue", 2, "black", true, "Flip", -2)),
-                             (new componentWall(128, 472, 40, 224, "orange", 2, "black", false, "Flip", -1))];
-                    holes = [];
+                             (new componentWall(828, 522, 40, 224, "orange", 2, "black", false, "Flip", -1))];
+                    holes = [(new componentHole(102, 280, 100, 150, "skyblue", 2, "black", true, "Flip", -2)),
+                             (new componentHole(306, 280, 100, 150, "black", 2, "orange", false, "Flip", -1)),
+                             (new componentHole(0, 280, 100, 150, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(204, 280, 100, 150, "black", 2, "black", false, "N/A", 0)),
+                             (new componentHole(408, 280, 100, 150, "black", 2, "black", false, "N/A", 0))];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
                     warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
                     switches = [(new componentSwitch(500, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
-                                (new componentSwitch(500, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
+                                (new componentSwitch(600, 150, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(900, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
-                                (new componentSwitch(100, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
+                                (new componentSwitch(100, 150, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
 
                     hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 4", 0, "Level")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -937,7 +941,7 @@
                 // Handle the player falling into a bottomless hole
                 this.handleHoleFalling = function(hole)
                 {
-                    if (this.falling) { return; }
+                    if (hole.walkability || this.falling) { return; }
 
                     var overlapX = Math.min(this.x + this.radius, hole.x + hole.width) - Math.max(this.x - this.radius, hole.x);
                     var overlapY = Math.min(this.y + this.radius, hole.y + hole.height) - Math.max(this.y - this.radius, hole.y);
@@ -989,15 +993,34 @@
             }
 
             // Code for the bottomless holes
-            function componentHole(x, y, width, height, fillColor, lineWidth, lineColor)
+            function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, walkability, type, value)
             {
                 this.x = x, this.y = y, this.width = width, this.height = height;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+                this.walkability = walkability, this.type = type, this.value = value;
                 this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Falling.mp3", "SFX");
 
                 this.update = function()
                 {
                     this.context = gameArea.context;
+
+                    if (this.type == "Flip")
+                    {
+                        if (this.walkability)
+                        {
+                            if (this.value == -1) { this.fillColor = "orange"; }
+                            else if (this.value == -2) { this.fillColor = "skyblue"; }
+
+                            this.lineColor = "black";
+                        }
+                        else if (!this.walkability)
+                        {
+                            if (this.value == -1) { this.lineColor = "orange"; }
+                            else if (this.value == -2) { this.lineColor = "skyblue"; }
+
+                            this.fillColor = "black";
+                        }
+                    }
 
                     this.context.fillStyle = this.fillColor;
                     this.context.fillRect(this.x, this.y, this.width, this.height);
@@ -1183,6 +1206,23 @@
                                 {
                                     if (walls[i].value == -1) { walls[i].tangibility = false; }
                                     else if (walls[i].value == -2) { walls[i].tangibility = true; }
+                                }
+                            }
+                        }
+
+                        for (i = 0; i < holes.length; i++)
+                        {
+                            if (holes[i].type == "Flip" && holes[i].value < 0)
+                            {
+                                if (this.state == "OFF")
+                                {
+                                    if (holes[i].value == -1) { holes[i].walkability = true; }
+                                    else if (holes[i].value == -2) { holes[i].walkability = false; }
+                                }
+                                else if (this.state == "ON")
+                                {
+                                    if (holes[i].value == -1) { holes[i].walkability = false; }
+                                    else if (holes[i].value == -2) { holes[i].walkability = true; }
                                 }
                             }
                         }
@@ -1493,6 +1533,7 @@
             }
 
             // IDEAS
+            // - Move JavaScript code into its own file and reference it in the HTML file
             // - Shrinkers + Growers
             // - Big Door Switches + Big Toggle Switches
             // - Push Blocks
@@ -1502,6 +1543,7 @@
             // ISSUES
             // - Sound effects not properly muting when the game interval is paused
             // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
+            // - Little visual difference between flip walls and bridges that are both on, and between flip walls and switches
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
