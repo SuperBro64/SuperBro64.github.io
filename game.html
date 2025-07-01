@@ -81,6 +81,43 @@
             var gameStarted = false, gameIsOver = false;
             var hud = [], music, sfx;
 
+            // Constant containing the HSL color values for easily identifiable HTML color names
+            const colors =
+            {
+                // Comments on the right indicate which level has that color for its background gradient
+                AntiqueWhite   : "hsl(34, 78%, 91%)",   // Main Hub
+                Crimson        : "hsl(348, 83%, 47%)",
+                DarkGray       : "hsl(0, 0%, 66%)",     // Title Screen
+                DarkOrange     : "hsl(33, 100%, 50%)",  // Level 8
+                DarkSlateBlue  : "hsl(248, 39%, 39%)",  // Credits
+                DarkTurquoise  : "hsl(181, 100%, 41%)", // Level 3
+                DimGray        : "hsl(0, 0%, 41%)",     // Level 9
+                DodgerBlue     : "hsl(210, 100%, 56%)", // Level 4
+                ForestGreen    : "hsl(120, 61%, 34%)",
+                HotPink        : "hsl(330, 100%, 71%)", // Level 5
+                Khaki          : "hsl(54, 77%, 75%)",   // Level A
+                LightCoral     : "hsl(0, 79%, 72%)",    // Level 2
+                LightGray      : "hsl(0, 0%, 83%)",     // Menu Screen
+                MediumPurple   : "hsl(260, 60%, 65%)",  // Level 7
+                MediumSeaGreen : "hsl(147, 50%, 47%)",  // Level C
+                Orange         : "hsl(39, 100%, 50%)",
+                Orchid         : "hsl(302, 59%, 65%)",  // Level B
+                SkyBlue        : "hsl(197, 71%, 73%)",
+                SlateGray      : "hsl(210, 13%, 50%)",  // Level 10
+                Tan            : "hsl(34, 44%, 69%)",   // Level 6
+                YellowGreen    : "hsl(80, 61%, 50%)",   // Level 1
+
+                shading: function(color, delta)
+                {
+                    // Code for changing a color's shade, originally by Chalarangelo (Angelos Chalaris) on GitHubb
+                    var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
+                    var newLightness = Math.max(0, Math.min(100, lightness + Number.parseFloat(delta)));
+                    var shade = "hsl(" + hue + ", " + saturation + "%, " + newLightness + "%)";
+
+                    return shade;
+                }
+            };
+
             // Variable for storing and manipulating the player's game completion progress through the use of web storage
             var saveProgress =
             {
@@ -159,11 +196,7 @@
                 gradient: function(color)
                 {
                     var grad = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-
-                    // Following three lines originally by Chalarangelo (Angelos Chalaris) on GitHub
-                    var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
-                    var newLightness = Math.max(0, Math.min(100, lightness + Number.parseFloat(-25)));
-                    var shade = "hsl(" + hue + ", " + saturation + "%, " + newLightness + "%)";
+                    var shade = colors.shading(color, -25);
 
                     grad.addColorStop(0.0, shade); grad.addColorStop(0.5, color); grad.addColorStop(1.0, shade);
                     this.fillColor = grad;
@@ -176,7 +209,7 @@
                 // Setup for the title screen
                 titleScreen: function()
                 {
-                    gameArea.gradient("hsl(0, 0%, 66%)"); // HTML Color Name: "darkgray"
+                    gameArea.gradient(colors.DarkGray);
                     gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -200,7 +233,7 @@
                 // Setup for the menu screen
                 menuScreen: function()
                 {
-                    gameArea.gradient("hsl(0, 0%, 83%)"); // HTML Color Name: "lightgray"
+                    gameArea.gradient(colors.LightGray);
                     gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -224,7 +257,7 @@
                 // Setup for the credits screen
                 credits: function()
                 {
-                    gameArea.gradient("hsl(248, 39%, 39%)"); // HTML Color Name: "darkslateblue"
+                    gameArea.gradient(colors.DarkSlateBlue);
                     gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
@@ -247,14 +280,14 @@
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 320,
                                 "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
                            (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 370,
-                                "Color Gradient Code . . . . Chalarangelo", 0, "N/A"))];
+                                "Color Shading Code . . . . Chalarangelo", 0, "N/A"))];
                     music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
                 },
 
                 // Setup for the main hub
                 mainHub: function()
                 {
-                    gameArea.gradient("hsl(34, 78%, 91%)"); // HTML Color Name: "antiquewhite"
+                    gameArea.gradient(colors.AntiqueWhite);
                     gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
@@ -333,7 +366,7 @@
                 // Setup for level 1
                 level1: function()
                 {
-                    gameArea.gradient("hsl(80, 61%, 50%)"); // HTML Color Name: "yellowgreen"
+                    gameArea.gradient(colors.YellowGreen);
                     gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(110, 384, 20, 0, 2, "red", 2, "black");
@@ -377,7 +410,7 @@
                 // Setup for level 2
                 level2: function()
                 {
-                    gameArea.gradient("hsl(0, 79%, 72%)"); // HTML Color Name: "lightcoral"
+                    gameArea.gradient(colors.LightCoral);
                     gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(964, 710, 20, 0, 2, "red", 2, "black");
@@ -425,7 +458,7 @@
                 // Setup for level 3
                 level3: function()
                 {
-                    gameArea.gradient("hsl(181, 100%, 41%)"); // HTML Color Name: "darkturquoise"
+                    gameArea.gradient(colors.DarkTurquoise);
                     gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 100, 20, 0, 2, "red", 2, "black");
@@ -479,14 +512,14 @@
                 // Setup for level 4
                 level4: function()
                 {
-                    gameArea.gradient("hsl(210, 100%, 56%)"); // HTML Color Name: "dodgerblue"
+                    gameArea.gradient(colors.DodgerBlue);
                     gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [(new componentWall(628, 372, 40, 224, "royalblue", 2, "black", true, "Flip", -2)),
-                             (new componentWall(428, 272, 224, 40, "darkorange", 2, "black", false, "Flip", -1)),
-                             (new componentWall(228, 672, 224, 40, "royalblue", 2, "black", true, "Flip", -2)),
-                             (new componentWall(128, 472, 40, 224, "darkorange", 2, "black", false, "Flip", -1))];
+                    walls = [(new componentWall(628, 372, 40, 224, "skyblue", 2, "black", true, "Flip", -2)),
+                             (new componentWall(428, 272, 224, 40, "orange", 2, "black", false, "Flip", -1)),
+                             (new componentWall(228, 672, 224, 40, "skyblue", 2, "black", true, "Flip", -2)),
+                             (new componentWall(128, 472, 40, 224, "orange", 2, "black", false, "Flip", -1))];
                     holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -507,7 +540,7 @@
                 // Setup for level 5
                 level5: function()
                 {
-                    gameArea.gradient("hsl(330, 100%, 71%)"); // HTML Color Name: "hotpink"
+                    gameArea.gradient(colors.HotPink);
                     gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -529,7 +562,7 @@
                 // Setup for level 6
                 level6: function()
                 {
-                    gameArea.gradient("hsl(34, 44%, 69%)"); // HTML Color Name: "tan"
+                    gameArea.gradient(colors.Tan);
                     gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -551,7 +584,7 @@
                 // Setup for level 7
                 level7: function()
                 {
-                    gameArea.gradient("hsl(260, 60%, 65%)"); // HTML Color Name: "mediumpurple"
+                    gameArea.gradient(colors.MediumPurple);
                     gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -573,7 +606,7 @@
                 // Setup for level 8
                 level8: function()
                 {
-                    gameArea.gradient("hsl(33, 100%, 50%)"); // HTML Color Name: "darkorange"
+                    gameArea.gradient(colors.DarkOrange);
                     gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -595,7 +628,7 @@
                 // Setup for level 9
                 level9: function()
                 {
-                    gameArea.gradient("hsl(0, 0%, 41%)"); // HTML Color Name: "dimgray"
+                    gameArea.gradient(colors.DimGray);
                     gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -617,7 +650,7 @@
                 // Setup for level 10
                 level10: function()
                 {
-                    gameArea.gradient("hsl(210, 13%, 50%)"); // HTML Color Name: "slategray""
+                    gameArea.gradient(colors.SlateGray);
                     gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -639,7 +672,7 @@
                 // Setup for level A
                 levelA: function()
                 {
-                    gameArea.gradient("hsl(54, 77%, 75%)"); // HTML Color Name: "khaki"
+                    gameArea.gradient(colors.Khaki);
                     gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 504, 20, 0, 2, "red", 2, "black");
@@ -718,7 +751,7 @@
                 // Setup for level B
                 levelB: function()
                 {
-                    gameArea.gradient("hsl(302, 59%, 65%)"); // HTML Color Name: "orchid"
+                    gameArea.gradient(colors.Orchid);
                     gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -740,7 +773,7 @@
                 // Setup for level C
                 levelC: function()
                 {
-                    gameArea.gradient("hsl(147, 50%, 47%)"); // HTML Color Name: "mediumseagreen"
+                    gameArea.gradient(colors.MediumSeaGreen);
                     gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
@@ -1086,26 +1119,26 @@
                     {
                         if (this.state == "OFF")
                         {
-                            if (this.activatable) { this.fillColor = "hsl(348, 83%, 57%)"; }
-                            else if (!this.activatable) { this.fillColor = "hsl(348, 83%, 47%)"; }
+                            if (this.activatable) { this.fillColor = colors.shading(colors.Crimson, 10); }
+                            else if (!this.activatable) { this.fillColor = colors.Crimson; }
                         }
                         else if (this.state == "ON")
                         {
-                            if (this.activatable) { this.fillColor = "hsl(120, 61%, 44%)"; }
-                            else if (!this.activatable) { this.fillColor = "hsl(120, 61%, 34%)"; }
+                            if (this.activatable) { this.fillColor = colors.shading(colors.ForestGreen, 10); }
+                            else if (!this.activatable) { this.fillColor = colors.ForestGreen; }
                         }
                     }
                     else if (this.type == "Flip")
                     {
                         if (this.state == "OFF")
                         {
-                            if (this.activatable) { this.fillColor = "hsl(33, 100%, 60%)"; }
-                            else if (!this.activatable) { this.fillColor = "hsl(33, 100%, 50%)"; }
+                            if (this.activatable) { this.fillColor = colors.shading(colors.Orange, 10); }
+                            else if (!this.activatable) { this.fillColor = colors.Orange; }
                         }
                         else if (this.state == "ON")
                         {
-                            if (this.activatable) { this.fillColor = "hsl(225, 73%, 67%)"; }
-                            else if (!this.activatable) { this.fillColor = "hsl(225, 73%, 57%)"; }
+                            if (this.activatable) { this.fillColor = colors.shading(colors.SkyBlue, 10); }
+                            else if (!this.activatable) { this.fillColor = colors.SkyBlue; }
                         }
                     }
 
@@ -1469,7 +1502,6 @@
             // ISSUES
             // - Sound effects not properly muting when the game interval is paused
             // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
-            // - Transparent walls may be hard to make out against some background colors
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
@@ -1749,7 +1781,7 @@
             - Joystick Code: Bobboteck (Roberto D'Amico)
             <a href = "https://github.com/bobboteck/JoyStick">Source</a>
             <br><br>
-            - Color Gradient Code: Chalarangelo (Angelos Chalaris)
+            - Color Shading Code: Chalarangelo (Angelos Chalaris)
             <a href = "https://github.com/Chalarangelo/30-seconds-of-code/blob/master/content/snippets/js/s/change-lightness.md">Source</a>
             <br><br>
             <a href = "https://superbro64.github.io">Back to Homepage</a>
