@@ -483,23 +483,17 @@
                     gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
 
                     player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-                    walls = [(new componentWall(328, 272, 40, 224, "saddlebrown", 2, "black", true, "Door", 1)),
-                             (new componentWall(728, 272, 224, 40, "saddlebrown", 2, "black", true, "Door", 2)),
-                             (new componentWall(228, 72, 224, 40, "saddlebrown", 2, "black", true, "Door", 3)),
-                             (new componentWall(628, 372, 40, 224, "royalblue", 2, "black", true, "Flip", -2)),
-                             (new componentWall(428, 272, 224, 40, "darkorange", 2, "black", true, "Flip", -1)),
+                    walls = [(new componentWall(628, 372, 40, 224, "royalblue", 2, "black", true, "Flip", -2)),
+                             (new componentWall(428, 272, 224, 40, "darkorange", 2, "black", false, "Flip", -1)),
                              (new componentWall(228, 672, 224, 40, "royalblue", 2, "black", true, "Flip", -2)),
-                             (new componentWall(128, 472, 40, 224, "darkorange", 2, "black", true, "Flip", -1))];
+                             (new componentWall(128, 472, 40, 224, "darkorange", 2, "black", false, "Flip", -1))];
                     holes = [];
                     treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                                 (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
                     warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
-                    switches = [(new componentSwitch(100, 400, 40, 40, "white", 2, "black", "Door", "OFF", 1)),
-                                (new componentSwitch(900, 400, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
-                                (new componentSwitch(800, 700, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
-                                (new componentSwitch(500, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
+                    switches = [(new componentSwitch(500, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(500, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(900, 600, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                                 (new componentSwitch(100, 200, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
@@ -948,32 +942,6 @@
                 {
                     this.context = gameArea.context;
 
-                    if (this.type == "Door")
-                    {
-                        for (i = 0; i < switches.length; i++)
-                        {
-                            if (switches[i].type == "Door" && switches[i].value == this.value)
-                            {
-                                if (switches[i].state == "ON") { this.tangibility = false; }
-                                else if (switches[i].state == "OFF") { this.tangibility = true; }
-                                break;
-                            }
-                        }
-                    }
-                    else if (this.type == "Flip")
-                    {
-                        if (switches[switches.length - 1].type == "Flip" && switches[switches.length - 1].state == "ON")
-                        {
-                            if (this.value == -1) { this.tangibility = true; }
-                            else if (this.value == -2) { this.tangibility = false; }
-                        }
-                        else if (switches[switches.length - 1].type == "Flip" && switches[switches.length - 1].state == "OFF")
-                        {
-                            if (this.value == -1) { this.tangibility = false; }
-                            else if (this.value == -2) { this.tangibility = true; }
-                        }
-                    }
-
                     if (!this.tangibility) { this.context.globalAlpha = 0.5; }
 
                     this.context.fillStyle = this.fillColor;
@@ -1107,7 +1075,7 @@
             {
                 this.x = x, this.y = y, this.width = width, this.height = height;
                 this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-                this.type = type, this.state = state, this.value = value;
+                this.type = type, this.state = state, this.value = value; this.activatable = false;
                 this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Camera_Click.wav", "SFX");
 
                 this.update = function()
@@ -1116,13 +1084,29 @@
 
                     if (this.type == "Door")
                     {
-                        if (this.state == "ON") { this.fillColor = "forestgreen"; }
-                        else if (this.state == "OFF") { this.fillColor = "crimson"; } 
+                        if (this.state == "OFF")
+                        {
+                            if (this.activatable) { this.fillColor = "hsl(348, 83%, 57%)"; }
+                            else if (!this.activatable) { this.fillColor = "hsl(348, 83%, 47%)"; }
+                        }
+                        else if (this.state == "ON")
+                        {
+                            if (this.activatable) { this.fillColor = "hsl(120, 61%, 44%)"; }
+                            else if (!this.activatable) { this.fillColor = "hsl(120, 61%, 34%)"; }
+                        }
                     }
                     else if (this.type == "Flip")
                     {
-                        if (this.state == "ON") { this.fillColor = "royalblue"; }
-                        else if (this.state == "OFF") { this.fillColor = "darkorange"; }
+                        if (this.state == "OFF")
+                        {
+                            if (this.activatable) { this.fillColor = "hsl(33, 100%, 60%)"; }
+                            else if (!this.activatable) { this.fillColor = "hsl(33, 100%, 50%)"; }
+                        }
+                        else if (this.state == "ON")
+                        {
+                            if (this.activatable) { this.fillColor = "hsl(225, 73%, 67%)"; }
+                            else if (!this.activatable) { this.fillColor = "hsl(225, 73%, 57%)"; }
+                        }
                     }
 
                     this.context.fillStyle = this.fillColor;
@@ -1135,19 +1119,45 @@
 
                 this.changeState = function()
                 {
+                    if (!this.sfx.sound.paused) { return; }
+                    
                     this.sfx.play();
 
                     if (this.type == "Door")
                     {
-                        if (this.state == "ON") { this.state = "OFF"; }
-                        else if (this.state == "OFF") { this.state = "ON"; }
+                        for (i = 0; i < walls.length; i++)
+                        {
+                            if (walls[i].type == "Door" && walls[i].value == this.value)
+                            {
+                                if (this.state == "OFF") { this.state = "ON"; walls[i].tangibility = false; }
+                                else if (this.state == "ON") { this.state = "OFF"; walls[i].tangibility = true; }
+                                break;
+                            }
+                        }
                     }
                     else if (this.type == "Flip")
                     {
+                        for (i = 0; i < walls.length; i++)
+                        {
+                            if (walls[i].type == "Flip" && walls[i].value < 0)
+                            {
+                                if (this.state == "OFF")
+                                {
+                                    if (walls[i].value == -1) { walls[i].tangibility = true; }
+                                    else if (walls[i].value == -2) { walls[i].tangibility = false; }
+                                }
+                                else if (this.state == "ON")
+                                {
+                                    if (walls[i].value == -1) { walls[i].tangibility = false; }
+                                    else if (walls[i].value == -2) { walls[i].tangibility = true; }
+                                }
+                            }
+                        }
+
                         for (i = 0; i < switches.length; i++)
                         {
-                            if (switches[i].type == "Flip" && switches[i].state == "ON") { switches[i].state = "OFF"; }
-                            else if (switches[i].type == "Flip" && switches[i].state == "OFF") { switches[i].state = "ON"; }
+                            if (switches[i].type == "Flip" && switches[i].state == "OFF") { switches[i].state = "ON"; }
+                            else if (switches[i].type == "Flip" && switches[i].state == "ON") { switches[i].state = "OFF"; }
                         }
                     }
                 }
@@ -1246,8 +1256,11 @@
                 {
                     if (player.objectCollision(switches[i]))
                     {
+                        switches[i].activatable = true;
+
                         if (player.action) { switches[i].changeState(); }
                     }
+                    else { switches[i].activatable = false; }
 
                     if (switches[i]) { switches[i].update(); }
                 }
@@ -1447,7 +1460,6 @@
             }
 
             // IDEAS
-            // - Add visual indicators to door and toggle switches
             // - Shrinkers + Growers
             // - Big Door Switches + Big Toggle Switches
             // - Push Blocks
@@ -1456,9 +1468,8 @@
 
             // ISSUES
             // - Sound effects not properly muting when the game interval is paused
-            // - Switch sound effect not playing on every press if the switch is pressed quickly
-            // - Wonkiness with updating wall variant types, with them sometimes dissapearing depending on placement order
             // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
+            // - Transparent walls may be hard to make out against some background colors
 
             // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
             let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
