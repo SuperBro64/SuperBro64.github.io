@@ -964,7 +964,7 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
     {
         this.context = gameArea.context;
 
-        if (!this.tangibility) { this.context.globalAlpha = 0.25; }
+        if (!this.tangibility) { this.context.globalAlpha = 0.5; }
 
         this.context.fillStyle = this.fillColor;
         this.context.fillRect(this.x, this.y, this.width, this.height);
