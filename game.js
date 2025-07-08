@@ -10,7 +10,7 @@ function startGame()
 
 // Variables for all game objects along with important global variables
 var player, walls = [], holes = [], treasure = [], warps = [], switches = [];
-var gameStarted = false, gameIsOver = false;
+var gameStarted = false, gameIsOver = false, mirrorModeIsOn = false;
 var hud = [], music, sfx;
 
 // Constant containing the HSL color values for easily identifiable HTML color names
@@ -132,6 +132,25 @@ var gameArea =
 
         grad.addColorStop(0.0, shade); grad.addColorStop(0.5, color); grad.addColorStop(1.0, shade);
         this.fillColor = grad;
+    },
+
+    // Turns Mirror Mode on or off
+    mirrorMode: function(state)
+    {
+        if (state)
+        {
+            mirrorModeIsOn = true;
+
+            this.context.translate(this.canvas.width, 0); this.context.scale(-1, 1);
+            this.context.drawImage(this.canvas, this.canvas.width * -1, 0);
+        }
+        else if (!state)
+        {
+            mirrorModeIsOn = false;
+
+            this.context.resetTransform();
+            this.context.drawImage(this.canvas, this.canvas.width, 0);
+        }
     }
 }
 
@@ -159,6 +178,8 @@ var levelSetup =
 
         document.querySelector("#actionButton").innerHTML = "🚩";
         document.querySelector("#pauseButton").innerHTML = "❌";
+
+        gameArea.mirrorMode(false);
         gameStarted = false;
     },
 
@@ -174,15 +195,17 @@ var levelSetup =
         treasure = [];
         warps = [(new componentWarp(120, 100, 30, 30, 0, "seagreen", 2, "black", "Credits", "N/A")),
                     (new componentWarp(512, 100, 30, 30, 0, "seagreen", 2, "black", "Main Hub", "N/A")),
-                    (new componentWarp(50, 718, 30, 30, 0, "royalblue", 2, "black", "Title Screen", "N/A")),
-                    (new componentWarp(974, 718, 30, 30, 0, "crimson", 2, "black", "Menu Screen", "Deletion"))];
+                    (new componentWarp(120, 718, 30, 30, 0, "royalblue", 2, "black", "Title Screen", "N/A")),
+                    (new componentWarp(512, 718, 30, 30, 0, "orange", 2, "black", "Menu Screen", "Mirror")),
+                    (new componentWarp(904, 718, 30, 30, 0, "crimson", 2, "black", "Menu Screen", "Deletion"))];
         switches = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 360, 50, "MAIN MENU", 0, "Level")),
                 (new componentHud("40px NewSuperMarioFontU", "white", "black", 400, 160, "Start Game!", 0, "N/A")),
                 (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 90, 730, "Quit Game", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 710, 730, "Erase Game", 0, "N/A"))];
+                (new componentHud("40px NewSuperMarioFontU", "white", "black", 25, 680, "Quit Game", 0, "N/A")),
+                (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 680, "Mirror Mode", 0, "N/A")),
+                (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
     },
 
@@ -833,6 +856,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
             if (stickX < 75 && stickX > -75) { this.speedX /= 2; }
             if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
+
+            if (mirrorModeIsOn) { this.speedX *= -1; }
         }
 
         this.x += this.speedX; this.y += this.speedY;
@@ -1065,6 +1090,11 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
 
         if (this.type == "Goal") { saveProgress.save("saveProgress"); }
         else if (this.type == "Deletion") { saveProgress.delete("saveProgress"); }
+        else if (this.type == "Mirror")
+        {
+            if (!mirrorModeIsOn) { gameArea.mirrorMode(true); }
+            else if (mirrorModeIsOn) { gameArea.mirrorMode(false); }
+        }
 
         switch (this.destination)
         {
@@ -1497,15 +1527,12 @@ function toggleAudioMuting()
 }
 
 // IDEAS
-// - Next Steps:
-//   - Transfer controls into game canvas so that everything is self-contained
-//   - Have "Webgame" button on main page open game up in new window instead of going to new webpage
-//  -) Create new "instructions" level and move all info from webpage into it
+// - Create new "instructions" level and move all info from webpage into it
+// - Allow for multiple save files that are saved separately from each other
+// - Implement Mirror Mode more fully by requiring it for 100% completion
 // - Shrinkers + Growers
 // - Big Door Switches + Big Toggle Switches
 // - Push Blocks
-// - Mirror Mode
-// - Time Trials
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
