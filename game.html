@@ -40,10 +40,8 @@
                 padding: 20px 20px; border: 3px solid black;
             }
             #pauseButton:active { background-color: darkgoldenrod; }
-            #controls { background-color: lightgray; border: 5px solid black; }
             
             .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
-            .row { display: inline-block; clear: both; }
 
             @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.woff"); }
             @font-face { font-family: "NewSuperMarioFontU"; src: url("resources/fonts/New_Super_Mario_Font_U.woff2"); }
@@ -55,17 +53,23 @@
 
     <body onload = "startGame()">
 
-        <div id = "controls" class = "row" style = "text-align: center; vertical-align: text-bottom;">
-            <div id = "joystick" style = "margin-top: 8px; margin-bottom: 8px;"></div>
+        <div id = "game" class = "prevent-select" style = "display: inline-block;">
 
-            <div id = "buttons" class = "prevent-select" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
-                <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
-                <button id = "actionButton" onclick = "playerAction()" style = "margin-left: 5px; margin-right: 5px;"><b>🅰️</b></button>
-                <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
+            <div id = "controls" style = "float: right; background-color: lightgray; border: 5px solid black;">
+
+                <div id = "joystick" style = "margin-top: 5px; margin-bottom: 1px;"></div>
+
+                <div id = "buttons" style = "margin-bottom: 4px; margin-left: 4px; margin-right: 4px;">
+                    <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
+                    <button id = "actionButton" onclick = "playerAction()"><b>🅰️</b></button>
+                    <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
+                </div>
+
             </div>
-        </div>
 
-        <script src = "game.js"></script>
+            <div id = "screen"><script src = "game.js"></script></div>
+
+        </div>
 
         <br>
         
