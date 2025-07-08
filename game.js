@@ -54,8 +54,8 @@ const colors =
 var saveProgress =
 {
     completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0], ["Level 6", 0],
-                    ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0],
-                    ["Level C", 0], ["Percentage", 0]],
+                 ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0],
+                 ["Level C", 0], ["Percentage", 0]],
 
     save: function(storageName)
     {
@@ -140,14 +140,12 @@ var gameArea =
         if (state)
         {
             mirrorModeIsOn = true;
-
             this.context.translate(this.canvas.width, 0); this.context.scale(-1, 1);
             this.context.drawImage(this.canvas, this.canvas.width * -1, 0);
         }
         else if (!state)
         {
             mirrorModeIsOn = false;
-
             this.context.resetTransform();
             this.context.drawImage(this.canvas, this.canvas.width, 0);
         }
@@ -171,9 +169,10 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("100px NewSuperMarioFontU", "white", "black", 230, 210, "HYPERION'S", 0, "Level")),
-                (new componentHud("60px NewSuperMarioFontU", "white", "black", 55, 280, "TREASURE-MAXED LABYRINTH", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755, "©️ 2025 SuperBro64", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500, "Click on 🚩 to play!", 0, "N/A"))];
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 55, 280, "TREASURE-MAXED LABYRINTH", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755, "©️ 2025 SuperBro64", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500, "Click on 🚩 to play!", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 220, 550, "Look below for instructions!", 0, "N/A"))];
         music.sound.src = ""; music.stop();
 
         document.querySelector("#actionButton").innerHTML = "🚩";
@@ -194,18 +193,18 @@ var levelSetup =
         holes = [];
         treasure = [];
         warps = [(new componentWarp(120, 100, 30, 30, 0, "seagreen", 2, "black", "Credits", "N/A")),
-                    (new componentWarp(512, 100, 30, 30, 0, "seagreen", 2, "black", "Main Hub", "N/A")),
-                    (new componentWarp(120, 718, 30, 30, 0, "royalblue", 2, "black", "Title Screen", "N/A")),
-                    (new componentWarp(512, 718, 30, 30, 0, "orange", 2, "black", "Menu Screen", "Mirror")),
-                    (new componentWarp(904, 718, 30, 30, 0, "crimson", 2, "black", "Menu Screen", "Deletion"))];
+                 (new componentWarp(512, 100, 30, 30, 0, "seagreen", 2, "black", "Main Hub", "N/A")),
+                 (new componentWarp(120, 718, 30, 30, 0, "royalblue", 2, "black", "Title Screen", "N/A")),
+                 (new componentWarp(512, 718, 30, 30, 0, "orange", 2, "black", "Menu Screen", "Mirror")),
+                 (new componentWarp(904, 718, 30, 30, 0, "crimson", 2, "black", "Menu Screen", "Deletion"))];
         switches = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 360, 50, "MAIN MENU", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 400, 160, "Start Game!", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 25, 680, "Quit Game", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 680, "Mirror Mode", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 400, 160, "Start Game!", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 25, 680, "Quit Game", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 680, "Mirror Mode", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
     },
 
@@ -223,19 +222,19 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 380, 50, "CREDITS", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 470, 750, "Exit", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 120,
-                    "Game Creator . . . . . . . . . . SuperBro64", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 170,
-                    "Background Music . . . . . Super Monkey Ball 2", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 220,
-                    "Sound Effects . . . . . . . . . Super Mario 64", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 270,
-                    "Font . . . . . . . . . . . . . . . . . . . . New Super Mario Bros. U", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 320,
-                    "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 370,
-                    "Color Shading Code . . . . Chalarangelo", 0, "N/A"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 470, 750, "Exit", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 120,
+                "Game Creator . . . . . . . . . . SuperBro64", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 170,
+                "Background Music . . . . . Super Monkey Ball 2", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 220,
+                "Sound Effects . . . . . . . . . Super Mario 64", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 270,
+                "Font . . . . . . . . . . . . . . . . . . . . New Super Mario Bros. U", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 320,
+                "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 370,
+                "Color Shading Code . . . . Chalarangelo", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
     },
 
@@ -247,72 +246,72 @@ var levelSetup =
 
         player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(328, 272, 40, 224, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(328, 232, 368, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(328, 496, 368, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(0, 384, 328, 30, "crimson", 2, "black", true, "Progression", 2)),
-                    (new componentWall(452, 0, 30, 232, "crimson", 2, "black", true, "Progression", 4)),
-                    (new componentWall(666, 272, 30, 224, "crimson", 2, "black", true, "Progression", 7)),
-                    (new componentWall(696, 496, 328, 30, "crimson", 2, "black", true, "Progression", 10)),
-                    (new componentWall(666, 536, 30, 232, "crimson", 2, "black", true, "Progression", 10))];
+                 (new componentWall(328, 232, 368, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(328, 496, 368, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(0, 384, 328, 30, "crimson", 2, "black", true, "Progression", 2)),
+                 (new componentWall(452, 0, 30, 232, "crimson", 2, "black", true, "Progression", 4)),
+                 (new componentWall(666, 272, 30, 224, "crimson", 2, "black", true, "Progression", 7)),
+                 (new componentWall(696, 496, 328, 30, "crimson", 2, "black", true, "Progression", 10)),
+                 (new componentWall(666, 536, 30, 232, "crimson", 2, "black", true, "Progression", 10))];
         holes = [];
         treasure = [];
         warps = [(new componentWarp(512, 688, 30, 30, 0, "seagreen", 2, "black", "Menu Screen", "N/A")),
-                    (new componentWarp(370, 644, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
-                    (new componentWarp(45, 728, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
-                    (new componentWarp(150, 504, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
-                    (new componentWarp(240, 310, 30, 30, 0, "sienna", 2, "black", "Level 4", "Level 4")),
-                    (new componentWarp(75, 90, 30, 30, 0, "sienna", 2, "black", "Level 5", "Level 5")),
-                    (new componentWarp(390, 170, 30, 30, 0, "sienna", 2, "black", "Level 6", "Level 6")),
-                    (new componentWarp(700, 110, 30, 30, 0, "sienna", 2, "black", "Level 7", "Level 7")),
-                    (new componentWarp(940, 230, 30, 30, 0, "sienna", 2, "black", "Level 8", "Level 8")),
-                    (new componentWarp(830, 430, 30, 30, 0, "sienna", 2, "black", "Level 9", "Level 9")),
-                    (new componentWarp(512, 384, 30, 30, 0, "sienna", 2, "black", "Level 10", "Level 10")),
-                    (new componentWarp(865, 604, 30, 30, 0, "sienna", 2, "black", "Level A", "Level A")),
-                    (new componentWarp(765, 704, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
-                    (new componentWarp(965, 704, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
+                 (new componentWarp(370, 644, 30, 30, 0, "sienna", 2, "black", "Level 1", "Level 1")),
+                 (new componentWarp(45, 728, 30, 30, 0, "sienna", 2, "black", "Level 2", "Level 2")),
+                 (new componentWarp(150, 504, 30, 30, 0, "sienna", 2, "black", "Level 3", "Level 3")),
+                 (new componentWarp(240, 310, 30, 30, 0, "sienna", 2, "black", "Level 4", "Level 4")),
+                 (new componentWarp(75, 90, 30, 30, 0, "sienna", 2, "black", "Level 5", "Level 5")),
+                 (new componentWarp(390, 170, 30, 30, 0, "sienna", 2, "black", "Level 6", "Level 6")),
+                 (new componentWarp(700, 110, 30, 30, 0, "sienna", 2, "black", "Level 7", "Level 7")),
+                 (new componentWarp(940, 230, 30, 30, 0, "sienna", 2, "black", "Level 8", "Level 8")),
+                 (new componentWarp(830, 430, 30, 30, 0, "sienna", 2, "black", "Level 9", "Level 9")),
+                 (new componentWarp(512, 384, 30, 30, 0, "sienna", 2, "black", "Level 10", "Level 10")),
+                 (new componentWarp(865, 604, 30, 30, 0, "sienna", 2, "black", "Level A", "Level A")),
+                 (new componentWarp(765, 704, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
+                 (new componentWarp(965, 704, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Main Hub", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
-                (new componentHud("60px NewSuperMarioFontU", "white", "black", 880, 45, "000%", 0, "Completion")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 470, 750, "Exit", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 360, 637, "1", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 35, 721, "2", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 140, 497, "3", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 230, 303, "4", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 65, 83, "5", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 380, 163, "6", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 690, 103, "7", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 930, 223, "8", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 820, 423, "9", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 494, 377, "10", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 852, 597, "A", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 752, 697, "B", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 952, 697, "C", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 80, 411, "2 Levels", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 40, "4", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 90, "L", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 113, "e", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 136, "v", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 159, "e", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 461, 188, "l", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 211, "s", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 310, "7", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 360, "L", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 383, "e", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 406, "v", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 429, "e", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 675, 458, "l", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 481, "s", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 672, 564, "1", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 672, 592, "0", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 642, "L", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 665, "e", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 688, "v", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 711, "e", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 675, 740, "l", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 763, "s", 0, "N/A")),
-                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 775, 523, "10 Levels", 0, "N/A"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 880, 45, "000%", 0, "Completion")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 470, 750, "Exit", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 360, 637, "1", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 35, 721, "2", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 140, 497, "3", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 230, 303, "4", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 65, 83, "5", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 380, 163, "6", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 690, 103, "7", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 930, 223, "8", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 820, 423, "9", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 494, 377, "10", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 852, 597, "A", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 752, 697, "B", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 952, 697, "C", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 80, 411, "2 Levels", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 40, "4", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 90, "L", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 113, "e", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 136, "v", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 159, "e", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 461, 188, "l", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 456, 211, "s", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 310, "7", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 360, "L", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 383, "e", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 406, "v", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 429, "e", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 675, 458, "l", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 481, "s", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 672, 564, "1", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 672, 592, "0", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 642, "L", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 665, "e", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 688, "v", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 711, "e", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 675, 740, "l", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 763, "s", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 775, 523, "10 Levels", 0, "N/A"))];
 
         if (saveProgress.completion[13][1] == 100) { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
         else { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
@@ -326,18 +325,18 @@ var levelSetup =
 
         player = new componentPlayer(110, 384, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(350, 0, 40, 150, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(215, 150, 175, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(215, 190, 40, 450, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(550, 190, 40, 110, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(550, 500, 40, 267, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(550, 300, 175, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(550, 460, 175, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(685, 340, 40, 120, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(550, 150, 175, 40, "gray", 2, "black", true, "N/A", 0))];
+                 (new componentWall(215, 150, 175, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(215, 190, 40, 450, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(550, 190, 40, 110, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(550, 500, 40, 267, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(550, 300, 175, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(550, 460, 175, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(685, 340, 40, 120, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(550, 150, 175, 40, "gray", 2, "black", true, "N/A", 0))];
         holes = [(new componentHole(727, 150, 180, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(843, 300, 180, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(727, 460, 180, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(867, 500, 40, 160, "black", 2, "black", false, "N/A", 0))];
+                 (new componentHole(843, 300, 180, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(727, 460, 180, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(867, 500, 40, 160, "black", 2, "black", false, "N/A", 0))];
         treasure = [(new componentTreasure(110, 220, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(110, 546, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(300, 80, 10, 0, 2, "gold", 2, "black")),
@@ -357,8 +356,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 1", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
     },
 
@@ -370,20 +369,20 @@ var levelSetup =
 
         player = new componentPlayer(964, 710, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(865, 622, 158, 30, "saddlebrown", 2, "black", true, "Door", 1)),
-                    (new componentWall(667, 157, 158, 30, "saddlebrown", 2, "black", true, "Door", 2)),
-                    (new componentWall(0, 157, 158, 30, "saddlebrown", 2, "black", true, "Door", 3)),
-                    (new componentWall(168, 352, 30, 145, "saddlebrown", 2, "black", true, "Door", 4)),
-                    (new componentWall(0, 612, 158, 30, "saddlebrown", 2, "black", true, "Door", 5)),
-                    (new componentWall(158, 497, 40, 270, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(425, 612, 40, 155, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(465, 612, 360, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(825, 157, 40, 495, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(158, 157, 509, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(0, 312, 425, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(158, 197, 40, 115, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(425, 312, 40, 205, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(627, 312, 40, 205, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(465, 392, 162, 40, "gray", 2, "black", true, "N/A", 0))];
+                 (new componentWall(667, 157, 158, 30, "saddlebrown", 2, "black", true, "Door", 2)),
+                 (new componentWall(0, 157, 158, 30, "saddlebrown", 2, "black", true, "Door", 3)),
+                 (new componentWall(168, 352, 30, 145, "saddlebrown", 2, "black", true, "Door", 4)),
+                 (new componentWall(0, 612, 158, 30, "saddlebrown", 2, "black", true, "Door", 5)),
+                 (new componentWall(158, 497, 40, 270, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(425, 612, 40, 155, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(465, 612, 360, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(825, 157, 40, 495, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(158, 157, 509, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(0, 312, 425, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(158, 197, 40, 115, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(425, 312, 40, 205, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(627, 312, 40, 205, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(465, 392, 162, 40, "gray", 2, "black", true, "N/A", 0))];
         holes = [];
         treasure = [(new componentTreasure(700, 710, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(990, 476, 10, 0, 2, "gold", 2, "black")),
@@ -405,8 +404,8 @@ var levelSetup =
                     (new componentSwitch(525, 455, 40, 40, "white", 2, "black", "Door", "OFF", 5)),];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 2", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
     },
 
@@ -418,22 +417,22 @@ var levelSetup =
 
         player = new componentPlayer(512, 100, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(412, 172, 200, 30, "saddlebrown", 2, "black", true, "Door", 1)),
-                    (new componentWall(412, 322, 200, 30, "saddlebrown", 2, "black", true, "Door", 2)),
-                    (new componentWall(412, 472, 200, 30, "saddlebrown", 2, "black", true, "Door", 3)),
-                    (new componentWall(412, 622, 200, 30, "saddlebrown", 2, "black", true, "Door", 4)),
-                    (new componentWall(372, 172, 40, 595, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(612, 172, 40, 595, "gray", 2, "black", true, "N/A", 0))];
+                 (new componentWall(412, 322, 200, 30, "saddlebrown", 2, "black", true, "Door", 2)),
+                 (new componentWall(412, 472, 200, 30, "saddlebrown", 2, "black", true, "Door", 3)),
+                 (new componentWall(412, 622, 200, 30, "saddlebrown", 2, "black", true, "Door", 4)),
+                 (new componentWall(372, 172, 40, 595, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(612, 172, 40, 595, "gray", 2, "black", true, "N/A", 0))];
         holes = [(new componentHole(100, 172, 270, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(250, 322, 120, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(250, 472, 120, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(250, 622, 120, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(100, 212, 40, 450, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(654, 172, 130, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(893, 172, 130, 40, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(744, 212, 40, 350, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(893, 212, 40, 350, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(744, 667, 40, 100, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(893, 667, 40, 100, "black", 2, "black", false, "N/A", 0))];
+                 (new componentHole(250, 322, 120, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(250, 472, 120, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(250, 622, 120, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(100, 212, 40, 450, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(654, 172, 130, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(893, 172, 130, 40, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(744, 212, 40, 350, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(893, 212, 40, 350, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(744, 667, 40, 100, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(893, 667, 40, 100, "black", 2, "black", false, "N/A", 0))];
         treasure = [(new componentTreasure(172, 100, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(322, 100, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(702, 100, 10, 0, 2, "gold", 2, "black")),
@@ -459,8 +458,8 @@ var levelSetup =
                     (new componentSwitch(306, 250, 40, 40, "white", 2, "black", "Door", "OFF", 4))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
     },
 
@@ -472,31 +471,31 @@ var levelSetup =
 
         player = new componentPlayer(100, 670, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(0, 450, 200, 30, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentWall(200, 300, 30, 150, "orange", 2, "black", false, "Flip", -1)),
-                    (new componentWall(0, 140, 200, 30, "orange", 2, "black", false, "Flip", -1)),
-                    (new componentWall(400, 0, 30, 120, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentWall(400, 140, 30, 120, "orange", 2, "black", false, "Flip", -1)),
-                    (new componentWall(605, 0, 30, 120, "orange", 2, "black", false, "Flip", -1)),
-                    (new componentWall(605, 140, 30, 120, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentWall(810, 0, 30, 120, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentWall(810, 140, 30, 120, "orange", 2, "black", false, "Flip", -1)),
-                    (new componentWall(840, 260, 183, 30, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentWall(410, 650, 30, 117, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentWall(914, 652, 30, 115, "orange", 2, "black", false, "Flip", -1)),
-                    (new componentWall(200, 450, 40, 317, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(240, 450, 160, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(400, 300, 40, 350, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(240, 260, 600, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(200, 140, 40, 160, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(400, 120, 623, 20, "gray", 2, "black", true, "N/A", 0))];
+                 (new componentWall(200, 300, 30, 150, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(0, 140, 200, 30, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(400, 0, 30, 120, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentWall(400, 140, 30, 120, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(605, 0, 30, 120, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(605, 140, 30, 120, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentWall(810, 0, 30, 120, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentWall(810, 140, 30, 120, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(840, 260, 183, 30, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentWall(410, 650, 30, 117, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentWall(914, 652, 30, 115, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(200, 450, 40, 317, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(240, 450, 160, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(400, 300, 40, 350, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(240, 260, 600, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(200, 140, 40, 160, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(400, 120, 623, 20, "gray", 2, "black", true, "N/A", 0))];
         holes = [(new componentHole(670, 400, 120, 75, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentHole(550, 575, 120, 75, "skyblue", 2, "black", true, "Flip", -2)),
-                    (new componentHole(792, 575, 120, 75, "black", 2, "orange", false, "Flip", -1)),
-                    (new componentHole(442, 400, 226, 75, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(792, 400, 231, 75, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(442, 575, 106, 75, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(672, 575, 118, 75, "black", 2, "black", false, "N/A", 0)),
-                    (new componentHole(914, 575, 109, 75, "black", 2, "black", false, "N/A", 0))];
+                 (new componentHole(550, 575, 120, 75, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentHole(792, 575, 120, 75, "black", 2, "orange", false, "Flip", -1)),
+                 (new componentHole(442, 400, 226, 75, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(792, 400, 231, 75, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(442, 575, 106, 75, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(672, 575, 118, 75, "black", 2, "black", false, "N/A", 0)),
+                 (new componentHole(914, 575, 109, 75, "black", 2, "black", false, "N/A", 0))];
         treasure = [(new componentTreasure(30, 738, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(100, 375, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(320, 375, 10, 0, 2, "gold", 2, "black")),
@@ -523,8 +522,8 @@ var levelSetup =
                     (new componentSwitch(710, 502, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 4", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
     },
 
@@ -545,8 +544,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 5", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
     },
 
@@ -567,8 +566,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 6", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
     },
 
@@ -589,8 +588,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 7", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
     },
 
@@ -611,8 +610,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 8", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
     },
 
@@ -633,8 +632,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 9", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
     },
 
@@ -655,8 +654,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 10", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
     },
 
@@ -668,28 +667,28 @@ var levelSetup =
 
         player = new componentPlayer(512, 504, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(462, 300, 100, 10, "saddlebrown", 2, "black", true, "Door", 1)),
-                    (new componentWall(462, 310, 100, 10, "saddlebrown", 2, "black", true, "Door", 2)),
-                    (new componentWall(462, 320, 100, 10, "saddlebrown", 2, "black", true, "Door", 3)),
-                    (new componentWall(462, 330, 100, 10, "saddlebrown", 2, "black", true, "Door", 4)),
-                    (new componentWall(422, 420, 180, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(422, 300, 40, 120, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(562, 300, 40, 120, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(282, 546, 460, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(492, 667, 40, 100, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(342, 586, 40, 100, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(642, 586, 40, 100, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(112, 646, 120, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(792, 646, 120, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(112, 546, 40, 100, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(872, 546, 40, 100, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(0, 420, 292, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(732, 420, 292, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(282, 300, 140, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(602, 300, 140, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(112, 146, 40, 194, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(872, 146, 40, 154, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(152, 146, 300, 40, "gray", 2, "black", true, "N/A", 0)),
-                    (new componentWall(572, 146, 300, 40, "gray", 2, "black", true, "N/A", 0))];
+                 (new componentWall(462, 310, 100, 10, "saddlebrown", 2, "black", true, "Door", 2)),
+                 (new componentWall(462, 320, 100, 10, "saddlebrown", 2, "black", true, "Door", 3)),
+                 (new componentWall(462, 330, 100, 10, "saddlebrown", 2, "black", true, "Door", 4)),
+                 (new componentWall(422, 420, 180, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(422, 300, 40, 120, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(562, 300, 40, 120, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(282, 546, 460, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(492, 667, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(342, 586, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(642, 586, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(112, 646, 120, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(792, 646, 120, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(112, 546, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(872, 546, 40, 100, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(0, 420, 292, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(732, 420, 292, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(282, 300, 140, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(602, 300, 140, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(112, 146, 40, 194, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(872, 146, 40, 154, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(152, 146, 300, 40, "gray", 2, "black", true, "N/A", 0)),
+                 (new componentWall(572, 146, 300, 40, "gray", 2, "black", true, "N/A", 0))];
         holes = [];
         treasure = [(new componentTreasure(215, 90, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(355, 90, 10, 0, 2, "gold", 2, "black")),
@@ -734,8 +733,8 @@ var levelSetup =
                     (new componentSwitch(954, 698, 40, 40, "white", 2, "black", "Door", "OFF", 4))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level A", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
     },
 
@@ -756,8 +755,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level B", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Target.mp3"; music.play();
     },
 
@@ -778,8 +777,8 @@ var levelSetup =
         switches = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level C", 0, "Level")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
-                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3"; music.play();
     }
 }
@@ -956,10 +955,7 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
     {
         var levelsCompleted = 0;
 
-        for (i = 0; i < saveProgress.completion.length - 1; i++)
-        {
-            if (saveProgress.completion[i][1] >= 1) { levelsCompleted++; }
-        }
+        for (i = 0; i < saveProgress.completion.length - 1; i++) { if (saveProgress.completion[i][1] >= 1) { levelsCompleted++; } }
 
         if (levelsCompleted >= this.value) { this.tangibility = false; }
     }
@@ -968,7 +964,7 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
     {
         this.context = gameArea.context;
 
-        if (!this.tangibility) { this.context.globalAlpha = 0.5; }
+        if (!this.tangibility) { this.context.globalAlpha = 0.25; }
 
         this.context.fillStyle = this.fillColor;
         this.context.fillRect(this.x, this.y, this.width, this.height);
@@ -1353,10 +1349,7 @@ function updateGameArea()
         }
         else if (hud[i].type == "Timer" && hud[i].startingTime > 0)
         {
-            if (hud[i].timeRemaining > 0)
-            {
-                hud[i].timeRemaining = (hud[i].startingTime - (gameArea.frameNum / 50)).toFixed(1);
-            }
+            if (hud[i].timeRemaining > 0) { hud[i].timeRemaining = (hud[i].startingTime - (gameArea.frameNum / 50)).toFixed(1); }
             if (hud[i].timeRemaining < 10) { hud[i].fillColor = "red"; }
 
             hud[i].text = "⏱️";
@@ -1489,9 +1482,9 @@ function pauseGame()
             for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
             var pauseText = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 400, 364, "PAUSED", 0, "N/A")),
-                                (new componentHud("40px NewSuperMarioFontU", "white", "black", 220, 414,
+                             (new componentHud("40px NewSuperMarioFontU", "white", "black", 220, 414,
                                 "Click ▶️ to resume the game.", 0, "N/A")),
-                                (new componentHud("40px NewSuperMarioFontU", "white", "black", 215, 464,
+                             (new componentHud("40px NewSuperMarioFontU", "white", "black", 215, 464,
                                 "Click 🏠 to return to the hub.", 0, "N/A"))];
             for (i = 0; i < pauseText.length; i++) { pauseText[i].update(); }
 
