@@ -588,14 +588,20 @@ var levelSetup =
         gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
-        walls = [];
-        holes = [(new componentHole(200, 400, 100, 100, "black", 2, "black", false, "N/A", 0))];
+        walls = [(new componentWall(300, 650, 158, 30, "saddlebrown", 2, "black", true, "Door", 1)),
+                 (new componentWall(550, 650, 158, 30, "saddlebrown", 2, "black", true, "Door", 2)),
+                 (new componentWall(0, 450, 200, 30, "skyblue", 2, "black", true, "Flip", -2)),
+                 (new componentWall(0, 140, 200, 30, "orange", 2, "black", false, "Flip", -1))];
+        holes = [(new componentHole(800, 300, 100, 100, "black", 2, "black", false, "N/A", 0))];
         treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
-        switches = [];
+        switches = [(new componentSwitch(360, 500, 40, 40, "white", 2, "black", "Door", "OFF", 1)),
+                    (new componentSwitch(590, 480, 70, 70, "white", 2, "black", "Door", "OFF", 2)),
+                    (new componentSwitch(80, 520, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
+                    (new componentSwitch(70, 230, 70, 70, "white", 2, "black", "Flip", "OFF", 0)),];
         resizers = [(new componentResizer(400, 300, 15, 0, 2, "skyblue", 2, "black", "Tiny")),
                     (new componentResizer(600, 300, 15, 0, 2, "orange", 2, "black", "Huge"))];
 
@@ -949,6 +955,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     {
         if (hole.walkability || this.falling) { return; }
 
+        this.radius = 20;
+
         var overlapX = Math.min(this.x + this.radius, hole.x + hole.width) - Math.max(this.x - this.radius, hole.x);
         var overlapY = Math.min(this.y + this.radius, hole.y + hole.height) - Math.max(this.y - this.radius, hole.y);
 
@@ -1193,7 +1201,7 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
 
     this.changeState = function()
     {
-        if (!this.sfx.sound.paused) { return; }
+        if (!this.sfx.sound.paused || !this.activatable) { return; }
         
         this.sfx.play();
 
@@ -1252,6 +1260,13 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
             }
         }
     }
+
+    this.enoughPlayerWeightToActivate = function()
+    {
+        if ((this.width >= 40 && this.height >= 40) && player.radius < 20) { this.activatable = false; }
+        else if ((this.width >= 70 && this.height >= 70) && player.radius < 35) { this.activatable = false; }
+        else { this.activatable = true; }
+    }
 }
 
 // Code for the resizers
@@ -1295,17 +1310,13 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
 
         if (this.type == "Tiny")
         {
-            this.sfx1.play();
-
-            if (player.radius >= 20) { player.radius = 7.5; }
-            else { player.radius = 20; }
+            if (player.radius >= 20) { player.radius = 7.5; this.sfx1.play(); }
+            else { player.radius = 20; this.sfx2.play(); }
         }
         else if (this.type == "Huge")
         {
-            this.sfx2.play();
-
-            if (player.radius <= 20) { player.radius = 35; }
-            else { player.radius = 20; }
+            if (player.radius <= 20) { player.radius = 35; this.sfx2.play(); }
+            else { player.radius = 20; this.sfx1.play(); }
         }
     }
 }
@@ -1403,7 +1414,7 @@ function updateGameArea()
     {
         if (player.objectCollision(switches[i]))
         {
-            switches[i].activatable = true;
+            switches[i].enoughPlayerWeightToActivate();
 
             if (player.action) { switches[i].changeState(); }
         }
@@ -1621,19 +1632,16 @@ function toggleAudioMuting()
 // - Create new "instructions" level and move all info from webpage into it
 // - Allow for multiple save files that are saved separately from each other
 // - Implement Mirror Mode more fully by requiring it for 100% completion
-// - Shrinkers + Growers
-// - Big Door Switches + Big Toggle Switches
-// - Push Blocks
-// - Time Trials
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
+// - Music restarting when the player restarts the current level after getting a game over
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Little visual difference between flip walls and bridges that are both on, and between flip walls and switches
 // - Sometimes hard to tell if a wall is off and transparent depending on the background color
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
-// - Player taking too short or too long when falling into a hole if tiny or huge, respectively
+// - Apply the constant colors to more areas and objects in the code instead of using quotes
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
