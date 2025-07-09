@@ -9,7 +9,7 @@ function startGame()
 }
 
 // Variables for all game objects along with important global variables
-var player, walls = [], holes = [], treasure = [], warps = [], switches = [];
+var player, walls = [], holes = [], treasure = [], warps = [], switches = [], resizers = [];
 var gameStarted = false, gameIsOver = false, mirrorModeIsOn = false;
 var hud = [], music, sfx;
 
@@ -167,6 +167,7 @@ var levelSetup =
         treasure = [];
         warps = [];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("100px NewSuperMarioFontU", "white", "black", 230, 210, "HYPERION'S", 0, "Level")),
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 55, 280, "TREASURE-MAXED LABYRINTH", 0, "N/A")),
@@ -198,6 +199,7 @@ var levelSetup =
                  (new componentWarp(512, 718, 30, 30, 0, "orange", 2, "black", "Menu Screen", "Mirror")),
                  (new componentWarp(904, 718, 30, 30, 0, "crimson", 2, "black", "Menu Screen", "Deletion"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 360, 50, "MAIN MENU", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 400, 160, "Start Game!", 0, "N/A")),
@@ -220,6 +222,7 @@ var levelSetup =
         treasure = [];
         warps = [(new componentWarp(512, 688, 30, 30, 0, "seagreen", 2, "black", "Menu Screen", "N/A"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", "white", "black", 380, 50, "CREDITS", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 470, 750, "Exit", 0, "N/A")),
@@ -270,6 +273,7 @@ var levelSetup =
                  (new componentWarp(765, 704, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
                  (new componentWarp(965, 704, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Main Hub", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 510, 35, "Game Completion: ", 0, "N/A")),
@@ -354,6 +358,7 @@ var levelSetup =
                     (new componentTreasure(965, 580, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(730, 620, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 1", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -401,7 +406,8 @@ var levelSetup =
                     (new componentSwitch(60, 80, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
                     (new componentSwitch(292, 690, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
                     (new componentSwitch(240, 235, 40, 40, "white", 2, "black", "Door", "OFF", 4)),
-                    (new componentSwitch(525, 455, 40, 40, "white", 2, "black", "Door", "OFF", 5)),];
+                    (new componentSwitch(525, 455, 40, 40, "white", 2, "black", "Door", "OFF", 5))];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 2", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -456,6 +462,7 @@ var levelSetup =
                     (new componentSwitch(306, 550, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
                     (new componentSwitch(960, 250, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
                     (new componentSwitch(306, 250, 40, 40, "white", 2, "black", "Door", "OFF", 4))];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 3", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -520,6 +527,7 @@ var levelSetup =
                     (new componentSwitch(914, 180, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                     (new componentSwitch(470, 330, 40, 40, "white", 2, "black", "Flip", "OFF", 0)),
                     (new componentSwitch(710, 502, 40, 40, "white", 2, "black", "Flip", "OFF", 0))];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 4", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -542,6 +550,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 5", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -564,6 +573,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 6", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -579,13 +589,15 @@ var levelSetup =
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
-        holes = [];
+        holes = [(new componentHole(200, 400, 100, 100, "black", 2, "black", false, "N/A", 0))];
         treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [(new componentResizer(400, 300, 15, 0, 2, "skyblue", 2, "black", "Tiny")),
+                    (new componentResizer(600, 300, 15, 0, 2, "orange", 2, "black", "Huge"))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 7", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -608,6 +620,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 8", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -630,6 +643,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -652,6 +666,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Credits", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level 10", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -731,6 +746,7 @@ var levelSetup =
                     (new componentSwitch(954, 70, 40, 40, "white", 2, "black", "Door", "OFF", 2)),
                     (new componentSwitch(30, 698, 40, 40, "white", 2, "black", "Door", "OFF", 3)),
                     (new componentSwitch(954, 698, 40, 40, "white", 2, "black", "Door", "OFF", 4))];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level A", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -753,6 +769,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level B", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -775,6 +792,7 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
         switches = [];
+        resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level C", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
@@ -1022,11 +1040,21 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
     this.x = x, this.y = y, this.radius = radius;
     this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+    this.animationCycle = 0;
     this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Coin.wav", "SFX");
 
     this.update = function()
     {
         this.context = gameArea.context;
+
+        this.animationCycle++;
+        if (this.animationCycle == 20)
+        {
+            this.animationCycle = 0;
+
+            if (this.fillColor == "gold") { this.fillColor = "yellow"; }
+            else if (this.fillColor == "yellow") { this.fillColor = "gold"; }
+        }
 
         this.context.beginPath();
         this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
@@ -1226,6 +1254,62 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
     }
 }
 
+// Code for the resizers
+function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor, type)
+{
+    this.x = x, this.y = y, this.radius = radius;
+    this.startAngle = startAngle, this.endAngle = endAngle;
+    this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+    this.type = type, this.activatable = false;
+    this.sfx1 = new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Enter.wav", "SFX");
+    this.sfx2 = new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Exit.wav", "SFX");
+
+    this.update = function()
+    {
+        this.context = gameArea.context;
+        
+        if (this.type == "Tiny")
+        {
+            if (this.activatable) { if (this.radius >= 15) { this.radius -= 0.5; } else { this.radius = 30; } }
+            else (this.radius = 15);
+        }
+        else if (this.type == "Huge")
+        {
+            if (this.activatable) { if (this.radius <= 30) { this.radius += 0.5; } else { this.radius = 15; }; }
+            else (this.radius = 15);
+        }
+
+        this.context.beginPath();
+        this.context.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle * Math.PI);
+        this.context.fillStyle = this.fillColor;
+        this.context.fill();
+
+        this.context.lineWidth = this.lineWidth;
+        this.context.strokeStyle = this.lineColor;
+        this.context.stroke();
+    }
+
+    this.resizePlayer = function()
+    {
+        if (!this.sfx1.sound.paused || !this.sfx2.sound.paused) { return; }
+
+        if (this.type == "Tiny")
+        {
+            this.sfx1.play();
+
+            if (player.radius >= 20) { player.radius = 7.5; }
+            else { player.radius = 20; }
+        }
+        else if (this.type == "Huge")
+        {
+            this.sfx2.play();
+
+            if (player.radius <= 20) { player.radius = 35; }
+            else { player.radius = 20; }
+        }
+    }
+}
+
 // Code for the heads-up display
 function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, type)
 {
@@ -1326,6 +1410,20 @@ function updateGameArea()
         else { switches[i].activatable = false; }
 
         if (switches[i]) { switches[i].update(); }
+    }
+
+    // Updateing the resizers
+    for (i = 0; i < resizers.length; i++)
+    {
+        if (player.objectCollision(resizers[i]))
+        {
+            resizers[i].activatable = true;
+
+            if (player.action) { resizers[i].resizePlayer(); }
+        }
+        else { resizers[i].activatable = false; }
+
+        if (resizers[i]) { resizers[i].update(); }
     }
 
     // Updating the HUD
@@ -1526,12 +1624,16 @@ function toggleAudioMuting()
 // - Shrinkers + Growers
 // - Big Door Switches + Big Toggle Switches
 // - Push Blocks
+// - Time Trials
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Little visual difference between flip walls and bridges that are both on, and between flip walls and switches
 // - Sometimes hard to tell if a wall is off and transparent depending on the background color
+// - Text being mirrored and hard to read when in Mirror Mode
+// - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
+// - Player taking too short or too long when falling into a hole if tiny or huge, respectively
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
