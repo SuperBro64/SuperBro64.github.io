@@ -13,31 +13,93 @@ var player, walls = [], holes = [], treasure = [], warps = [], switches = [], re
 var gameStarted = false, gameIsOver = false, mirrorModeIsOn = false;
 var hud = [], music, sfx;
 
-// Constant containing the HSL color values for easily identifiable HTML color names
+// Constant containing the HSL color values for all HTML color names to easily identify them
 const colors =
 {
-    // Comments on the right indicate which level has that color for its background gradient
-    AntiqueWhite   : "hsl(34, 78%, 91%)",   // Main Hub
-    Crimson        : "hsl(348, 83%, 47%)",
-    DarkGray       : "hsl(0, 0%, 66%)",     // Title Screen
-    DarkOrange     : "hsl(33, 100%, 50%)",  // Level 8
-    DarkSlateBlue  : "hsl(248, 39%, 39%)",  // Credits
-    DarkTurquoise  : "hsl(181, 100%, 41%)", // Level 3
-    DimGray        : "hsl(0, 0%, 41%)",     // Level 9
-    DodgerBlue     : "hsl(210, 100%, 56%)", // Level 4
-    ForestGreen    : "hsl(120, 61%, 34%)",
-    HotPink        : "hsl(330, 100%, 71%)", // Level 5
-    Khaki          : "hsl(54, 77%, 75%)",   // Level A
-    LightCoral     : "hsl(0, 79%, 72%)",    // Level 2
-    LightGray      : "hsl(0, 0%, 83%)",     // Menu Screen
-    MediumPurple   : "hsl(260, 60%, 65%)",  // Level 7
-    MediumSeaGreen : "hsl(147, 50%, 47%)",  // Level C
-    Orange         : "hsl(39, 100%, 50%)",
-    Orchid         : "hsl(302, 59%, 65%)",  // Level B
-    SkyBlue        : "hsl(197, 71%, 73%)",
-    SlateGray      : "hsl(210, 13%, 50%)",  // Level 10
-    Tan            : "hsl(34, 44%, 69%)",   // Level 6
-    YellowGreen    : "hsl(80, 61%, 50%)",   // Level 1
+    // Red Colors -----------------------------------------------------------------------------------
+    IndianRed            : "hsl(  0,  53%,  58%)", LightCoral           : "hsl(  0,  79%,  72%)",
+    Salmon               : "hsl(  6,  93%,  71%)", DarkSalmon           : "hsl( 15,  72%,  70%)",
+    LightSalmon          : "hsl( 17, 100%,  74%)", Crimson              : "hsl(348,  83%,  47%)",
+    Red                  : "hsl(  0, 100%,  50%)", FireBrick            : "hsl(  0,  68%,  42%)",
+    DarkRed              : "hsl(  0, 100%,  27%)",
+    // Pink Colors ----------------------------------------------------------------------------------
+    Pink                 : "hsl(350, 100%,  88%)", LightPink            : "hsl(351, 100%,  86%)",
+    HotPink              : "hsl(330, 100%,  71%)", DeepPink             : "hsl(328, 100%,  54%)",
+    MediumVioletRed      : "hsl(322,  81%,  43%)", PaleVioletRed        : "hsl(340,  60%,  65%)",
+    // Orange Colors --------------------------------------------------------------------------------
+    Coral                : "hsl( 16, 100%,  66%)", Tomato               : "hsl(  9, 100%,  64%)",
+    OrangeRed            : "hsl( 16, 100%,  50%)", DarkOrange           : "hsl( 33, 100%,  50%)",
+    Orange               : "hsl( 39, 100%,  50%)",
+    // Yellow Colors --------------------------------------------------------------------------------
+    Gold                 : "hsl( 51, 100%,  50%)", Yellow               : "hsl( 60, 100%,  50%)",
+    LightYellow          : "hsl( 60, 100%,  94%)", LemonChiffon         : "hsl( 54, 100%,  90%)",
+    LightGoldenrodYellow : "hsl( 60,  80%,  90%)", PapayaWhip           : "hsl( 37, 100%,  92%)",
+    Moccasin             : "hsl( 38, 100%,  85%)", PeachPuff            : "hsl( 28, 100%,  86%)",
+    PaleGoldenrod        : "hsl( 55,  67%,  80%)", Khaki                : "hsl( 54,  77%,  75%)",
+    DarkKhaki            : "hsl( 56,  38%,  58%)",
+    // Purple Colors --------------------------------------------------------------------------------
+    Lavender             : "hsl(240,  67%,  94%)", Thistle              : "hsl(300,  24%,  80%)",
+    Plum                 : "hsl(300,  47%,  75%)", Violet               : "hsl(300,  76%,  72%)",
+    Orchid               : "hsl(302,  59%,  65%)", Fushsia              : "hsl(300, 100%,  50%)",
+    Magenta              : "hsl(300, 100%,  50%)", MediumOrchid         : "hsl(288,  59%,  58%)",
+    MediumPurple         : "hsl(260,  60%,  65%)", RebeccaPurple        : "hsl(270,  50%,  40%)",
+    BlueViolet           : "hsl(271,  76%,  53%)", DarkViolet           : "hsl(282, 100%,  41%)",
+    DarkOrchid           : "hsl(280,  61%,  50%)", DarkMagenta          : "hsl(300, 100%,  27%)",
+    Purple               : "hsl(300, 100%,  25%)", Indigo               : "hsl(275, 100%,  25%)",
+    SlateBlue            : "hsl(248,  53%,  58%)", DarkSlateBlue        : "hsl(248,  39%,  39%)",
+    MediumSlateBlue      : "hsl(249,  80%,  67%)",
+    // Green Colors ---------------------------------------------------------------------------------
+    GreenYellow          : "hsl( 84, 100%,  59%)", Chartreuse           : "hsl( 90, 100%,  50%)",
+    LawnGreen            : "hsl( 90, 100%,  49%)", Lime                 : "hsl(120, 100%,  50%)",
+    LimeGreen            : "hsl(120,  61%,  50%)", PaleGreen            : "hsl(120,  93%,  79%)",
+    LightGreen           : "hsl(120,  73%,  75%)", MediumSpringGreen    : "hsl(157, 100%,  49%)",
+    SpringGreen          : "hsl(150, 100%,  50%)", MediumSeaGreen       : "hsl(147,  50%,  47%)",
+    SeaGreen             : "hsl(146,  50%,  36%)", ForestGreen          : "hsl(120,  61%,  34%)",
+    Green                : "hsl(120, 100%,  25%)", DarkGreen            : "hsl(120, 100%,  20%)",
+    YellowGreen          : "hsl( 80,  61%,  50%)", OliveDrab            : "hsl( 80,  60%,  35%)",
+    Olive                : "hsl( 60, 100%,  25%)", DarkOliveGreen       : "hsl( 82,  39%,  30%)",
+    MediumAquamarine     : "hsl(160,  51%,  60%)", DarkSeaGreen         : "hsl(115,  27%,  64%)",
+    LightSeaGreen        : "hsl(177,  70%,  41%)", DarkCyan             : "hsl(180, 100%,  27%)",
+    Teal                 : "hsl(180, 100%,  25%)",
+    // Blue Colors ----------------------------------------------------------------------------------
+    Aqua                 : "hsl(180, 100%,  50%)", Cyan                 : "hsl(180, 100%,  50%)",
+    LightCyan            : "hsl(180, 100%,  94%)", PaleTurquoise        : "hsl(180,  65%,  81%)",
+    Aquamarine           : "hsl(160, 100%,  75%)", Turquoise            : "hsl(174,  72%,  56%)",
+    MediumTurquoise      : "hsl(178,  60%,  55%)", DarkTurquoise        : "hsl(181, 100%,  41%)",
+    CadetBlue            : "hsl(182,  25%,  50%)", SteelBlue            : "hsl(207,  44%,  49%)",
+    LightSteelBlue       : "hsl(214,  41%,  78%)", PowderBlue           : "hsl(187,  52%,  80%)",
+    LightBlue            : "hsl(195,  53%,  79%)", SkyBlue              : "hsl(197,  71%,  73%)",
+    LightSkyBlue         : "hsl(203,  92%,  75%)", DeepSkyBlue          : "hsl(195, 100%,  50%)",
+    DodgerBlue           : "hsl(210, 100%,  56%)", CornflowerBlue       : "hsl(219,  79%,  66%)",
+    RoyalBlue            : "hsl(225,  73%,  57%)", Blue                 : "hsl(240, 100%,  50%)",
+    MediumBlue           : "hsl(240, 100%,  40%)", DarkBlue             : "hsl(240, 100%,  27%)",
+    Navy                 : "hsl(240, 100%,  25%)", MidnightBlue         : "hsl(240,  64%,  27%)",
+    // Brown Colors ---------------------------------------------------------------------------------
+    Cornsilk             : "hsl( 48, 100%,  93%)", BlanchedAlmond       : "hsl( 36, 100%,  90%)",
+    Bisque               : "hsl( 33, 100%,  88%)", NavajoWhite          : "hsl( 36, 100%,  84%)",
+    Wheat                : "hsl( 39,  77%,  83%)", BurlyWood            : "hsl( 34,  57%,  70%)",
+    Tan                  : "hsl( 34,  44%,  69%)", RosyBrown            : "hsl(  0,  25%,  65%)",
+    SandyBrown           : "hsl( 28,  87%,  67%)", Goldenrod            : "hsl( 43,  74%,  49%)",
+    DarkGoldenrod        : "hsl( 43,  89%,  38%)", Peru                 : "hsl( 30,  59%,  53%)",
+    Chocolate            : "hsl( 25,  75%,  47%)", SaddleBrown          : "hsl( 25,  76%,  31%)",
+    Sienna               : "hsl( 19,  56%,  40%)", Brown                : "hsl(  0,  59%,  41%)",
+    Maroon               : "hsl(  0, 100%,  25%)",
+    // White Colors ---------------------------------------------------------------------------------
+    White                : "hsl(  0,   0%, 100%)", Snow                 : "hsl(  0, 100%,  99%)",
+    HoneyDew             : "hsl(120, 100%,  97%)", MintCream            : "hsl(150, 100%,  98%)",
+    Azure                : "hsl(180, 100%,  97%)", AliceBlue            : "hsl(208, 100%,  97%)",
+    GhostWhite           : "hsl(240, 100%,  99%)", WhiteSmoke           : "hsl(  0,   0%,  96%)",
+    SeaShell             : "hsl( 25, 100%,  97%)", Beige                : "hsl( 60,  56%,  91%)",
+    OldLace              : "hsl( 39,  85%,  95%)", FloralWhite          : "hsl( 40, 100%,  97%)",
+    Ivory                : "hsl( 60, 100%,  97%)", AntiqueWhite         : "hsl( 34,  78%,  91%)",
+    Linen                : "hsl( 30,  67%,  94%)", LavenderBlush        : "hsl(340, 100%,  97%)",
+    MistyRose            : "hsl(  6, 100%,  94%)",
+    // Gray Colors ----------------------------------------------------------------------------------
+    Gainsboro            : "hsl(  0,   0%,  86%)", LightGray            : "hsl(  0,   0%,  83%)",
+    Silver               : "hsl(  0,   0%,  75%)", DarkGray             : "hsl(  0,   0%,  66%)",
+    Gray                 : "hsl(  0,   0%,  50%)", DimGray              : "hsl(  0,   0%,  41%)",
+    LightSlateGray       : "hsl(210,  14%,  53%)", SlateGray            : "hsl(210,  13%,  50%)",
+    DarkSlateGray        : "hsl(180,  25%,  25%)", Black                : "hsl(  0,   0%,   0%)",
 
     shading: function(color, delta)
     {
@@ -1631,7 +1693,7 @@ function toggleAudioMuting()
 // IDEAS
 // - Create new "instructions" level and move all info from webpage into it
 // - Allow for multiple save files that are saved separately from each other
-// - Implement Mirror Mode more fully by requiring it for 100% completion
+// - Implement Mirror Mode more fully by requiring it for 100% completion, and making the levels harder (Level 1+, 2+, etc.)
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
