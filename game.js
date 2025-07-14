@@ -115,9 +115,8 @@ const colors =
 // Variable for storing and manipulating the player's game completion progress through the use of web storage
 var saveProgress =
 {
-    completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0], ["Level 6", 0],
-                 ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0],
-                 ["Level C", 0], ["Percentage", 0]],
+    completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0], ["Level 6", 0], ["Level 7", 0],
+                 ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Percentage", 0]],
 
     save: function(storageName)
     {
@@ -129,6 +128,7 @@ var saveProgress =
                 else if (this.completion[i][1] != 2) { this.completion[i][1] = 1; } break;
             }
         }
+
         this.completion[13][1] = 0.00;
         for (i = 0; i < this.completion.length - 1; i++) { this.completion[13][1] += this.completion[i][1]; }
         this.completion[13][1] = Math.min(Math.round((this.completion[13][1] / (13 * 2)) * 100), 100);
@@ -221,6 +221,7 @@ var levelSetup =
     titleScreen: function()
     {
         gameArea.gradient(colors.DarkGray); gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
+        gameStarted = false; gameArea.mirrorMode = false;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -234,13 +235,14 @@ var levelSetup =
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 55, 280, "TREASURE-MAXED LABYRINTH", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 300, 755, "©️ 2025 SuperBro64", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 310, 500, "Click on 🚩 to play!", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", "white", "black", 220, 550, "Look below for instructions!", 0, "N/A"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 220, 550, "Read below for instructions!", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 165, 660, "TOTAL GAME COMPLETION:", 0, "N/A")),
+               (new componentHud("70px NewSuperMarioFontU", "white", "black", 705, 660, "000%", 0, "Completion"))];
         music.sound.src = ""; music.stop();
 
         document.querySelector("#actionButton").innerHTML = "🚩";
         document.querySelector("#pauseButton").innerHTML = "❌";
 
-        gameArea.mirrorMode = false; gameStarted = false;
     },
 
     // Setup for the menu screen
@@ -898,7 +900,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     // Calculates each frame the new x and y positions of the player as they move around
     this.newPosition = function()
     {
-        if (!gameStarted || this.falling) { return; }
+        if (this.falling) { return; }
 
         var stickX = joystick.getX(), stickY = joystick.getY();
         var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
@@ -1677,8 +1679,8 @@ function toggleAudioMuting()
 }
 
 // IDEAS
+// - Cracked walls that require the player to be huge to destroy
 // - Create new "instructions" level and move all info from webpage into it
-// - Allow for multiple save files that are saved separately from each other
 // - Implement Mirror Mode more fully by requiring it for 100% completion, and making the levels harder (Level 1+, 2+, etc.)
 
 // ISSUES
