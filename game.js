@@ -226,7 +226,10 @@ var levelSetup =
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
         holes = [];
-        treasure = [];
+        treasure = [(new componentTreasure(86, 76, 10, 0, 2, "gold", 2, "black")),
+                    (new componentTreasure(938, 76, 10, 0, 2, "gold", 2, "black")),
+                    (new componentTreasure(86, 692, 10, 0, 2, "gold", 2, "black")),
+                    (new componentTreasure(938, 692, 10, 0, 2, "gold", 2, "black"))];
         warps = [];
         switches = [];
         resizers = [];
@@ -267,7 +270,15 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 45, 160, "Credits", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 25, 680, "Quit Game", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 680, "Mirror Mode", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A"))];
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 440, 360, "⬉", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 495, 350, "⬆", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 535, 360, "⬈", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 425, 405, "⬅", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 540, 405, "➡", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 440, 450, "⬋", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 495, 460, "⬇", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 535, 450, "⬊", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
     },
 
@@ -900,7 +911,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     // Calculates each frame the new x and y positions of the player as they move around
     this.newPosition = function()
     {
-        if (this.falling) { return; }
+        if (!gameStarted || this.falling) { return; }
 
         var stickX = joystick.getX(), stickY = joystick.getY();
         var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
