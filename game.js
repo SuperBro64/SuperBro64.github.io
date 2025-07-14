@@ -10,7 +10,7 @@ function startGame()
 
 // Variables for all game objects along with important global variables
 var player, walls = [], holes = [], treasure = [], warps = [], switches = [], resizers = [];
-var gameStarted = false, gameIsOver = false, mirrorModeIsOn = false;
+var gameStarted = false, gameIsOver = false;
 var hud = [], music, sfx;
 
 // Constant containing the HSL color values for all HTML color names to easily identify them
@@ -161,7 +161,7 @@ var saveProgress =
 // Variable for the playable game area
 var gameArea =
 {
-    canvas: document.createElement("canvas"), currentLevel: "",
+    canvas: document.createElement("canvas"), currentLevel: "", mirrorMode: false,
 
     start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
     {
@@ -184,6 +184,8 @@ var gameArea =
         this.context.clearRect(this.x, this.y, this.canvas.width, this.canvas.height);
         this.context.fillStyle = this.fillColor;
         this.context.fillRect(this.x, this.y, this.canvas.width, this.canvas.height);
+
+        this.applyMirrorMode(false); if (this.mirrorMode) { this.applyMirrorMode(true); }
     },
 
     // Applies a diagonal gradient to the canvas background, using the given color and a darker shade of the color
@@ -197,17 +199,15 @@ var gameArea =
     },
 
     // Turns Mirror Mode on or off
-    mirrorMode: function(state)
+    applyMirrorMode: function(state)
     {
         if (state)
         {
-            mirrorModeIsOn = true;
             this.context.translate(this.canvas.width, 0); this.context.scale(-1, 1);
             this.context.drawImage(this.canvas, this.canvas.width * -1, 0);
         }
         else if (!state)
         {
-            mirrorModeIsOn = false;
             this.context.resetTransform();
             this.context.drawImage(this.canvas, this.canvas.width, 0);
         }
@@ -220,8 +220,7 @@ var levelSetup =
     // Setup for the title screen
     titleScreen: function()
     {
-        gameArea.gradient(colors.DarkGray);
-        gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.DarkGray); gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -241,15 +240,13 @@ var levelSetup =
         document.querySelector("#actionButton").innerHTML = "🚩";
         document.querySelector("#pauseButton").innerHTML = "❌";
 
-        gameArea.mirrorMode(false);
-        gameStarted = false;
+        gameArea.mirrorMode = false; gameStarted = false;
     },
 
     // Setup for the menu screen
     menuScreen: function()
     {
-        gameArea.gradient(colors.LightGray);
-        gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.LightGray); gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -275,10 +272,9 @@ var levelSetup =
     // Setup for the credits screen
     credits: function()
     {
-        gameArea.gradient(colors.DarkSlateBlue);
-        gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.DarkSlateBlue); gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
 
-        player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
+        player = new componentPlayer(512, 500, 20, 0, 2, "red", 2, "black");
         walls = [];
         holes = [];
         treasure = [];
@@ -299,15 +295,18 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 320,
                 "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 370,
-                "Color Shading Code . . . . Chalarangelo", 0, "N/A"))];
+                "Color Shading Code . . . . Chalarangelo", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 50, 420,
+                "Special Thanks . . . . . . . . Bryce Pavlakos", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 30, 620,
+                "❤️ Thank you so much for a-playing my game! ❤️", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
     },
 
     // Setup for the main hub
     mainHub: function()
     {
-        gameArea.gradient(colors.AntiqueWhite);
-        gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.AntiqueWhite); gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 604, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(328, 272, 40, 224, "gray", 2, "black", true, "N/A", 0)),
@@ -386,8 +385,7 @@ var levelSetup =
     // Setup for level 1
     level1: function()
     {
-        gameArea.gradient(colors.YellowGreen);
-        gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.YellowGreen); gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
 
         player = new componentPlayer(110, 384, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(350, 0, 40, 150, "gray", 2, "black", true, "N/A", 0)),
@@ -431,8 +429,7 @@ var levelSetup =
     // Setup for level 2
     level2: function()
     {
-        gameArea.gradient(colors.LightCoral);
-        gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.LightCoral); gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
 
         player = new componentPlayer(964, 710, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(865, 622, 158, 30, "saddlebrown", 2, "black", true, "Door", 1)),
@@ -480,8 +477,7 @@ var levelSetup =
     // Setup for level 3
     level3: function()
     {
-        gameArea.gradient(colors.DarkTurquoise);
-        gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.DarkTurquoise); gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 100, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(412, 172, 200, 30, "saddlebrown", 2, "black", true, "Door", 1)),
@@ -535,8 +531,7 @@ var levelSetup =
     // Setup for level 4
     level4: function()
     {
-        gameArea.gradient(colors.DodgerBlue);
-        gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.DodgerBlue); gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
 
         player = new componentPlayer(100, 670, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(0, 450, 200, 30, "skyblue", 2, "black", true, "Flip", -2)),
@@ -600,8 +595,7 @@ var levelSetup =
     // Setup for level 5
     level5: function()
     {
-        gameArea.gradient(colors.HotPink);
-        gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.HotPink); gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -623,8 +617,7 @@ var levelSetup =
     // Setup for level 6
     level6: function()
     {
-        gameArea.gradient(colors.Tan);
-        gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.Tan); gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -646,8 +639,7 @@ var levelSetup =
     // Setup for level 7
     level7: function()
     {
-        gameArea.gradient(colors.MediumPurple);
-        gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.MediumPurple); gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(300, 650, 158, 30, "saddlebrown", 2, "black", true, "Door", 1)),
@@ -676,8 +668,7 @@ var levelSetup =
     // Setup for level 8
     level8: function()
     {
-        gameArea.gradient(colors.DarkOrange);
-        gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.DarkOrange); gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -699,8 +690,7 @@ var levelSetup =
     // Setup for level 9
     level9: function()
     {
-        gameArea.gradient(colors.DimGray);
-        gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.DimGray); gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -722,8 +712,7 @@ var levelSetup =
     // Setup for level 10
     level10: function()
     {
-        gameArea.gradient(colors.SlateGray);
-        gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.SlateGray); gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -745,8 +734,7 @@ var levelSetup =
     // Setup for level A
     levelA: function()
     {
-        gameArea.gradient(colors.Khaki);
-        gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.Khaki); gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 504, 20, 0, 2, "red", 2, "black");
         walls = [(new componentWall(462, 300, 100, 10, "saddlebrown", 2, "black", true, "Door", 1)),
@@ -825,8 +813,7 @@ var levelSetup =
     // Setup for level B
     levelB: function()
     {
-        gameArea.gradient(colors.Orchid);
-        gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.Orchid); gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -848,8 +835,7 @@ var levelSetup =
     // Setup for level C
     levelC: function()
     {
-        gameArea.gradient(colors.MediumSeaGreen);
-        gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
+        gameArea.gradient(colors.MediumSeaGreen); gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
 
         player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
         walls = [];
@@ -942,7 +928,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (stickX < 75 && stickX > -75) { this.speedX /= 2; }
             if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
 
-            if (mirrorModeIsOn) { this.speedX *= -1; }
+            if (gameArea.mirrorMode) { this.speedX *= -1; }
         }
 
         this.x += this.speedX; this.y += this.speedY;
@@ -1186,8 +1172,8 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
         else if (this.type == "Deletion") { saveProgress.delete("saveProgress"); }
         else if (this.type == "Mirror")
         {
-            if (!mirrorModeIsOn) { gameArea.mirrorMode(true); }
-            else if (mirrorModeIsOn) { gameArea.mirrorMode(false); }
+            if (!gameArea.mirrorMode) { gameArea.mirrorMode = true; }
+            else if (gameArea.mirrorMode) { gameArea.mirrorMode = false; }
         }
 
         switch (this.destination)
