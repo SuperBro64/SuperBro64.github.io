@@ -275,7 +275,7 @@ var levelSetup =
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 495, 350, "⬆", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 535, 360, "⬈", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 425, 405, "⬅", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 540, 405, "➡", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 540, 405, "⮕", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 440, 450, "⬋", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 495, 460, "⬇", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", "white", "black", 535, 450, "⬊", 0, "N/A"))];
@@ -1813,7 +1813,7 @@ var JoyStick = (function (container, parameters, callback)
             context.clearRect(0, 0, canvas.width, canvas.height);
             drawOuter(); drawInner();
 
-            StickStatus.xPosition = movedX, StickStatus.yPosition = momveY;
+            StickStatus.xPosition = movedX, StickStatus.yPosition = movedY;
             StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
             StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
             StickStatus.cardinalDirection = getCardinalDirection();

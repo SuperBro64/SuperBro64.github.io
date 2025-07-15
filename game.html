@@ -19,27 +19,30 @@
             }
             a:hover, a:active { background-color: firebrick; }
 
+            #pauseButton
+            {
+                background-color: goldenrod; color: black; display: inline-block;
+                font-family: monospace; font-size: xx-large; text-align: center; padding: 25px 25px;
+                border-left: 5px solid black; border-right: 0px solid black;
+                border-top: 0px solid black; border-bottom: 2px solid black;
+            }
+            #pauseButton:active { background-color: darkgoldenrod; }
             #actionButton
             {
                 background-color: mediumseagreen; color: black; display: inline-block;
-                font-family: monospace; font-size: xx-large; text-align: center;
-                padding: 20px 20px; border: 3px solid black;
+                font-family: monospace; font-size: xx-large; text-align: center; padding: 25px 25px;
+                border-left: 5px solid black; border-right: 0px solid black;
+                border-top: 3px solid black; border-bottom: 3px solid black;
             }
             #actionButton:active { background-color: seagreen; }
             #audioButton
             {
                 background-color: slateblue; color: black; display: inline-block;
-                font-family: monospace; font-size: xx-large; text-align: center;
-                padding: 20px 20px; border: 3px solid black;
+                font-family: monospace; font-size: xx-large; text-align: center; padding: 25px 25px;
+                border-left: 5px solid black; border-right: 0px solid black;
+                border-top: 2px solid black; border-bottom: 0px solid black;
             }
             #audioButton:active { background-color: darkslateblue; }
-            #pauseButton
-            {
-                background-color: goldenrod; color: black; display: inline-block;
-                font-family: monospace; font-size: xx-large; text-align: center;
-                padding: 20px 20px; border: 3px solid black;
-            }
-            #pauseButton:active { background-color: darkgoldenrod; }
             
             .prevent-select { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
 
@@ -55,26 +58,31 @@
 
         <div id = "game" class = "prevent-select" style = "display: inline-block;">
 
-            <div id = "controls" style = "float: right; background-color: lightgray; border: 5px solid black;">
+            <div id = "controls" style = "float: right; text-align: center; background-color: lightgray; border: 5px solid black;">
+                
+                <p style = "font-family: NewSuperMarioFontU; font-size: xx-large; margin: 0px; color: black;
+                            border-bottom: 5px solid black; background-color: darkgray;">CONTROLS</p>
 
-                <div id = "joystick" style = "text-align: center; margin-top: 12px; margin-bottom: 8px;"></div>
+                <div id = "joystick" style = "float: left;"></div>
 
-                <div id = "buttons" style = "margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
-                    <button id = "audioButton" onclick = "toggleAudioMuting()" style = "margin-right: 5px;"><b>🔊</b></button>
+                <div id = "buttons" style = "float: right;">
+                    <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
+                    <br>
                     <button id = "actionButton" onclick = "playerAction()"><b>🅰️</b></button>
-                    <button id = "pauseButton" onclick = "pauseGame()" style = "margin-left: 5px;"><b>⏸️</b></button>
+                    <br>
+                    <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
                 </div>
 
             </div>
 
-            <div id = "screen"><script src = "game.js"></script></div>
+            <div id = "screen" style = "float: left;"><script src = "game.js"></script></div>
 
         </div>
 
         <br>
         
         <h1>
-            Hyperion's Treasure-Maxed Labyrinth (WIP)
+            Hyperion's Treasure-Maxed Labyrinth
         </h1>
 
         <h2>
