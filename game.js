@@ -271,10 +271,10 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 25, 680, "Quit Game", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 680, "Mirror Mode", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 485, 350, "🡅", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 430, 405, "🡄", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 540, 405, "🡆", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 485, 460, "🡇", 0, "N/A"))];
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 480, 345, "🡹", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 420, 405, "🡸", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 540, 405, "🡺", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "white", "black", 480, 465, "🡻", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
     },
 
