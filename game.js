@@ -115,8 +115,9 @@ const colors =
 // Variable for storing and manipulating the player's game completion progress through the use of web storage
 var saveProgress =
 {
-    completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0], ["Level 6", 0], ["Level 7", 0],
-                 ["Level 8", 0], ["Level 9", 0], ["Level 10", 0], ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Percentage", 0]],
+    completion: [["Level 1", 0], ["Level 2", 0], ["Level 3", 0], ["Level 4", 0], ["Level 5", 0],
+                 ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
+                 ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Level ?", 0], ["Percentage", 0]],
 
     save: function(storageName)
     {
@@ -129,9 +130,11 @@ var saveProgress =
             }
         }
 
-        this.completion[13][1] = 0.00;
-        for (i = 0; i < this.completion.length - 1; i++) { this.completion[13][1] += this.completion[i][1]; }
-        this.completion[13][1] = Math.min(Math.round((this.completion[13][1] / (13 * 2)) * 100), 100);
+        this.completion[14][1] = 0.00;
+        for (i = 0; i < this.completion.length - 2; i++) { this.completion[14][1] += this.completion[i][1]; }
+        this.completion[14][1] = Math.min(Math.round((this.completion[14][1] / (13 * 2)) * 100), 100);
+
+        if (this.completion[14][1] == 100 && this.completion[13][1] == 2) { this.completion[14][1] = 101; }
 
         if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
     },
@@ -151,8 +154,7 @@ var saveProgress =
 
     delete: function(storageName)
     {
-        for (i = 0; i < this.completion.length - 1; i++) { this.completion[i][1] = 0; }
-        this.completion[13][1] = 0;
+        for (i = 0; i < this.completion.length; i++) { this.completion[i][1] = 0; }
 
         if (typeof(Storage) !== "undefined") { localStorage.removeItem(storageName); }
     }
@@ -342,6 +344,9 @@ var levelSetup =
                  (new componentWarp(865, 604, 30, 30, 0, "sienna", 2, "black", "Level A", "Level A")),
                  (new componentWarp(765, 704, 30, 30, 0, "sienna", 2, "black", "Level B", "Level B")),
                  (new componentWarp(965, 704, 30, 30, 0, "sienna", 2, "black", "Level C", "Level C"))];
+        if (saveProgress.completion[14][1] >= 100)
+        { warps.push(new componentWarp(410, 460, 30, 30, 0, "sienna", 2, "black", "Level ?", "Level ?")); }
+
         switches = [];
         resizers = [];
 
@@ -386,8 +391,10 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 675, 740, "l", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 670, 763, "s", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "salmon", "black", 775, 523, "10 Levels", 0, "N/A"))];
+        if (saveProgress.completion[14][1] >= 100)
+        { hud.push(new componentHud("40px NewSuperMarioFontU", "white", "black", 400, 453, "?", 0, "N/A")); }
 
-        if (saveProgress.completion[13][1] == 100) { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
+        if (saveProgress.completion[14][1] == 101) { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3"; }
         else { music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3"; } music.play();
     },
 
@@ -862,6 +869,28 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3"; music.play();
+    },
+
+    // Setup for level ?
+    level$: function()
+    {
+        gameArea.gradient(colors.Brown); gameArea.currentLevel = "Level ?"; gameArea.frameNum = 0;
+
+        player = new componentPlayer(512, 384, 20, 0, 2, "red", 2, "black");
+        walls = [];
+        holes = [];
+        treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
+                    (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
+                    (new componentTreasure(768, 192, 10, 0, 2, "gold", 2, "black")),
+                    (new componentTreasure(768, 576, 10, 0, 2, "gold", 2, "black"))];
+        warps = [(new componentWarp(512, 100, 30, 30, 0, "cyan", 2, "black", "Main Hub", "Goal"))];
+        switches = [];
+        resizers = [];
+
+        hud = [(new componentHud("40px NewSuperMarioFontU", "white", "black", 10, 35, "Level ?", 0, "Level")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 430, 35, "🪙", 0, "Treasure")),
+               (new componentHud("40px NewSuperMarioFontU", "white", "black", 870, 35, "⏱️", 100, "Timer"))];
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Billiards.mp3"; music.play();
     }
 }
 
@@ -1210,6 +1239,7 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
             case "Level A":      levelSetup.levelA(); break;
             case "Level B":      levelSetup.levelB(); break;
             case "Level C":      levelSetup.levelC(); break;
+            case "Level ?":      levelSetup.level$(); break;
             default:             levelSetup.titleScreen(); break;
         }
     }
@@ -1512,12 +1542,12 @@ function updateGameArea()
         }
         else if (hud[i].type == "Completion")
         {
-            if (saveProgress.completion[13][1] == 100) { hud[i].fillColor = "gold"; }
+            if (saveProgress.completion[14][1] == 101) { hud[i].fillColor = "gold"; }
 
             hud[i].text = "";
-            if (saveProgress.completion[13][1] < 10) { hud[i].text += "00"; }
-            else if (saveProgress.completion[13][1] < 100) { hud[i].text += "0"; }
-            hud[i].text += saveProgress.completion[13][1] + "%";
+            if (saveProgress.completion[14][1] < 10) { hud[i].text += "00"; }
+            else if (saveProgress.completion[14][1] < 100) { hud[i].text += "0"; }
+            hud[i].text += saveProgress.completion[14][1] + "%";
         }
         else if (hud[i].type == "Timer" && hud[i].startingTime > 0)
         {
@@ -1597,6 +1627,7 @@ function levelRestart()
         case "Level A":      levelSetup.levelA(); break;
         case "Level B":      levelSetup.levelB(); break;
         case "Level C":      levelSetup.levelC(); break;
+        case "Level ?":      levelSetup.level$(); break;
         default:             levelSetup.titleScreen(); break;
     }
 }
