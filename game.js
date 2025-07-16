@@ -271,11 +271,14 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 25, 680, "Quit Game", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 395, 680, "Mirror Mode", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", "white", "black", 780, 680, "Erase Game", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 485, 350, "⮝", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 430, 405, "⮜", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 545, 405, "⮞", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", "white", "black", 485, 460, "⮟", 0, "N/A")),
-            ];
+               (new componentHud("60px NewSuperMarioFontU", "black", "black", 450, 360, "↖", 0, "N/A")),
+               (new componentHud("50px NewSuperMarioFontU", "black", "black", 500, 340, "↑", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "black", "black", 530, 360, "↗", 0, "N/A")),
+               (new componentHud("50px NewSuperMarioFontU", "black", "black", 430, 395, "←", 0, "N/A")),
+               (new componentHud("50px NewSuperMarioFontU", "black", "black", 545, 395, "→", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "black", "black", 450, 440, "↙", 0, "N/A")),
+               (new componentHud("50px NewSuperMarioFontU", "black", "black", 500, 453, "↓", 0, "N/A")),
+               (new componentHud("60px NewSuperMarioFontU", "black", "black", 530, 440, "↘", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3"; music.play();
     },
 
