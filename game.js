@@ -654,7 +654,8 @@ var levelSetup =
         walls = [(new componentWall(300, 650, 158, 30, "saddlebrown", 2, "black", true, "Door", 1)),
                  (new componentWall(550, 650, 158, 30, "saddlebrown", 2, "black", true, "Door", 2)),
                  (new componentWall(0, 450, 200, 30, "skyblue", 2, "black", true, "Flip", -2)),
-                 (new componentWall(0, 140, 200, 30, "orange", 2, "black", false, "Flip", -1))];
+                 (new componentWall(0, 140, 200, 30, "orange", 2, "black", false, "Flip", -1)),
+                 (new componentWall(328, 172, 224, 40, "tomato", 2, "black", true, "Cracked", 0))];
         holes = [(new componentHole(800, 300, 100, 100, "black", 2, "black", false, "N/A", 0))];
         treasure = [(new componentTreasure(256, 192, 10, 0, 2, "gold", 2, "black")),
                     (new componentTreasure(256, 576, 10, 0, 2, "gold", 2, "black")),
@@ -995,15 +996,19 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         var overlapX = Math.min(this.x + this.radius, wall.x + wall.width) - Math.max(this.x - this.radius, wall.x);
         var overlapY = Math.min(this.y + this.radius, wall.y + wall.height) - Math.max(this.y - this.radius, wall.y);
 
-        if (overlapX < overlapY)
-        {
-            if (this.x < wall.x) { this.x -= overlapX; }
-            else { this.x += overlapX; }
-        }
+        if (wall.type == "Cracked" && this.radius >= 35) { wall.x = -1000; wall.y = -1000; wall.sfx.play(); }
         else
         {
-            if (this.y < wall.y) { this.y -= overlapY; }
-            else { this.y += overlapY; }
+            if (overlapX < overlapY)
+            {
+                if (this.x < wall.x) { this.x -= overlapX; }
+                else { this.x += overlapX; }
+            }
+            else
+            {
+                if (this.y < wall.y) { this.y -= overlapY; }
+                else { this.y += overlapY; }
+            }
         }
     }
 
@@ -1033,6 +1038,7 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
     this.x = x, this.y = y, this.width = width, this.height = height;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.tangibility = tangibility, this.type = type, this.value = value;
+    this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Break_Box.wav", "SFX");
 
     if (this.type == "Progression" && this.value > 0)
     {
@@ -1131,7 +1137,7 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
         this.context.stroke();
     }
 
-    this.disappear = function() { this.radius = 0; this.sfx.play(); }
+    this.disappear = function() { this.x = -1000; this.y = -1000; this.sfx.play(); }
 }
 
 // Code for the warps
@@ -1686,7 +1692,6 @@ function toggleAudioMuting()
 }
 
 // IDEAS
-// - Cracked walls that require the player to be huge to destroy
 // - Create new "instructions" level and move all info from webpage into it
 // - Implement Mirror Mode more fully by requiring it for 100% completion, and making the levels harder (Level 1+, 2+, etc.)
 
