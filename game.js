@@ -1446,10 +1446,7 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
         else if (this.type == "Completion")
         {
             if (saveProgress.completion[14][1] < 50) { this.fillColor = colors.White; }
-            else if (saveProgress.completion[14][1] >= 50 && saveProgress.completion < 100)
-            {
-                this.fillColor = colors.shading(colors.Silver, 10);
-            }
+            else if (saveProgress.completion[14][1] >= 50 && saveProgress.completion < 100) { this.fillColor = colors.Silver; }
             else if (saveProgress.completion[14][1] == 100) { this.fillColor = colors.Gold; }
             else if (saveProgress.completion[14][1] >= 101)
             {
