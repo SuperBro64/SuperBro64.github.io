@@ -101,14 +101,24 @@ const colors =
     LightSlateGray       : "hsl(210,  14%,  53%)", SlateGray            : "hsl(210,  13%,  50%)",
     DarkSlateGray        : "hsl(180,  25%,  25%)", Black                : "hsl(  0,   0%,   0%)",
 
+    // Code for changing a color's shade, originally by Chalarangelo (Angelos Chalaris) on GitHub
     shading: function(color, delta)
     {
-        // Code for changing a color's shade, originally by Chalarangelo (Angelos Chalaris) on GitHubb
         var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
         var newLightness = Math.max(0, Math.min(100, lightness + Number.parseFloat(delta)));
         var shade = "hsl(" + hue + ", " + saturation + "%, " + newLightness + "%)";
 
         return shade;
+    },
+
+    // Code for causing a color to cycle through the rainbow, based on Chalarangelo's shading code above
+    rainbow: function(color, delta)
+    {
+        var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
+        var newHue = Math.max(0, Math.min(360, hue + Number.parseFloat(delta))) % 360;
+        var rainbowChange = "hsl(" + newHue + ", " + saturation + "%, " + lightness + "%)";
+
+        return rainbowChange;
     }
 };
 
@@ -243,7 +253,7 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 550,
                     "Read below for instructions!", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 165, 660, "TOTAL GAME COMPLETION:", 0, "N/A")),
-               (new componentHud("70px NewSuperMarioFontU", colors.White, colors.Black, 705, 660, "000%", 0, "Completion"))];
+               (new componentHud("70px NewSuperMarioFontU", colors.Red, colors.Black, 705, 660, "000%", 0, "Completion"))];
         music.sound.src = ""; music.stop();
 
         document.querySelector("#actionButton").innerHTML = "🚩";
@@ -353,7 +363,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Main Hub", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 510, 35, "Game Completion: ", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 880, 45, "000%", 0, "Completion")),
+               (new componentHud("60px NewSuperMarioFontU", colors.Red, colors.Black, 880, 45, "000%", 0, "Completion")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 470, 750, "Exit", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 360, 637, "1", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 35, 721, "2", 0, "N/A")),
@@ -1426,6 +1436,42 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
 
     this.update = function()
     {
+        if (this.type == "Treasure" && treasure.length > 0)
+        {
+            if (this.treasureCollected == treasure.length) { this.fillColor = colors.Gold; }
+
+            this.text = "💰";
+            this.text += this.treasureCollected + "/" + treasure.length;
+        }
+        else if (this.type == "Completion")
+        {
+            if (saveProgress.completion[14][1] < 50) { this.fillColor = colors.White; }
+            else if (saveProgress.completion[14][1] >= 50 && saveProgress.completion < 100)
+            {
+                this.fillColor = colors.shading(colors.Silver, 10);
+            }
+            else if (saveProgress.completion[14][1] == 100) { this.fillColor = colors.Gold; }
+            else if (saveProgress.completion[14][1] >= 101)
+            {
+                this.fillColor = colors.rainbow(this.fillColor, 1);
+            }
+
+            this.text = "";
+            if (saveProgress.completion[14][1] < 10) { this.text += "00"; }
+            else if (saveProgress.completion[14][1] < 100) { this.text += "0"; }
+            this.text += saveProgress.completion[14][1] + "%";
+        }
+        else if (this.type == "Timer" && this.startingTime > 0)
+        {
+            if (this.timeRemaining > 0) { this.timeRemaining = (this.startingTime - (gameArea.frameNum / 50)).toFixed(1); }
+            if (this.timeRemaining < 10) { this.fillColor = colors.Red; }
+
+            this.text = "⏱️";
+            if (this.timeRemaining < 10) { this.text += "00"; }
+            else if (this.timeRemaining < 100) { this.text += "0"; }
+            this.text += this.timeRemaining;
+        }
+
         this.context = gameArea.context;
         this.context.font = this.font;
 
@@ -1532,37 +1578,7 @@ function updateGameArea()
     }
 
     // Updating the HUD
-    for (i = 0; i < hud.length; i++)
-    {
-        if (hud[i].type == "Treasure" && treasure.length > 0)
-        {
-            if (hud[i].treasureCollected == treasure.length) { hud[i].fillColor = colors.Gold; }
-
-            hud[i].text = "💰";
-            hud[i].text += hud[i].treasureCollected + "/" + treasure.length;
-        }
-        else if (hud[i].type == "Completion")
-        {
-            if (saveProgress.completion[14][1] == 101) { hud[i].fillColor = colors.Gold; }
-
-            hud[i].text = "";
-            if (saveProgress.completion[14][1] < 10) { hud[i].text += "00"; }
-            else if (saveProgress.completion[14][1] < 100) { hud[i].text += "0"; }
-            hud[i].text += saveProgress.completion[14][1] + "%";
-        }
-        else if (hud[i].type == "Timer" && hud[i].startingTime > 0)
-        {
-            if (hud[i].timeRemaining > 0) { hud[i].timeRemaining = (hud[i].startingTime - (gameArea.frameNum / 50)).toFixed(1); }
-            if (hud[i].timeRemaining < 10) { hud[i].fillColor = colors.Red; }
-
-            hud[i].text = "⏱️";
-            if (hud[i].timeRemaining < 10) { hud[i].text += "00"; }
-            else if (hud[i].timeRemaining < 100) { hud[i].text += "0"; }
-            hud[i].text += hud[i].timeRemaining;
-        }
-
-        if (hud[i]) { hud[i].update(); }
-    }
+    for (i = 0; i < hud.length; i++) { if (hud[i]) { hud[i].update(); } }
 
     // Updating the music and sound effects
     if (!music.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = false); }
