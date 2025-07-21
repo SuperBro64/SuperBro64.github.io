@@ -449,7 +449,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 1", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3"; music.play();
     },
 
@@ -497,7 +497,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 2", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3"; music.play();
     },
 
@@ -551,7 +551,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 3", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3"; music.play();
     },
 
@@ -615,7 +615,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 4", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_4.mp3"; music.play();
     },
 
@@ -637,7 +637,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 5", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_5.mp3"; music.play();
     },
 
@@ -659,7 +659,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 6", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_6.mp3"; music.play();
     },
 
@@ -669,24 +669,81 @@ var levelSetup =
         gameArea.gradient(colors.MediumPurple); gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
 
         player = new componentPlayer(984, 75, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [(new componentWall(300, 650, 158, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
-                 (new componentWall(550, 650, 158, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
-                 (new componentWall(328, 172, 224, 40, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
-                 (new componentWall(492, 0, 40, 200, colors.Gray, 2, colors.Black, true, "N/A", 0))];
+        walls = [(new componentWall(502, 629, 30, 140, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
+                 (new componentWall(332, 160, 160, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
+                 (new componentWall(199, 309, 93, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 3)),
+                 (new componentWall(159, 599, 173, 30, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(-1, 459, 120, 30, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(372, 459, 120, 30, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(-1, 160, 160, 30, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(492, 59, 40, 570, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(748, -1, 40, 740, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(532, 59, 100, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(592, -1, 40, 60, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(788, 180, 140, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(958, 180, 67, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(908, 200, 20, 150, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(958, 200, 20, 304, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(788, 350, 140, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(815, 394, 20, 110, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(835, 394, 123, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(835, 484, 123, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(815, 529, 20, 150, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(835, 529, 123, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(958, 529, 20, 150, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(815, 679, 210, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(788, 719, 210, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(532, 180, 185, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(697, 200, 20, 105, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(532, 305, 185, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(560, 350, 188, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(532, 395, 185, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(557, 440, 115, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(557, 460, 20, 100, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(557, 560, 160, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(697, 415, 20, 145, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(532, 609, 185, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(697, 629, 20, 110, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(-1, 589, 160, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(332, 589, 160, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(119, 449, 253, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(159, 309, 40, 140, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(292, 309, 40, 140, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(50, 309, 109, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(332, 309, 160, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(159, -1, 40, 191, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(292, -1, 40, 191, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(50, 140, 109, 20, colors.Gray, 2, colors.Black, true, "N/A", 0))];
         holes = [];
-        treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [(new componentSwitch(360, 500, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
-                    (new componentSwitch(590, 480, 70, 70, colors.White, 2, colors.Black, "Door", "OFF", 2))];
-        resizers = [(new componentResizer(400, 300, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
-                    (new componentResizer(600, 300, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
+        treasure = [(new componentTreasure(1002, 225, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(1002, 655, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(610, 485, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(665, 485, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(610, 535, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(665, 535, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(815, 155, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(670, 655, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(690, 100, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(245, 700, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(60, 540, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(430, 540, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(360, 375, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(465, 375, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(130, 375, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(412, 250, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(245, 160, 10, 0, 2, colors.Gold, 2, colors.Black))];
+        warps = [(new componentWarp(245, 410, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
+        switches = [(new componentSwitch(670, 25, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(90, 65, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2)),
+                    (new componentSwitch(377, 60, 70, 70, colors.White, 2, colors.Black, "Door", "OFF", 3))];
+        resizers = [(new componentResizer(834, 75, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
+                    (new componentResizer(575, 140, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
+                    (new componentResizer(50, 700, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge")),
+                    (new componentResizer(245, 55, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 7", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_7.mp3"; music.play();
     },
 
@@ -708,7 +765,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 8", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_8.mp3"; music.play();
     },
 
@@ -730,7 +787,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_9.mp3";  music.play();
     },
 
@@ -752,7 +809,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 10", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3"; music.play();
     },
 
@@ -831,7 +888,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level A", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Bonus.mp3"; music.play();
     },
 
@@ -853,7 +910,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level B", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Target.mp3"; music.play();
     },
 
@@ -875,7 +932,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level C", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3"; music.play();
     },
 
@@ -897,7 +954,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level ?", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Billiards.mp3"; music.play();
     }
 }
@@ -1100,6 +1157,17 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.strokeRect(this.x, this.y, this.width, this.height);
+
+        if (this.type == "Cracked")
+        {
+            this.context.beginPath();
+            this.context.moveTo(this.x, this.y); this.context.lineTo(this.x + this.width, this.y + this.height);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.moveTo(this.x, this.y + this.height); this.context.lineTo(this.x + this.width, this.y);
+            this.context.stroke();
+        }
     }
 }
 
@@ -1730,8 +1798,7 @@ function toggleAudioMuting()
 }
 
 // IDEAS
-// - Create new "instructions" level and move all info from webpage into it
-// - Implement Mirror Mode more fully by requiring it for 100% completion, and making the levels harder (Level 1+, 2+, etc.)
+// - Create new "instructions" level and move all info from webpage into it, or put instructions across menu screen
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
@@ -1741,6 +1808,7 @@ function toggleAudioMuting()
 // - Sometimes hard to tell if a wall is off and transparent depending on the background color
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
+// - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
