@@ -897,15 +897,48 @@ var levelSetup =
     {
         gameArea.gradient(colors.Orchid); gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
 
-        player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
+        player = new componentPlayer(512, 692, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
-        holes = [];
-        treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [];
+        holes = [(new componentHole(206, 1, 203, 152, colors.Black, 2, colors.SaddleBrown, false, "Door", 3)),
+                 (new componentHole(616, 1, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentHole(1, 155, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentHole(206, 155, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentHole(411, 155, 203, 152, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(616, 155, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(821, 155, 202, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(1, 309, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(411, 309, 203, 152, colors.Black, 2, colors.SaddleBrown, false, "Door", 2)),
+                 (new componentHole(821, 309, 202, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentHole(1, 463, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(206, 463, 203, 152, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(411, 463, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(616, 463, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentHole(206, 617, 203, 150, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentHole(616, 617, 203, 150, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(821, 617, 202, 150, colors.Black, 2, colors.SaddleBrown, false, "Door", 1))];
+        treasure = [(new componentTreasure(307, 77, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(717, 77, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(102, 232, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(307, 232, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(922, 232, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(512, 386, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(922, 386, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(102, 539, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(512, 539, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(717, 539, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(307, 692, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(717, 692, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(922, 692, 10, 0, 2, colors.Gold, 2, colors.Black))];
+        warps = [(new componentWarp(512, 77, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
+        switches = [(new componentSwitch(697, 212, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(82, 366, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(287, 366, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(902, 516, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(82, 672, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(492, 672, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(82, 57, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 1)),
+                    (new componentSwitch(697, 366, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 2)),
+                    (new componentSwitch(902, 57, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 3))];
         resizers = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level B", 0, "Level")),
@@ -1161,11 +1194,13 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
         if (this.type == "Cracked")
         {
             this.context.beginPath();
-            this.context.moveTo(this.x, this.y); this.context.lineTo(this.x + this.width, this.y + this.height);
+            this.context.moveTo(this.x, this.y);
+            this.context.lineTo(this.x + this.width, this.y + this.height);
             this.context.stroke();
 
             this.context.beginPath();
-            this.context.moveTo(this.x, this.y + this.height); this.context.lineTo(this.x + this.width, this.y);
+            this.context.moveTo(this.x, this.y + this.height);
+            this.context.lineTo(this.x + this.width, this.y);
             this.context.stroke();
         }
     }
@@ -1183,7 +1218,12 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
     {
         this.context = gameArea.context;
 
-        if (this.type == "Flip")
+        if (this.type == "Door")
+        {
+            if (this.walkability) { this.fillColor = colors.SaddleBrown; this.lineColor = colors.Black; }
+            else if (!this.walkability) { this.lineColor = colors.SaddleBrown; this.fillColor = colors.Black; }
+        }
+        else if (this.type == "Flip")
         {
             if (this.walkability)
             {
@@ -1207,6 +1247,19 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.strokeRect(this.x, this.y, this.width, this.height);
+
+        if (this.type == "Door" || this.type == "Flip")
+        {
+            this.context.beginPath();
+            this.context.moveTo(this.x + (this.width / 2), this.y);
+            this.context.lineTo(this.x + (this.width / 2), this.y + this.height);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.moveTo(this.x, this.y + (height / 2));
+            this.context.lineTo(this.x + this.width, this.y + (this.height / 2));
+            this.context.stroke();
+        }
     }
 }
 
@@ -1382,6 +1435,16 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
                 {
                     if (this.state == "OFF") { this.state = "ON"; walls[i].tangibility = false; }
                     else if (this.state == "ON") { this.state = "OFF"; walls[i].tangibility = true; }
+                    break;
+                }
+            }
+
+            for (i = 0; i < holes.length; i++)
+            {
+                if (holes[i].type == "Door" && holes[i].value == this.value)
+                {
+                    if (this.state == "OFF") { this.state = "ON"; holes[i].walkability = false; }
+                    else if (this.state == "ON") { this.state = "OFF"; holes[i].walkability = true; }
                     break;
                 }
             }
