@@ -13,110 +13,122 @@ var player, walls = [], holes = [], treasure = [], warps = [], switches = [], re
 var gameStarted = false, gameIsOver = false;
 var hud = [], music, sfx;
 
-// Constant containing the HSL color values for all 140+ HTML color names to easily identify them
+// Constant containing the HSLA color values for all 140+ HTML color names to easily identify them
 const colors =
 {
-    // Red Colors -----------------------------------------------------------------------------------
-    IndianRed            : "hsl(  0,  53%,  58%)", LightCoral           : "hsl(  0,  79%,  72%)",
-    Salmon               : "hsl(  6,  93%,  71%)", DarkSalmon           : "hsl( 15,  72%,  70%)",
-    LightSalmon          : "hsl( 17, 100%,  74%)", Crimson              : "hsl(348,  83%,  47%)",
-    Red                  : "hsl(  0, 100%,  50%)", FireBrick            : "hsl(  0,  68%,  42%)",
-    DarkRed              : "hsl(  0, 100%,  27%)",
-    // Pink Colors ----------------------------------------------------------------------------------
-    Pink                 : "hsl(350, 100%,  88%)", LightPink            : "hsl(351, 100%,  86%)",
-    HotPink              : "hsl(330, 100%,  71%)", DeepPink             : "hsl(328, 100%,  54%)",
-    MediumVioletRed      : "hsl(322,  81%,  43%)", PaleVioletRed        : "hsl(340,  60%,  65%)",
-    // Orange Colors --------------------------------------------------------------------------------
-    Coral                : "hsl( 16, 100%,  66%)", Tomato               : "hsl(  9, 100%,  64%)",
-    OrangeRed            : "hsl( 16, 100%,  50%)", DarkOrange           : "hsl( 33, 100%,  50%)",
-    Orange               : "hsl( 39, 100%,  50%)",
-    // Yellow Colors --------------------------------------------------------------------------------
-    Gold                 : "hsl( 51, 100%,  50%)", Yellow               : "hsl( 60, 100%,  50%)",
-    LightYellow          : "hsl( 60, 100%,  94%)", LemonChiffon         : "hsl( 54, 100%,  90%)",
-    LightGoldenrodYellow : "hsl( 60,  80%,  90%)", PapayaWhip           : "hsl( 37, 100%,  92%)",
-    Moccasin             : "hsl( 38, 100%,  85%)", PeachPuff            : "hsl( 28, 100%,  86%)",
-    PaleGoldenrod        : "hsl( 55,  67%,  80%)", Khaki                : "hsl( 54,  77%,  75%)",
-    DarkKhaki            : "hsl( 56,  38%,  58%)",
-    // Purple Colors --------------------------------------------------------------------------------
-    Lavender             : "hsl(240,  67%,  94%)", Thistle              : "hsl(300,  24%,  80%)",
-    Plum                 : "hsl(300,  47%,  75%)", Violet               : "hsl(300,  76%,  72%)",
-    Orchid               : "hsl(302,  59%,  65%)", Fushsia              : "hsl(300, 100%,  50%)",
-    Magenta              : "hsl(300, 100%,  50%)", MediumOrchid         : "hsl(288,  59%,  58%)",
-    MediumPurple         : "hsl(260,  60%,  65%)", RebeccaPurple        : "hsl(270,  50%,  40%)",
-    BlueViolet           : "hsl(271,  76%,  53%)", DarkViolet           : "hsl(282, 100%,  41%)",
-    DarkOrchid           : "hsl(280,  61%,  50%)", DarkMagenta          : "hsl(300, 100%,  27%)",
-    Purple               : "hsl(300, 100%,  25%)", Indigo               : "hsl(275, 100%,  25%)",
-    SlateBlue            : "hsl(248,  53%,  58%)", DarkSlateBlue        : "hsl(248,  39%,  39%)",
-    MediumSlateBlue      : "hsl(249,  80%,  67%)",
-    // Green Colors ---------------------------------------------------------------------------------
-    GreenYellow          : "hsl( 84, 100%,  59%)", Chartreuse           : "hsl( 90, 100%,  50%)",
-    LawnGreen            : "hsl( 90, 100%,  49%)", Lime                 : "hsl(120, 100%,  50%)",
-    LimeGreen            : "hsl(120,  61%,  50%)", PaleGreen            : "hsl(120,  93%,  79%)",
-    LightGreen           : "hsl(120,  73%,  75%)", MediumSpringGreen    : "hsl(157, 100%,  49%)",
-    SpringGreen          : "hsl(150, 100%,  50%)", MediumSeaGreen       : "hsl(147,  50%,  47%)",
-    SeaGreen             : "hsl(146,  50%,  36%)", ForestGreen          : "hsl(120,  61%,  34%)",
-    Green                : "hsl(120, 100%,  25%)", DarkGreen            : "hsl(120, 100%,  20%)",
-    YellowGreen          : "hsl( 80,  61%,  50%)", OliveDrab            : "hsl( 80,  60%,  35%)",
-    Olive                : "hsl( 60, 100%,  25%)", DarkOliveGreen       : "hsl( 82,  39%,  30%)",
-    MediumAquamarine     : "hsl(160,  51%,  60%)", DarkSeaGreen         : "hsl(115,  27%,  64%)",
-    LightSeaGreen        : "hsl(177,  70%,  41%)", DarkCyan             : "hsl(180, 100%,  27%)",
-    Teal                 : "hsl(180, 100%,  25%)",
-    // Blue Colors ----------------------------------------------------------------------------------
-    Aqua                 : "hsl(180, 100%,  50%)", Cyan                 : "hsl(180, 100%,  50%)",
-    LightCyan            : "hsl(180, 100%,  94%)", PaleTurquoise        : "hsl(180,  65%,  81%)",
-    Aquamarine           : "hsl(160, 100%,  75%)", Turquoise            : "hsl(174,  72%,  56%)",
-    MediumTurquoise      : "hsl(178,  60%,  55%)", DarkTurquoise        : "hsl(181, 100%,  41%)",
-    CadetBlue            : "hsl(182,  25%,  50%)", SteelBlue            : "hsl(207,  44%,  49%)",
-    LightSteelBlue       : "hsl(214,  41%,  78%)", PowderBlue           : "hsl(187,  52%,  80%)",
-    LightBlue            : "hsl(195,  53%,  79%)", SkyBlue              : "hsl(197,  71%,  73%)",
-    LightSkyBlue         : "hsl(203,  92%,  75%)", DeepSkyBlue          : "hsl(195, 100%,  50%)",
-    DodgerBlue           : "hsl(210, 100%,  56%)", CornflowerBlue       : "hsl(219,  79%,  66%)",
-    RoyalBlue            : "hsl(225,  73%,  57%)", Blue                 : "hsl(240, 100%,  50%)",
-    MediumBlue           : "hsl(240, 100%,  40%)", DarkBlue             : "hsl(240, 100%,  27%)",
-    Navy                 : "hsl(240, 100%,  25%)", MidnightBlue         : "hsl(240,  64%,  27%)",
-    // Brown Colors ---------------------------------------------------------------------------------
-    Cornsilk             : "hsl( 48, 100%,  93%)", BlanchedAlmond       : "hsl( 36, 100%,  90%)",
-    Bisque               : "hsl( 33, 100%,  88%)", NavajoWhite          : "hsl( 36, 100%,  84%)",
-    Wheat                : "hsl( 39,  77%,  83%)", BurlyWood            : "hsl( 34,  57%,  70%)",
-    Tan                  : "hsl( 34,  44%,  69%)", RosyBrown            : "hsl(  0,  25%,  65%)",
-    SandyBrown           : "hsl( 28,  87%,  67%)", Goldenrod            : "hsl( 43,  74%,  49%)",
-    DarkGoldenrod        : "hsl( 43,  89%,  38%)", Peru                 : "hsl( 30,  59%,  53%)",
-    Chocolate            : "hsl( 25,  75%,  47%)", SaddleBrown          : "hsl( 25,  76%,  31%)",
-    Sienna               : "hsl( 19,  56%,  40%)", Brown                : "hsl(  0,  59%,  41%)",
-    Maroon               : "hsl(  0, 100%,  25%)",
-    // White Colors ---------------------------------------------------------------------------------
-    White                : "hsl(  0,   0%, 100%)", Snow                 : "hsl(  0, 100%,  99%)",
-    HoneyDew             : "hsl(120, 100%,  97%)", MintCream            : "hsl(150, 100%,  98%)",
-    Azure                : "hsl(180, 100%,  97%)", AliceBlue            : "hsl(208, 100%,  97%)",
-    GhostWhite           : "hsl(240, 100%,  99%)", WhiteSmoke           : "hsl(  0,   0%,  96%)",
-    SeaShell             : "hsl( 25, 100%,  97%)", Beige                : "hsl( 60,  56%,  91%)",
-    OldLace              : "hsl( 39,  85%,  95%)", FloralWhite          : "hsl( 40, 100%,  97%)",
-    Ivory                : "hsl( 60, 100%,  97%)", AntiqueWhite         : "hsl( 34,  78%,  91%)",
-    Linen                : "hsl( 30,  67%,  94%)", LavenderBlush        : "hsl(340, 100%,  97%)",
-    MistyRose            : "hsl(  6, 100%,  94%)",
-    // Gray Colors ----------------------------------------------------------------------------------
-    Gainsboro            : "hsl(  0,   0%,  86%)", LightGray            : "hsl(  0,   0%,  83%)",
-    Silver               : "hsl(  0,   0%,  75%)", DarkGray             : "hsl(  0,   0%,  66%)",
-    Gray                 : "hsl(  0,   0%,  50%)", DimGray              : "hsl(  0,   0%,  41%)",
-    LightSlateGray       : "hsl(210,  14%,  53%)", SlateGray            : "hsl(210,  13%,  50%)",
-    DarkSlateGray        : "hsl(180,  25%,  25%)", Black                : "hsl(  0,   0%,   0%)",
+    // Red Colors -----------------------------------------------------------------------------------------------
+    IndianRed            : "hsla(  0,  53%,  58%, 1.0)", LightCoral           : "hsla(  0,  79%,  72%, 1.0)",
+    Salmon               : "hsla(  6,  93%,  71%, 1.0)", DarkSalmon           : "hsla( 15,  72%,  70%, 1.0)",
+    LightSalmon          : "hsla( 17, 100%,  74%, 1.0)", Crimson              : "hsla(348,  83%,  47%, 1.0)",
+    Red                  : "hsla(  0, 100%,  50%, 1.0)", FireBrick            : "hsla(  0,  68%,  42%, 1.0)",
+    DarkRed              : "hsla(  0, 100%,  27%, 1.0)",
+    // Pink Colors ----------------------------------------------------------------------------------------------
+    Pink                 : "hsla(350, 100%,  88%, 1.0)", LightPink            : "hsla(351, 100%,  86%, 1.0)",
+    HotPink              : "hsla(330, 100%,  71%, 1.0)", DeepPink             : "hsla(328, 100%,  54%, 1.0)",
+    MediumVioletRed      : "hsla(322,  81%,  43%, 1.0)", PaleVioletRed        : "hsla(340,  60%,  65%, 1.0)",
+    // Orange Colors --------------------------------------------------------------------------------------------
+    Coral                : "hsla( 16, 100%,  66%, 1.0)", Tomato               : "hsla(  9, 100%,  64%, 1.0)",
+    OrangeRed            : "hsla( 16, 100%,  50%, 1.0)", DarkOrange           : "hsla( 33, 100%,  50%, 1.0)",
+    Orange               : "hsla( 39, 100%,  50%, 1.0)",
+    // Yellow Colors --------------------------------------------------------------------------------------------
+    Gold                 : "hsla( 51, 100%,  50%, 1.0)", Yellow               : "hsla( 60, 100%,  50%, 1.0)",
+    LightYellow          : "hsla( 60, 100%,  94%, 1.0)", LemonChiffon         : "hsla( 54, 100%,  90%, 1.0)",
+    LightGoldenrodYellow : "hsla( 60,  80%,  90%, 1.0)", PapayaWhip           : "hsla( 37, 100%,  92%, 1.0)",
+    Moccasin             : "hsla( 38, 100%,  85%, 1.0)", PeachPuff            : "hsla( 28, 100%,  86%, 1.0)",
+    PaleGoldenrod        : "hsla( 55,  67%,  80%, 1.0)", Khaki                : "hsla( 54,  77%,  75%, 1.0)",
+    DarkKhaki            : "hsla( 56,  38%,  58%, 1.0)",
+    // Purple Colors --------------------------------------------------------------------------------------------
+    Lavender             : "hsla(240,  67%,  94%, 1.0)", Thistle              : "hsla(300,  24%,  80%, 1.0)",
+    Plum                 : "hsla(300,  47%,  75%, 1.0)", Violet               : "hsla(300,  76%,  72%, 1.0)",
+    Orchid               : "hsla(302,  59%,  65%, 1.0)", Fushsia              : "hsla(300, 100%,  50%, 1.0)",
+    Magenta              : "hsla(300, 100%,  50%, 1.0)", MediumOrchid         : "hsla(288,  59%,  58%, 1.0)",
+    MediumPurple         : "hsla(260,  60%,  65%, 1.0)", RebeccaPurple        : "hsla(270,  50%,  40%, 1.0)",
+    BlueViolet           : "hsla(271,  76%,  53%, 1.0)", DarkViolet           : "hsla(282, 100%,  41%, 1.0)",
+    DarkOrchid           : "hsla(280,  61%,  50%, 1.0)", DarkMagenta          : "hsla(300, 100%,  27%, 1.0)",
+    Purple               : "hsla(300, 100%,  25%, 1.0)", Indigo               : "hsla(275, 100%,  25%, 1.0)",
+    SlateBlue            : "hsla(248,  53%,  58%, 1.0)", DarkSlateBlue        : "hsla(248,  39%,  39%, 1.0)",
+    MediumSlateBlue      : "hsla(249,  80%,  67%, 1.0)",
+    // Green Colors ---------------------------------------------------------------------------------------------
+    GreenYellow          : "hsla( 84, 100%,  59%, 1.0)", Chartreuse           : "hsla( 90, 100%,  50%, 1.0)",
+    LawnGreen            : "hsla( 90, 100%,  49%, 1.0)", Lime                 : "hsla(120, 100%,  50%, 1.0)",
+    LimeGreen            : "hsla(120,  61%,  50%, 1.0)", PaleGreen            : "hsla(120,  93%,  79%, 1.0)",
+    LightGreen           : "hsla(120,  73%,  75%, 1.0)", MediumSpringGreen    : "hsla(157, 100%,  49%, 1.0)",
+    SpringGreen          : "hsla(150, 100%,  50%, 1.0)", MediumSeaGreen       : "hsla(147,  50%,  47%, 1.0)",
+    SeaGreen             : "hsla(146,  50%,  36%, 1.0)", ForestGreen          : "hsla(120,  61%,  34%, 1.0)",
+    Green                : "hsla(120, 100%,  25%, 1.0)", DarkGreen            : "hsla(120, 100%,  20%, 1.0)",
+    YellowGreen          : "hsla( 80,  61%,  50%, 1.0)", OliveDrab            : "hsla( 80,  60%,  35%, 1.0)",
+    Olive                : "hsla( 60, 100%,  25%, 1.0)", DarkOliveGreen       : "hsla( 82,  39%,  30%, 1.0)",
+    MediumAquamarine     : "hsla(160,  51%,  60%, 1.0)", DarkSeaGreen         : "hsla(115,  27%,  64%, 1.0)",
+    LightSeaGreen        : "hsla(177,  70%,  41%, 1.0)", DarkCyan             : "hsla(180, 100%,  27%, 1.0)",
+    Teal                 : "hsla(180, 100%,  25%, 1.0)",
+    // Blue Colors ----------------------------------------------------------------------------------------------
+    Aqua                 : "hsla(180, 100%,  50%, 1.0)", Cyan                 : "hsla(180, 100%,  50%, 1.0)",
+    LightCyan            : "hsla(180, 100%,  94%, 1.0)", PaleTurquoise        : "hsla(180,  65%,  81%, 1.0)",
+    Aquamarine           : "hsla(160, 100%,  75%, 1.0)", Turquoise            : "hsla(174,  72%,  56%, 1.0)",
+    MediumTurquoise      : "hsla(178,  60%,  55%, 1.0)", DarkTurquoise        : "hsla(181, 100%,  41%, 1.0)",
+    CadetBlue            : "hsla(182,  25%,  50%, 1.0)", SteelBlue            : "hsla(207,  44%,  49%, 1.0)",
+    LightSteelBlue       : "hsla(214,  41%,  78%, 1.0)", PowderBlue           : "hsla(187,  52%,  80%, 1.0)",
+    LightBlue            : "hsla(195,  53%,  79%, 1.0)", SkyBlue              : "hsla(197,  71%,  73%, 1.0)",
+    LightSkyBlue         : "hsla(203,  92%,  75%, 1.0)", DeepSkyBlue          : "hsla(195, 100%,  50%, 1.0)",
+    DodgerBlue           : "hsla(210, 100%,  56%, 1.0)", CornflowerBlue       : "hsla(219,  79%,  66%, 1.0)",
+    RoyalBlue            : "hsla(225,  73%,  57%, 1.0)", Blue                 : "hsla(240, 100%,  50%, 1.0)",
+    MediumBlue           : "hsla(240, 100%,  40%, 1.0)", DarkBlue             : "hsla(240, 100%,  27%, 1.0)",
+    Navy                 : "hsla(240, 100%,  25%, 1.0)", MidnightBlue         : "hsla(240,  64%,  27%, 1.0)",
+    // Brown Colors ---------------------------------------------------------------------------------------------
+    Cornsilk             : "hsla( 48, 100%,  93%, 1.0)", BlanchedAlmond       : "hsla( 36, 100%,  90%, 1.0)",
+    Bisque               : "hsla( 33, 100%,  88%, 1.0)", NavajoWhite          : "hsla( 36, 100%,  84%, 1.0)",
+    Wheat                : "hsla( 39,  77%,  83%, 1.0)", BurlyWood            : "hsla( 34,  57%,  70%, 1.0)",
+    Tan                  : "hsla( 34,  44%,  69%, 1.0)", RosyBrown            : "hsla(  0,  25%,  65%, 1.0)",
+    SandyBrown           : "hsla( 28,  87%,  67%, 1.0)", Goldenrod            : "hsla( 43,  74%,  49%, 1.0)",
+    DarkGoldenrod        : "hsla( 43,  89%,  38%, 1.0)", Peru                 : "hsla( 30,  59%,  53%, 1.0)",
+    Chocolate            : "hsla( 25,  75%,  47%, 1.0)", SaddleBrown          : "hsla( 25,  76%,  31%, 1.0)",
+    Sienna               : "hsla( 19,  56%,  40%, 1.0)", Brown                : "hsla(  0,  59%,  41%, 1.0)",
+    Maroon               : "hsla(  0, 100%,  25%, 1.0)",
+    // White Colors ---------------------------------------------------------------------------------------------
+    White                : "hsla(  0,   0%, 100%, 1.0)", Snow                 : "hsla(  0, 100%,  99%, 1.0)",
+    HoneyDew             : "hsla(120, 100%,  97%, 1.0)", MintCream            : "hsla(150, 100%,  98%, 1.0)",
+    Azure                : "hsla(180, 100%,  97%, 1.0)", AliceBlue            : "hsla(208, 100%,  97%, 1.0)",
+    GhostWhite           : "hsla(240, 100%,  99%, 1.0)", WhiteSmoke           : "hsla(  0,   0%,  96%, 1.0)",
+    SeaShell             : "hsla( 25, 100%,  97%, 1.0)", Beige                : "hsla( 60,  56%,  91%, 1.0)",
+    OldLace              : "hsla( 39,  85%,  95%, 1.0)", FloralWhite          : "hsla( 40, 100%,  97%, 1.0)",
+    Ivory                : "hsla( 60, 100%,  97%, 1.0)", AntiqueWhite         : "hsla( 34,  78%,  91%, 1.0)",
+    Linen                : "hsla( 30,  67%,  94%, 1.0)", LavenderBlush        : "hsla(340, 100%,  97%, 1.0)",
+    MistyRose            : "hsla(  6, 100%,  94%, 1.0)",
+    // Gray Colors ----------------------------------------------------------------------------------------------
+    Gainsboro            : "hsla(  0,   0%,  86%, 1.0)", LightGray            : "hsla(  0,   0%,  83%, 1.0)",
+    Silver               : "hsla(  0,   0%,  75%, 1.0)", DarkGray             : "hsla(  0,   0%,  66%, 1.0)",
+    Gray                 : "hsla(  0,   0%,  50%, 1.0)", DimGray              : "hsla(  0,   0%,  41%, 1.0)",
+    LightSlateGray       : "hsla(210,  14%,  53%, 1.0)", SlateGray            : "hsla(210,  13%,  50%, 1.0)",
+    DarkSlateGray        : "hsla(180,  25%,  25%, 1.0)", Black                : "hsla(  0,   0%,   0%, 1.0)",
+    // Alpha Colors ---------------------------------------------------------------------------------------------
+    Clear                : "hsla(  0,   0%, 100%, 0.0)",
 
     // Code for changing a color's shade, originally by Chalarangelo (Angelos Chalaris) on GitHub
     shading: function(color, delta)
     {
-        var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
+        var [hue, saturation, lightness, alpha] = color.match(/\d+/g).map(Number);
         var newLightness = Math.max(0, Math.min(100, lightness + Number.parseFloat(delta)));
-        var shade = "hsl(" + hue + ", " + saturation + "%, " + newLightness + "%)";
+        var shade = "hsla(" + hue + ", " + saturation + "%, " + newLightness + "%, " + alpha + ")";
 
         return shade;
+    },
+
+    // Code for changing a color's transparency alpha value, based on Chalarangelo's shading code above
+    transparency: function(color, value)
+    {
+        var [hue, saturation, lightness, alpha] = color.match(/\d+/g).map(Number);
+        var newAlpha = Math.max(0.0, Math.min(1.0, alpha = Number.parseFloat(value)));
+        var transparent = "hsla(" + hue + ", " + saturation + "%, " + lightness + "%, " + newAlpha + ")";
+
+        return transparent;
     },
 
     // Code for causing a color to cycle through the rainbow, based on Chalarangelo's shading code above
     rainbow: function(color, delta)
     {
-        var [hue, saturation, lightness] = color.match(/\d+/g).map(Number);
+        var [hue, saturation, lightness, alpha] = color.match(/\d+/g).map(Number);
         var newHue = Math.max(0, Math.min(360, hue + Number.parseFloat(delta))) % 360;
-        var rainbowChange = "hsl(" + newHue + ", " + saturation + "%, " + lightness + "%)";
+        var rainbowChange = "hsl(" + newHue + ", " + saturation + "%, " + lightness + "%, " + alpha + ")";
 
         return rainbowChange;
     },
@@ -1160,7 +1172,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         var overlapX = Math.min(this.x + this.radius, wall.x + wall.width) - Math.max(this.x - this.radius, wall.x);
         var overlapY = Math.min(this.y + this.radius, wall.y + wall.height) - Math.max(this.y - this.radius, wall.y);
 
-        if (wall.type == "Cracked" && this.radius >= 35) { wall.x = -1000; wall.y = -1000; wall.sfx.play(); }
+        if (wall.type == "Cracked" && this.radius >= 35) { wall.tangibility = false; wall.sfx.play(); }
         else
         {
             if (overlapX < overlapY)
@@ -1217,19 +1229,57 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
     {
         this.context = gameArea.context;
 
-        if (!this.tangibility) { this.context.globalAlpha = 0.5; }
+        if (this.type == "Door")
+        {
+            if (this.tangibility) { this.fillColor = colors.SaddleBrown; this.lineColor = colors.Black; }
+            else if (!this.tangibility)
+            {
+                this.lineColor = colors.SaddleBrown; this.fillColor = colors.transparency(colors.SaddleBrown, 0.25);
+            }
+        }
+        else if (this.type == "Flip")
+        {
+            if (this.tangibility)
+            {
+                if (this.value == -1) { this.fillColor = colors.Orange; }
+                else if (this.value == -2) { this.fillColor = colors.SkyBlue; }
+
+                this.lineColor = colors.Black;
+            }
+            else if (!this.tangibility)
+            {
+                if (this.value == -1)
+                {
+                    this.lineColor = colors.Orange; this.fillColor = colors.transparency(colors.Orange, 0.25);
+                }
+                else if (this.value == -2)
+                {
+                    this.lineColor = colors.SkyBlue; this.fillColor = colors.transparency(colors.SkyBlue, 0.25);
+                }
+            }
+        }
+        else if (this.type == "Progression")
+        {
+            if (this.tangibility) { this.fillColor = colors.Crimson; this.lineColor = colors.Black; }
+            else if (!this.tangibility)
+            {
+                this.lineColor = colors.Crimson; this.fillColor = colors.transparency(colors.Crimson, 0.25);
+            }
+        }
+
+        if (this.type == "Door" || this.type == "Flip" || this.type == "Progression")
+        {
+            if (this.lineColor == colors.Black) { this.context.setLineDash([0, 0]); }
+            else { this.context.setLineDash([8, 4]); }
+        }
 
         this.context.fillStyle = this.fillColor;
         this.context.fillRect(this.x, this.y, this.width, this.height);
 
-        this.context.globalAlpha = 1.0;
-
-        this.context.lineWidth = this.lineWidth;
-        this.context.strokeStyle = this.lineColor;
-        this.context.strokeRect(this.x, this.y, this.width, this.height);
-
         if (this.type == "Cracked")
         {
+            if (!this.tangibility) { this.fillColor = colors.transparency(colors.Tomato, 0.25); this.context.setLineDash([4, 2]); }
+
             this.context.beginPath();
             this.context.moveTo(this.x, this.y);
             this.context.lineTo(this.x + this.width, this.y + this.height);
@@ -1240,6 +1290,12 @@ function componentWall(x, y, width, height, fillColor, lineWidth, lineColor, tan
             this.context.lineTo(this.x + this.width, this.y);
             this.context.stroke();
         }
+
+        this.context.lineWidth = this.lineWidth;
+        this.context.strokeStyle = this.lineColor;
+        this.context.strokeRect(this.x, this.y, this.width, this.height);
+
+        this.context.setLineDash([0, 0]);
     }
 }
 
@@ -1771,7 +1827,7 @@ function gameOver()
     document.querySelector("#pauseButton").innerHTML = "🔄️";
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                            colors.Gray, 0, colors.Black, false, "N/A", 0))];
+                            colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
     for (i = 0; i < gameOverOverlay.length; i++) { gameOverOverlay[i].update(); }
     
     var gameOverText = [(new componentHud("60px NewSuperMarioFontU", colors.Red, colors.Black, 350, 364, "GAME OVER", 0, "N/A")),
@@ -1861,7 +1917,7 @@ function pauseGame()
             document.querySelector("#pauseButton").innerHTML = "▶️";
 
             var pauseOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                    colors.Gray, 0, colors.Black, false, "N/A", 0))];
+                                    colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
             for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
             var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 400, 364, "PAUSED", 0, "N/A")),
@@ -1909,8 +1965,6 @@ function toggleAudioMuting()
 // - Sound effects not properly muting when the game interval is paused
 // - Music restarting when the player restarts the current level after getting a game over
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
-// - Little visual difference between flip walls and bridges that are both on, and between flip walls and switches
-// - Sometimes hard to tell if a wall is off and transparent depending on the background color
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
