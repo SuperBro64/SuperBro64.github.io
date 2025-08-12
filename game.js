@@ -1250,6 +1250,9 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
 
         if (this.type == "Door" || this.type == "Flip")
         {
+            if (this.lineColor == colors.Black) { this.context.setLineDash([0, 0]); }
+            else { this.context.setLineDash([8, 4]); }
+
             this.context.beginPath();
             this.context.moveTo(this.x + (this.width / 2), this.y);
             this.context.lineTo(this.x + (this.width / 2), this.y + this.height);
@@ -1259,6 +1262,8 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
             this.context.moveTo(this.x, this.y + (height / 2));
             this.context.lineTo(this.x + this.width, this.y + (this.height / 2));
             this.context.stroke();
+
+            this.context.setLineDash([0, 0]);
         }
     }
 }
