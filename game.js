@@ -119,6 +119,16 @@ const colors =
         var rainbowChange = "hsl(" + newHue + ", " + saturation + "%, " + lightness + "%)";
 
         return rainbowChange;
+    },
+
+    // Code for applying a diagonal linear gradient to the given object using the given color and a darker shade of it
+    diagonalLinearGradient: function(color, delta, object, startX, startY, endX, endY)
+    {
+        var gradient = object.context.createLinearGradient(startX, startY, endX, endY);
+        var shade = colors.shading(color, delta);
+        gradient.addColorStop(0.0, shade); gradient.addColorStop(0.5, color); gradient.addColorStop(1.0, shade);
+
+        return gradient;
     }
 };
 
@@ -200,16 +210,6 @@ var gameArea =
         this.applyMirrorMode(false); if (this.mirrorMode) { this.applyMirrorMode(true); }
     },
 
-    // Applies a diagonal gradient to the canvas background, using the given color and a darker shade of the color
-    gradient: function(color)
-    {
-        var grad = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-        var shade = colors.shading(color, -25);
-
-        grad.addColorStop(0.0, shade); grad.addColorStop(0.5, color); grad.addColorStop(1.0, shade);
-        this.fillColor = grad;
-    },
-
     // Turns Mirror Mode on or off
     applyMirrorMode: function(state)
     {
@@ -232,7 +232,10 @@ var levelSetup =
     // Setup for the title screen
     titleScreen: function()
     {
-        gameArea.gradient(colors.DarkGray); gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Title Screen"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkGray, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
+
         gameStarted = false; gameArea.mirrorMode = false;
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
@@ -264,7 +267,9 @@ var levelSetup =
     // Setup for the menu screen
     menuScreen: function()
     {
-        gameArea.gradient(colors.LightGray); gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Menu Screen"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.LightGray, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -294,7 +299,9 @@ var levelSetup =
     // Setup for the credits screen
     credits: function()
     {
-        gameArea.gradient(colors.DarkSlateBlue); gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Credits Screen"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkSlateBlue, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 500, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -328,7 +335,9 @@ var levelSetup =
     // Setup for the main hub
     mainHub: function()
     {
-        gameArea.gradient(colors.AntiqueWhite); gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Main Hub"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.AntiqueWhite, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 604, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(328, 272, 40, 224, colors.Gray, 2, colors.Black, true, "N/A", 0)),
@@ -412,7 +421,9 @@ var levelSetup =
     // Setup for level 1
     level1: function()
     {
-        gameArea.gradient(colors.YellowGreen); gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 1"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.YellowGreen, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(110, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(350, -1, 40, 151, colors.Gray, 2, colors.Black, true, "N/A", 0)),
@@ -456,7 +467,9 @@ var levelSetup =
     // Setup for level 2
     level2: function()
     {
-        gameArea.gradient(colors.LightCoral); gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 2"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.LightCoral, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(964, 710, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(865, 622, 160, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
@@ -504,7 +517,9 @@ var levelSetup =
     // Setup for level 3
     level3: function()
     {
-        gameArea.gradient(colors.DarkTurquoise); gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 3"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkTurquoise, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 100, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(412, 172, 200, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
@@ -558,7 +573,9 @@ var levelSetup =
     // Setup for level 4
     level4: function()
     {
-        gameArea.gradient(colors.DodgerBlue); gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 4"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.DodgerBlue, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(100, 670, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(-1, 450, 201, 30, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
@@ -622,7 +639,9 @@ var levelSetup =
     // Setup for level 5
     level5: function()
     {
-        gameArea.gradient(colors.HotPink); gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 5"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.HotPink, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -644,7 +663,9 @@ var levelSetup =
     // Setup for level 6
     level6: function()
     {
-        gameArea.gradient(colors.Tan); gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 6"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.Tan, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -666,7 +687,9 @@ var levelSetup =
     // Setup for level 7
     level7: function()
     {
-        gameArea.gradient(colors.MediumPurple); gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 7"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.MediumPurple, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(984, 75, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(502, 629, 30, 140, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
@@ -750,7 +773,9 @@ var levelSetup =
     // Setup for level 8
     level8: function()
     {
-        gameArea.gradient(colors.DarkOrange); gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 8"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkOrange, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -772,7 +797,9 @@ var levelSetup =
     // Setup for level 9
     level9: function()
     {
-        gameArea.gradient(colors.DimGray); gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 9"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.DimGray, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -794,7 +821,9 @@ var levelSetup =
     // Setup for level 10
     level10: function()
     {
-        gameArea.gradient(colors.SlateGray); gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level 10"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.SlateGray, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -816,7 +845,9 @@ var levelSetup =
     // Setup for level A
     levelA: function()
     {
-        gameArea.gradient(colors.Khaki); gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level A"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.Khaki, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 504, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(462, 300, 100, 10, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
@@ -895,7 +926,9 @@ var levelSetup =
     // Setup for level B
     levelB: function()
     {
-        gameArea.gradient(colors.Orchid); gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level B"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.Orchid, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 692, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -950,7 +983,9 @@ var levelSetup =
     // Setup for level C
     levelC: function()
     {
-        gameArea.gradient(colors.MediumSeaGreen); gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level C"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.MediumSeaGreen, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -972,7 +1007,9 @@ var levelSetup =
     // Setup for level ?
     level$: function()
     {
-        gameArea.gradient(colors.Brown); gameArea.currentLevel = "Level ?"; gameArea.frameNum = 0;
+        gameArea.currentLevel = "Level ?"; gameArea.frameNum = 0;
+        gameArea.fillColor = colors.diagonalLinearGradient(colors.Brown, -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
