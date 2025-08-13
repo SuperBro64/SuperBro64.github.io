@@ -1051,7 +1051,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.action = false, this.falling = false;
     this.originalX = x, this.originalY = y, this.originalRadius = radius;
-    this.sprite = new Image();
+    this.sprite = new Image(), this.crown = new Image();
 
     this.update = function()
     {
@@ -1065,6 +1065,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.stroke();
+
+        this.action = false;
 
         if (!this.falling)
         {
@@ -1086,8 +1088,13 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             }
         }
 
-        this.action = false;
         this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+
+        if (saveProgress.completion[14][1] == 101)
+        {
+            this.crown.src = "resources/images/player_crown.png";
+            this.context.drawImage(this.crown, this.x - this.radius, this.y - (2.2 * this.radius), 2 * this.radius, 2 * this.radius);
+        }
     }
 
     // Calculates each frame the new x and y positions of the player as they move around
