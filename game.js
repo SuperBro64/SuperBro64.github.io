@@ -1562,6 +1562,7 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.strokeRect(this.x, this.y, this.width, this.height);
+        this.context.strokeRect(this.x + 5, this.y + 5, this.width - 10, this.height - 10);
     }
 
     this.changeState = function()
