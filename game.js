@@ -325,20 +325,22 @@ var levelSetup =
 
         hud = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 380, 50, "CREDITS", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 470, 750, "Exit", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 120,
-                "Game Creator . . . . . . . . . . SuperBro64", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 170,
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 120,
+                "Game Creator . . . . . . . . . . SuperBro64 (Brandon Jackson)", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 160,
                 "Background Music . . . . . Super Monkey Ball 2", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 220,
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 200,
                 "Sound Effects . . . . . . . . . Super Mario 64", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 270,
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 240,
                 "Font . . . . . . . . . . . . . . . . . . . . New Super Mario Bros. U", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 320,
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 280,
+                "Emoji Images . . . . . . . . . . . emoji.aranja.com", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 320,
                 "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 370,
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 360,
                 "Color Shading Code . . . . Chalarangelo", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 50, 420,
-                "Special Thanks . . . . . . . . Bryce Pavlakos", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 400,
+                "Special Thanks . . . . . . . . Rick Jackson, Bryce Pavlakos", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 30, 620,
                 "❤️ Thank you so much for a-playing my game! ❤️", 0, "N/A"))];
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3"; music.play();
@@ -1352,8 +1354,8 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
         if (!this.walkability)
         {
             var tempFill = this.context.fillStyle, tempStroke = this.context.strokeStyle;
-            var innerStartX = this.x + 5, innerEndX = this.width - 10;
-            var innerStartY = this.y + 5, innerEndY = this.height - 10;
+            var innerStartX = this.x + 2.5, innerEndX = this.width - 5;
+            var innerStartY = this.y + 2.5, innerEndY = this.height - 5;
 
             this.context.fillStyle = colors.Black;
             this.context.fillRect(innerStartX, innerStartY, innerEndX, innerEndY);
