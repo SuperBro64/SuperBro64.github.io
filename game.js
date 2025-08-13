@@ -1321,7 +1321,7 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
         if (this.type == "Door")
         {
             if (this.walkability) { this.fillColor = colors.SaddleBrown; this.lineColor = colors.Black; }
-            else if (!this.walkability) { this.lineColor = colors.SaddleBrown; this.fillColor = colors.Black; }
+            else if (!this.walkability) { this.lineColor = colors.SaddleBrown; this.fillColor = colors.shading(colors.Black, 20) }
         }
         else if (this.type == "Flip")
         {
@@ -1337,9 +1337,10 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
                 if (this.value == -1) { this.lineColor = colors.Orange; }
                 else if (this.value == -2) { this.lineColor = colors.SkyBlue; }
 
-                this.fillColor = colors.Black;
+                this.fillColor = colors.shading(colors.Black, 20)
             }
         }
+        else { this.fillColor = colors.shading(colors.Black, 20); }
 
         this.context.fillStyle = this.fillColor;
         this.context.fillRect(this.x, this.y, this.width, this.height);
@@ -1347,6 +1348,41 @@ function componentHole(x, y, width, height, fillColor, lineWidth, lineColor, wal
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.strokeRect(this.x, this.y, this.width, this.height);
+
+        if (!this.walkability)
+        {
+            var tempFill = this.context.fillStyle, tempStroke = this.context.strokeStyle;
+            var innerStartX = this.x + 5, innerEndX = this.width - 10;
+            var innerStartY = this.y + 5, innerEndY = this.height - 10;
+
+            this.context.fillStyle = colors.Black;
+            this.context.fillRect(innerStartX, innerStartY, innerEndX, innerEndY);
+
+            this.context.strokeStyle = colors.transparency(colors.White, 0.25);
+            this.context.strokeRect(innerStartX, innerStartY, innerEndX, innerEndY);
+
+            this.context.beginPath();
+            this.context.moveTo(this.x, this.y);
+            this.context.lineTo(innerStartX, innerStartY);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.moveTo(this.x + this.width, this.y);
+            this.context.lineTo(innerStartX + innerEndX, innerStartY);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.moveTo(this.x, this.y + this.height);
+            this.context.lineTo(innerStartX, innerStartY + innerEndY);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.moveTo(this.x + this.width, this.y + this.height);
+            this.context.lineTo(innerStartX + innerEndX, innerStartY + innerEndY);
+            this.context.stroke();
+
+            this.context.fillStyle = tempFill; this.context.strokeStyle = tempStroke;
+        }
 
         if (this.type == "Door" || this.type == "Flip")
         {
@@ -1796,7 +1832,7 @@ function updateGameArea()
         if (switches[i]) { switches[i].update(); }
     }
 
-    // Updateing the resizers
+    // Updating the resizers
     for (i = 0; i < resizers.length; i++)
     {
         if (player.objectCollision(resizers[i]))
