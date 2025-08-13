@@ -1045,11 +1045,11 @@ var levelSetup =
 function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
 {
     this.speedX = 0, this.speedY = 0;
-    this.x = x, this.y = y, this.radius = radius;
-    this.startAngle = startAngle, this.endAngle = endAngle;
+    this.x = x, this.y = y, this.radius = radius; this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.action = false, this.falling = false;
     this.originalX = x, this.originalY = y, this.originalRadius = radius;
+    this.sprite = new Image();
 
     this.update = function()
     {
@@ -1064,11 +1064,15 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         this.context.strokeStyle = this.lineColor;
         this.context.stroke();
 
-        this.action = false;
-
-        if (this.falling)
+        if (!this.falling)
         {
-            this.radius -= 0.15;
+            if (this.radius <= 7.5) { this.sprite.src = "resources/images/player_tiny.png"; }
+            else if (this.radius >= 35) { this.sprite.src = "resources/images/player_huge.png"; }
+            else { this.sprite.src = "resources/images/player_normal.png"; }
+        }
+        else if (this.falling)
+        {
+            this.radius -= 0.15; this.sprite.src = "resources/images/player_falling.png";
 
             if (this.radius <= 0)
             {
@@ -1079,6 +1083,9 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
                 document.querySelector("#pauseButton").innerHTML = "⏸️";
             }
         }
+
+        this.action = false;
+        this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
     }
 
     // Calculates each frame the new x and y positions of the player as they move around
