@@ -10,7 +10,6 @@ function startGame()
 
 // Variables for all game objects along with important global variables
 var player, walls = [], holes = [], treasure = [], warps = [], switches = [], resizers = [];
-var gameStarted = false, gameIsOver = false;
 var hud = [], music, sfx;
 
 // Constant containing the HSLA color values for all 140+ HTML color names to easily identify them
@@ -151,6 +150,7 @@ var saveProgress =
                  ["Level 6", 0], ["Level 7", 0], ["Level 8", 0], ["Level 9", 0], ["Level 10", 0],
                  ["Level A", 0], ["Level B", 0], ["Level C", 0], ["Level ?", 0], ["Percentage", 0]],
 
+    // Saves the player's current game progress to web storage
     save: function(storageName)
     {
         for (i = 0; i < this.completion.length - 1; i++)
@@ -171,6 +171,7 @@ var saveProgress =
         if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
     },
 
+    // Loads the player's current game progress from web storage
     load: function(storageName)
     {
         if (typeof(Storage) !== "undefined" && localStorage.getItem(storageName) != null)
@@ -184,6 +185,7 @@ var saveProgress =
         }
     },
 
+    // Deletes the player's current game progress from web storage
     delete: function(storageName)
     {
         for (i = 0; i < this.completion.length; i++) { this.completion[i][1] = 0; }
@@ -195,7 +197,8 @@ var saveProgress =
 // Variable for the playable game area
 var gameArea =
 {
-    canvas: document.createElement("canvas"), currentLevel: "", mirrorMode: false,
+    canvas: document.createElement("canvas"),
+    currentLevel: "", gameStarted: false, gameIsOver: false, mirrorMode: false,
 
     start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
     {
@@ -248,7 +251,7 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkGray, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        gameStarted = false; gameArea.mirrorMode = false;
+        gameArea.gameStarted = false; gameArea.mirrorMode = false;
 
         player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
@@ -938,20 +941,21 @@ var levelSetup =
                  (new componentWall(282, 300, 140, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(602, 300, 140, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(112, 146, 40, 194, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(872, 146, 40, 154, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(152, 146, 300, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(572, 146, 300, 40, colors.Gray, 2, colors.Black, true, "N/A", 0))];
+                 (new componentWall(872, 146, 40, 194, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(282, -1, 40, 200, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(702, -1, 40, 200, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(422, 159, 180, 40, colors.Gray, 2, colors.Black, true, "N/A", 0))];
         holes = [];
         treasure = [(new componentTreasure(215, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(355, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(375, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(512, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(669, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(649, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(809, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(50, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(215, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(355, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(375, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(512, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(669, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(649, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(809, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(974, 240, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(50, 375, 10, 0, 2, colors.Gold, 2, colors.Black)),
@@ -1154,7 +1158,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     // Calculates each frame the new x and y positions of the player as they move around
     this.newPosition = function()
     {
-        if (!gameStarted || this.falling) { return; }
+        if (!gameArea.gameStarted || this.falling) { return; }
 
         var stickX = joystick.getX(), stickY = joystick.getY();
         var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
@@ -1922,16 +1926,20 @@ function updateGameArea()
     if (player) { player.update(); }
 
     // Checking conditions for a Game Over occuring
-    if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameIsOver) { gameOver(); }
+    if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver(); }
 }
 
 // Code for the game over that occurs when the level time has run out
 function gameOver()
 {
-    gameIsOver = true;
+    gameArea.gameIsOver = true;
 
     document.querySelector("#actionButton").innerHTML = "🏠";
     document.querySelector("#pauseButton").innerHTML = "🔄️";
+
+    player.sprite.src = "resources/images/player_game_over.png";
+    player.context.drawImage(player.sprite,
+        player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
                             colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
@@ -1978,29 +1986,29 @@ function levelRestart()
 // Code for the player's actions during normal gameplay, or for returning to the main hub during a pause or Game Over
 function playerAction()
 {
-    if (!gameStarted)
+    if (!gameArea.gameStarted)
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
 
         sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
-        gameStarted = true;
+        gameArea.gameStarted = true;
         
         levelSetup.menuScreen();
     }
-    else if (!gameArea.interval && gameIsOver)
+    else if (!gameArea.interval && gameArea.gameIsOver)
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
 
-        gameIsOver = false; sfx.stop();
+        gameArea.gameIsOver = false; sfx.stop();
 
         sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
         levelSetup.mainHub();
     }
-    else if (!gameArea.interval && !gameIsOver)
+    else if (!gameArea.interval && !gameArea.gameIsOver)
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2010,13 +2018,13 @@ function playerAction()
 
         levelSetup.mainHub();
     }
-    else if (gameArea.interval && !gameIsOver) { player.action = true; }
+    else if (gameArea.interval && !gameArea.gameIsOver) { player.action = true; }
 }
 
 // Code for pausing the game during normal gameplay, or for restarting the current level after getting a Game Over
 function pauseGame()
 {
-    if (gameStarted && !gameIsOver && !player.falling)
+    if (gameArea.gameStarted && !gameArea.gameIsOver && !player.falling)
     {
         if (gameArea.interval)
         {
@@ -2046,12 +2054,12 @@ function pauseGame()
             gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
         }
     }
-    else if (gameStarted && gameIsOver && !gameArea.interval)
+    else if (gameArea.gameStarted && gameArea.gameIsOver && !gameArea.interval)
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
 
-        gameIsOver = false; sfx.stop();
+        gameArea.gameIsOver = false; sfx.stop();
         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
         levelRestart();
