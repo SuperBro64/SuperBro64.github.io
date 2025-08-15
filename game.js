@@ -198,7 +198,7 @@ var saveProgress =
 var gameArea =
 {
     canvas: document.createElement("canvas"),
-    currentLevel: "", gameStarted: false, gameIsOver: false, mirrorMode: false,
+    currentLevel: "", levelComplete: false, gameStarted: false, gameIsOver: false, mirrorMode: false,
 
     start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
     {
@@ -1547,15 +1547,18 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
 
     this.toDestination = function()
     {
-        music.stop(); this.sfx.play();
-
-        if (this.type == "Goal") { saveProgress.save("saveProgress"); }
+        if (this.type == "Goal")
+        {
+            saveProgress.save("saveProgress"); gameArea.levelComplete = true; this.update(); return;
+        }
         else if (this.type == "Deletion") { saveProgress.delete("saveProgress"); }
         else if (this.type == "Mirror")
         {
             if (!gameArea.mirrorMode) { gameArea.mirrorMode = true; }
             else if (gameArea.mirrorMode) { gameArea.mirrorMode = false; }
         }
+
+        music.stop(); this.sfx.play();
 
         switch (this.destination)
         {
@@ -1925,6 +1928,9 @@ function updateGameArea()
     player.newPosition();
     if (player) { player.update(); }
 
+    // Checking conditions for a level being completed
+    if (gameArea.levelComplete) { levelEnd(); }
+
     // Checking conditions for a Game Over occuring
     if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver(); }
 }
@@ -1952,7 +1958,7 @@ function gameOver()
                             "Click 🏠 to return to the hub.", 0, "N/A"))];
     for (i = 0; i < gameOverText.length; i++) { gameOverText[i].update(); }
 
-    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Game_Over.wav"; sfx.play();
+    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Oof.wav"; sfx.play();
     clearInterval(gameArea.interval); gameArea.interval = null;
 }
 
@@ -1983,7 +1989,46 @@ function levelRestart()
     }
 }
 
-// Code for the player's actions during normal gameplay, or for returning to the main hub during a pause or Game Over
+function levelEnd()
+{
+    document.querySelector("#actionButton").innerHTML = "🏠";
+    document.querySelector("#pauseButton").innerHTML = "❌";
+
+    player.sprite.src = "resources/images/player_level_complete.png";
+    player.context.drawImage(player.sprite,
+        player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
+
+    var levelCompleteOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
+                                 colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
+    for (i = 0; i < levelCompleteOverlay.length; i++) { levelCompleteOverlay[i].update(); }
+
+    var levelCompleteText = [(new componentHud("60px NewSuperMarioFontU", colors.Gold, colors.Black, 425, 364, "GOAL!!", 0, "N/A")),
+                             (new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 215, 464,
+                                "Click 🏠 to return to the hub.", 0, "N/A"))];
+    for (i = 0; i < hud.length; i++)
+    {
+        if (hud[i].type == "Treasure")
+        {
+            if (hud[i].treasureCollected == treasure.length)
+            {
+                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 180, 414,
+                    "You collected all of the treasure!", 0, "N/A")));
+            }
+            else
+            {
+                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 170, 414,
+                    "You missed some of the treasure...", 0, "N/A")));
+            }
+            break;
+        }
+    }
+    for (i = 0; i < levelCompleteText.length; i++) { levelCompleteText[i].update(); }
+
+    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Star_Catch.mp3"; sfx.play();
+    clearInterval(gameArea.interval); gameArea.interval = null;
+}
+
+// Code for the player's actions during normal gameplay, or for returning to the main hub during specific circumstances
 function playerAction()
 {
     if (!gameArea.gameStarted)
@@ -1995,6 +2040,18 @@ function playerAction()
         gameArea.gameStarted = true;
         
         levelSetup.menuScreen();
+    }
+    else if (!gameArea.interval && gameArea.levelComplete)
+    {
+        document.querySelector("#actionButton").innerHTML = "🅰️";
+        document.querySelector("#pauseButton").innerHTML = "⏸️";
+
+        gameArea.levelComplete = false; sfx.stop();
+
+        sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
+        gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
+        levelSetup.mainHub();
     }
     else if (!gameArea.interval && gameArea.gameIsOver)
     {
@@ -2024,7 +2081,7 @@ function playerAction()
 // Code for pausing the game during normal gameplay, or for restarting the current level after getting a Game Over
 function pauseGame()
 {
-    if (gameArea.gameStarted && !gameArea.gameIsOver && !player.falling)
+    if (gameArea.gameStarted && !gameArea.levelComplete && !gameArea.gameIsOver && !player.falling)
     {
         if (gameArea.interval)
         {
@@ -2075,6 +2132,11 @@ function toggleAudioMuting()
 
 // IDEAS
 // - Create new "instructions" level and move all info from webpage into it, or put instructions across menu screen
+// - Sound effects to add:
+//    - "Warp" when using a teleporter
+//    - "Camera can't zoom" when trying to activate a switch that's too big
+//    - "1-Up" when every treasure in a level has been collected
+//    - "Thank you so much" when going to the credits screen from Level 10
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
