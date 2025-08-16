@@ -1499,7 +1499,8 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
     this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.animationCycle = 0;
-    this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Coin.wav", "SFX");
+    this.sfx1 = new componentSound("resources/sounds/Super_Mario_64_-_Coin.wav", "SFX");
+    this.sfx2 = new componentSound("resources/sounds/Super_Mario_64_-_1-Up.wav", "SFX");
 
     this.update = function()
     {
@@ -1524,7 +1525,20 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
         this.context.stroke();
     }
 
-    this.disappear = function() { this.x = -1000; this.y = -1000; this.sfx.play(); }
+    this.disappear = function()
+    {
+        this.x = -100; this.y = -100;
+
+        for (i = 0; i < hud.length; i++)
+        {
+            if (hud[i].type == "Treasure" && treasure.length > 0)
+            {
+                if (hud[i].treasureCollected == treasure.length - 1) { this.sfx2.play(); }
+                else { this.sfx1.play(); }
+                break;
+            }
+        }
+    }
 }
 
 // Code for the warps
@@ -1560,6 +1574,11 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
+
+        this.context.beginPath();
+        this.context.arc((this.width / -2) + (this.width / 2), (this.height / -2) + (this.height / 2), 10, 0, 2 * Math.PI);
+        this.context.fill();
+        this.context.stroke();
 
         this.context.restore();
 
@@ -1612,7 +1631,8 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
     this.x = x, this.y = y, this.width = width, this.height = height;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.type = type, this.state = state, this.value = value; this.activatable = false;
-    this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Camera_Click.wav", "SFX");
+    this.sfx1 = new componentSound("resources/sounds/Super_Mario_64_-_Camera_Click.wav", "SFX");
+    this.sfx2 = new componentSound("resources/sounds/Super_Mario_64_-_Camera_Buzz.wav", "SFX");
 
     this.update = function()
     {
@@ -1656,9 +1676,10 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
 
     this.changeState = function()
     {
-        if (!this.sfx.sound.paused || !this.activatable) { return; }
+        if (!this.sfx1.sound.paused) { return; }
+        if (!this.activatable) { this.sfx2.play(); return; }
         
-        this.sfx.play();
+        this.sfx1.play();
 
         if (this.type == "Door")
         {
@@ -1808,6 +1829,11 @@ function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, l
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.lineColor;
         this.context.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
+
+        this.context.beginPath();
+        this.context.arc((this.width / -2) + (this.width / 2), (this.height / -2) + (this.height / 2), 10, 0, 2 * Math.PI);
+        this.context.fill();
+        this.context.stroke();
 
         this.context.restore();
 
@@ -2111,7 +2137,7 @@ function levelEnd()
                                 "Click 🏠 to return to the hub.", 0, "N/A"))];
     for (i = 0; i < hud.length; i++)
     {
-        if (hud[i].type == "Treasure")
+        if (hud[i].type == "Treasure" && treasure.length > 0)
         {
             if (hud[i].treasureCollected == treasure.length)
             {
@@ -2237,9 +2263,6 @@ function toggleAudioMuting()
 // IDEAS
 // - Create new "instructions" level and move all info from webpage into it, or put instructions across menu screen
 // - Sound effects to add:
-//    - "Warp" when using a teleporter
-//    - "Camera can't zoom" when trying to activate a switch that's too big
-//    - "1-Up" when every treasure in a level has been collected
 //    - "Thank you so much" when going to the credits screen from Level 10
 
 // ISSUES
@@ -2249,6 +2272,7 @@ function toggleAudioMuting()
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
+// - Dotted "X" of the lowest cracked wall in Level 7 when broken turns brown when the big switch door is opened
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
