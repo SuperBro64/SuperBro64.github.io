@@ -1155,8 +1155,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
             if (gameArea.gameStarted && this.idleTimer < 1000) { this.idleTimer++; }
 
-            if (this.idleTimer >= 50 && this.idleTimer < 100) { this.sprite.src = "resources/images/player_idle_thinking.png"; }
-            else if (this.idleTimer >= 100) { this.sprite.src = "resources/images/player_idle_sleeping.png"; }
+            if (this.idleTimer >= 200 && this.idleTimer < 400) { this.sprite.src = "resources/images/player_idle_looking.png"; }
+            else if (this.idleTimer >= 400) { this.sprite.src = "resources/images/player_idle_sleeping.png"; }
         }
         else if (this.falling)
         {
