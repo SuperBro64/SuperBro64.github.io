@@ -1215,9 +1215,11 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
 
             if (gameArea.mirrorMode) { this.speedX *= -1; }
+
+            this.idleTimer = 0;
         }
 
-        this.x += this.speedX; this.y += this.speedY; this.idleTimer = 0;
+        this.x += this.speedX; this.y += this.speedY;
 
         this.x = Math.max(0 + this.radius, Math.min(this.x, gameArea.canvas.width - this.radius));
         this.y = Math.max(0 + this.radius, Math.min(this.y, gameArea.canvas.height - this.radius));
