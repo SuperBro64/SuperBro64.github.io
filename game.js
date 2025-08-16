@@ -1130,7 +1130,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.action = false, this.falling = false;
     this.originalX = x, this.originalY = y, this.originalRadius = radius;
-    this.sprite = new Image(), this.crown = new Image();
+    this.sprite = new Image(), this.crown = new Image(); this.idleTimer = 0;
 
     this.update = function()
     {
@@ -1152,6 +1152,11 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (this.radius <= 7.5) { this.sprite.src = "resources/images/player_tiny.png"; }
             else if (this.radius >= 35) { this.sprite.src = "resources/images/player_huge.png"; }
             else { this.sprite.src = "resources/images/player_normal.png"; }
+
+            if (gameArea.gameStarted && this.idleTimer < 1000) { this.idleTimer++; }
+
+            if (this.idleTimer >= 500 && this.idleTimer < 1000) { this.sprite.src = "resources/images/player_idle_thinking.png"; }
+            else if (this.idleTimer >= 1000) { this.sprite.src = "resources/images/player_idle_sleeping.png"; }
         }
         else if (this.falling)
         {
@@ -1212,7 +1217,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (gameArea.mirrorMode) { this.speedX *= -1; }
         }
 
-        this.x += this.speedX; this.y += this.speedY;
+        this.x += this.speedX; this.y += this.speedY; this.idleTimer = 0;
 
         this.x = Math.max(0 + this.radius, Math.min(this.x, gameArea.canvas.width - this.radius));
         this.y = Math.max(0 + this.radius, Math.min(this.y, gameArea.canvas.height - this.radius));
