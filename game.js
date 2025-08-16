@@ -9,7 +9,7 @@ function startGame()
 }
 
 // Variables for all game objects along with important global variables
-var player, walls = [], holes = [], treasure = [], warps = [], switches = [], resizers = [];
+var player, walls = [], holes = [], treasure = [], warps = [], switches = [], resizers = [], teleporters = [[]];
 var hud = [], music, sfx;
 
 // Constant containing the HSLA color values for all 140+ HTML color names to easily identify them
@@ -263,6 +263,7 @@ var levelSetup =
         warps = [];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("100px NewSuperMarioFontU", colors.White, colors.Black, 230, 210, "HYPERION'S", 0, "Level")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 55, 280, "TREASURE-MAXED LABYRINTH", 0, "N/A")),
@@ -297,6 +298,7 @@ var levelSetup =
                  (new componentWarp(904, 718, 30, 30, 0, colors.Crimson, 2, colors.Black, "Menu Screen", "Deletion"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 360, 50, "MAIN MENU", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 400, 160, "Start Game!", 0, "N/A")),
@@ -325,6 +327,7 @@ var levelSetup =
         warps = [(new componentWarp(512, 688, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Menu Screen", "N/A"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 380, 50, "CREDITS", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 470, 750, "Exit", 0, "N/A")),
@@ -386,6 +389,7 @@ var levelSetup =
 
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Main Hub", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 510, 35, "Game Completion: ", 0, "N/A")),
@@ -474,6 +478,7 @@ var levelSetup =
         warps = [(new componentWarp(730, 620, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 1", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -524,6 +529,7 @@ var levelSetup =
                     (new componentSwitch(240, 235, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 4)),
                     (new componentSwitch(525, 455, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 5))];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 2", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -580,6 +586,7 @@ var levelSetup =
                     (new componentSwitch(960, 250, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 3)),
                     (new componentSwitch(306, 250, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 4))];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 3", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -646,6 +653,7 @@ var levelSetup =
                     (new componentSwitch(470, 330, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
                     (new componentSwitch(710, 502, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0))];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 4", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -724,6 +732,7 @@ var levelSetup =
                     (new componentSwitch(926, 500, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 8)),
                     (new componentSwitch(59, 228, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 9))];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 5", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -748,6 +757,7 @@ var levelSetup =
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 6", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -834,6 +844,7 @@ var levelSetup =
                     (new componentResizer(575, 140, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
                     (new componentResizer(50, 700, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge")),
                     (new componentResizer(245, 55, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 7", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -858,6 +869,7 @@ var levelSetup =
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 8", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -882,6 +894,7 @@ var levelSetup =
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -906,6 +919,7 @@ var levelSetup =
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Credits", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 10", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -988,6 +1002,7 @@ var levelSetup =
                     (new componentSwitch(30, 698, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 3)),
                     (new componentSwitch(954, 698, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 4))];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level A", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -1045,6 +1060,7 @@ var levelSetup =
                     (new componentSwitch(697, 366, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 2)),
                     (new componentSwitch(902, 57, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 3))];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level B", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -1069,6 +1085,7 @@ var levelSetup =
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level C", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -1093,6 +1110,10 @@ var levelSetup =
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
         resizers = [];
+        teleporters = [[(new componentTeleporter(362, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
+                        (new componentTeleporter(662, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))],
+                       [(new componentTeleporter(512, 234, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2)),
+                        (new componentTeleporter(512, 534, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2))]];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level ?", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -1765,6 +1786,68 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
     }
 }
 
+// Code for the teleporters
+function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, lineColor, value)
+{
+    this.x = x, this.y = y, this.width = width, this.height = height, this.angle = angle;
+    this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
+    this.rotationSpeed = 90, this.value = value;
+    this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Warp.wav", "SFX");
+
+    this.update = function()
+    {
+        this.context = gameArea.context;
+        this.context.save();
+
+        this.context.translate(this.x, this.y);
+        this.context.rotate(this.angle);
+
+        this.context.fillStyle = fillColor;
+        this.context.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+
+        this.context.lineWidth = this.lineWidth;
+        this.context.strokeStyle = this.lineColor;
+        this.context.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
+
+        this.context.restore();
+
+        this.angle -= (1 * Math.PI / this.rotationSpeed);
+    }
+
+    this.teleportPlayer = function()
+    {
+        for (i = 0; i < teleporters.length; i++)
+        {
+            if (!teleporters[i][0].sfx.sound.paused || !teleporters[i][1].sfx.sound.paused) { return; }
+
+            if (teleporters[i][0].value == this.value)
+            {
+                if (teleporters[i][0].x == this.x && teleporters[i][0].y == this.y)
+                {
+                    player.x = teleporters[i][1].x; player.y = teleporters[i][1].y; teleporters[i][0].sfx.play();
+                }
+                else
+                {
+                    player.x = teleporters[i][0].x; player.y = teleporters[i][0].y; teleporters[i][1].sfx.play();
+                }
+                break;
+            }
+            else if (teleporters[i][1].value == this.value)
+            {
+                if (teleporters[i][1].x == this.x && teleporters[i][1].y == this.y)
+                {
+                    player.x = teleporters[i][0].x; player.y = teleporters[i][0].y; teleporters[i][1].sfx.play();
+                }
+                else
+                {
+                    player.x = teleporters[i][1].x; player.y = teleporters[i][1].y; teleporters[i][0].sfx.play();
+                }
+                break;
+            }
+        }
+    }
+}
+
 // Code for the heads-up display
 function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, type)
 {
@@ -1915,6 +1998,27 @@ function updateGameArea()
         else { resizers[i].activatable = false; }
 
         if (resizers[i]) { resizers[i].update(); }
+    }
+
+    // Updating the teleporters
+    for (i = 0; i < teleporters.length; i++)
+    {
+        if (player.objectCollision(teleporters[i][0]))
+        {
+            teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
+
+            if (player.action) { teleporters[i][0].teleportPlayer(); }
+        }
+        else if (player.objectCollision(teleporters[i][1]))
+        {
+            teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
+
+            if (player.action) { teleporters[i][1].teleportPlayer(); }
+        }
+        else { teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 90; }
+
+        if (teleporters[i][0]) { teleporters[i][0].update(); }
+        if (teleporters[i][1]) { teleporters[i][1].update(); }
     }
 
     // Updating the HUD
