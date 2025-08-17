@@ -1108,8 +1108,11 @@ var levelSetup =
                     (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [];
-        resizers = [];
+        switches = [(new componentSwitch(90, 264, 15, 15, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(90, 364, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2)),
+                    (new componentSwitch(90, 464, 70, 70, colors.White, 2, colors.Black, "Door", "OFF", 3))];
+        resizers = [(new componentResizer(834, 384, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
+                    (new componentResizer(834, 485, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
         teleporters = [[(new componentTeleporter(362, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
                         (new componentTeleporter(662, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))],
                        [(new componentTeleporter(512, 234, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2)),
@@ -2287,6 +2290,7 @@ function toggleAudioMuting()
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
 // - Dotted "X" of the lowest cracked wall in Level 7 when broken turns brown when the big switch door is opened
+// - Visible cut to the player's normal face during the transition from their looking to sleeping idle animations
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
