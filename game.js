@@ -1154,8 +1154,6 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         {
             if (gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
 
-            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
-
             if (this.idleTimer < 750)
             {
                 if (this.radius <= 7.5) { this.sprite.src = "resources/images/player_tiny.png"; }
