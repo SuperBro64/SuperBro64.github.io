@@ -1149,13 +1149,15 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         if (!this.falling)
         {
-            if (this.radius <= 7.5) { this.sprite.src = "resources/images/player_tiny.png"; }
-            else if (this.radius >= 35) { this.sprite.src = "resources/images/player_huge.png"; }
-            else { this.sprite.src = "resources/images/player_normal.png"; }
-
             if (gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
 
-            if (this.idleTimer >= 750 && this.idleTimer < 1500) { this.idle.src = "resources/images/player_idle_looking.png"; }
+            if (this.idleTimer < 750)
+            {
+                if (this.radius <= 7.5) { this.sprite.src = "resources/images/player_tiny.png"; }
+                else if (this.radius >= 35) { this.sprite.src = "resources/images/player_huge.png"; }
+                else { this.sprite.src = "resources/images/player_normal.png"; }
+            }
+            else if (this.idleTimer < 1500) { this.idle.src = "resources/images/player_idle_looking.png"; }
             else if (this.idleTimer >= 1500) { this.idle.src = "resources/images/player_idle_sleeping.png"; }
         }
         else if (this.falling)
