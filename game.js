@@ -1130,7 +1130,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.action = false, this.falling = false;
     this.originalX = x, this.originalY = y, this.originalRadius = radius;
-    this.sprite = new Image(), this.crown = new Image(); this.idleTimer = 0;
+    this.sprite = new Image(), this.idle = new Image(), this.crown = new Image(), this.idleTimer = 0;
 
     this.update = function()
     {
@@ -1153,10 +1153,10 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             else if (this.radius >= 35) { this.sprite.src = "resources/images/player_huge.png"; }
             else { this.sprite.src = "resources/images/player_normal.png"; }
 
-            if (gameArea.gameStarted && this.idleTimer < 1000) { this.idleTimer++; }
+            if (gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
 
-            if (this.idleTimer >= 200 && this.idleTimer < 400) { this.sprite.src = "resources/images/player_idle_looking.png"; }
-            else if (this.idleTimer >= 400) { this.sprite.src = "resources/images/player_idle_sleeping.png"; }
+            if (this.idleTimer >= 750 && this.idleTimer < 1500) { this.idle.src = "resources/images/player_idle_looking.png"; }
+            else if (this.idleTimer >= 1500) { this.idle.src = "resources/images/player_idle_sleeping.png"; }
         }
         else if (this.falling)
         {
@@ -1173,6 +1173,11 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         }
 
         this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+
+        if (this.idleTimer >= 750)
+        {
+            this.context.drawImage(this.idle, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+        }
 
         if (saveProgress.completion[14][1] == 101)
         {
