@@ -1962,8 +1962,7 @@ function componentSound(source, type)
 
     this.update = function()
     {
-        if (!this.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = false); }
-        else if (this.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = true); }
+
     }
 
     this.play = function() { this.sound.play(); }
@@ -2274,11 +2273,33 @@ function pauseGame()
     }
 }
 
-// Code for muting and unmuting the background music and all sound effects
-function toggleAudioMuting()
+// Code for altering the volume of the background music and all sound effects
+function changeAudioVolume()
 {
-    if (!music.sound.muted) { document.querySelector("#audioButton").innerHTML = "🔇"; music.sound.muted = true; }
-    else if (music.sound.muted) { document.querySelector("#audioButton").innerHTML = "🔊"; music.sound.muted = false; }
+    if (music.sound.volume > 0.2)
+    {
+        document.querySelector("#audioButton").innerHTML = "🔉";
+        document.querySelectorAll("audio").forEach(element => element.volume = 0.4);
+        music.sound.volume = 0.2;
+    }
+    else if (music.sound.volume > 0.1 && music.sound.volume <= 0.2)
+    {
+        document.querySelector("#audioButton").innerHTML = "🔈";
+        document.querySelectorAll("audio").forEach(element => element.volume = 0.3);
+        music.sound.volume = 0.1;
+    }
+    else if (music.sound.volume > 0.0 && music.sound.volume <= 0.1)
+    {
+        document.querySelector("#audioButton").innerHTML = "🔇";
+        document.querySelectorAll("audio").forEach(element => element.volume = 0.0);
+        music.sound.volume = 0.0;
+    }
+    else if (music.sound.volume <= 0.0)
+    {
+        document.querySelector("#audioButton").innerHTML = "🔊";
+        document.querySelectorAll("audio").forEach(element => element.volume = 0.5);
+        music.sound.volume = 0.3;
+    }
 }
 
 // IDEAS
