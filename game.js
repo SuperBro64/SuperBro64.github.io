@@ -1137,6 +1137,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
     this.update = function()
     {
+        this.newPosition();
+
         this.context = gameArea.context;
 
         this.context.beginPath();
@@ -1512,8 +1514,8 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
     this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.animationCycle = 0;
-    this.sfx1 = new componentSound("resources/sounds/Super_Mario_64_-_Coin.wav", "SFX");
-    this.sfx2 = new componentSound("resources/sounds/Super_Mario_64_-_1-Up.wav", "SFX");
+    this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Coin.wav", "SFX")),
+                (new componentSound("resources/sounds/Super_Mario_64_-_1-Up.wav", "SFX"))];
 
     this.update = function()
     {
@@ -1546,8 +1548,8 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
         {
             if (hud[i].type == "Treasure" && treasure.length > 0)
             {
-                if (hud[i].treasureCollected == treasure.length - 1) { this.sfx2.play(); }
-                else { this.sfx1.play(); }
+                if (hud[i].treasureCollected == treasure.length - 1) { this.sfx[1].play(); }
+                else { this.sfx[0].play(); }
                 break;
             }
         }
@@ -1644,8 +1646,8 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
     this.x = x, this.y = y, this.width = width, this.height = height;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.type = type, this.state = state, this.value = value; this.activatable = false;
-    this.sfx1 = new componentSound("resources/sounds/Super_Mario_64_-_Camera_Click.wav", "SFX");
-    this.sfx2 = new componentSound("resources/sounds/Super_Mario_64_-_Camera_Buzz.wav", "SFX");
+    this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Camera_Click.wav", "SFX")),
+                (new componentSound("resources/sounds/Super_Mario_64_-_Camera_Buzz.wav", "SFX"))];
 
     this.update = function()
     {
@@ -1689,10 +1691,10 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
 
     this.changeState = function()
     {
-        if (!this.sfx1.sound.paused) { return; }
-        if (!this.activatable) { this.sfx2.play(); return; }
+        if (!this.sfx[0].sound.paused) { return; }
+        if (!this.activatable) { this.sfx[1].play(); return; }
         
-        this.sfx1.play();
+        this.sfx[0].play();
 
         if (this.type == "Door")
         {
@@ -1775,8 +1777,8 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
     this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.type = type, this.activatable = false;
-    this.sfx1 = new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Enter.wav", "SFX");
-    this.sfx2 = new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Exit.wav", "SFX");
+    this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Enter.wav", "SFX")),
+                (new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Exit.wav", "SFX"))];
 
     this.update = function()
     {
@@ -1805,17 +1807,17 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
 
     this.resizePlayer = function()
     {
-        if (!this.sfx1.sound.paused || !this.sfx2.sound.paused) { return; }
+        if (!this.sfx[0].sound.paused || !this.sfx[1].sound.paused) { return; }
 
         if (this.type == "Tiny")
         {
-            if (player.radius >= 20) { player.radius = 7.5; this.sfx1.play(); }
-            else { player.radius = 20; this.sfx2.play(); }
+            if (player.radius >= 20) { player.radius = 7.5; this.sfx[0].play(); }
+            else { player.radius = 20; this.sfx[1].play(); }
         }
         else if (this.type == "Huge")
         {
-            if (player.radius <= 20) { player.radius = 35; this.sfx2.play(); }
-            else { player.radius = 20; this.sfx1.play(); }
+            if (player.radius <= 20) { player.radius = 35; this.sfx[1].play(); }
+            else { player.radius = 20; this.sfx[0].play(); }
         }
     }
 }
@@ -1958,6 +1960,12 @@ function componentSound(source, type)
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
 
+    this.update = function()
+    {
+        if (!this.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = false); }
+        else if (this.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = true); }
+    }
+
     this.play = function() { this.sound.play(); }
     this.stop = function() { this.sound.pause(); }
 }
@@ -2064,11 +2072,9 @@ function updateGameArea()
     for (i = 0; i < hud.length; i++) { if (hud[i]) { hud[i].update(); } }
 
     // Updating the music and sound effects
-    if (!music.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = false); }
-    else if (music.sound.muted) { document.querySelectorAll("audio").forEach((element) => element.muted = true); }
+    if (music) { music.update(); }
 
     // Updating the player
-    player.newPosition();
     if (player) { player.update(); }
 
     // Checking conditions for a level being completed
@@ -2078,7 +2084,7 @@ function updateGameArea()
     if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver(); }
 }
 
-// Code for the game over that occurs when the level time has run out
+// Code for the Game Over that occurs when the level time has run out
 function gameOver()
 {
     gameArea.gameIsOver = true;
@@ -2132,6 +2138,7 @@ function levelRestart()
     }
 }
 
+// Code for the victory screen that occurs after completing a level
 function levelEnd()
 {
     document.querySelector("#actionButton").innerHTML = "🏠";
@@ -2171,10 +2178,10 @@ function levelEnd()
     clearInterval(gameArea.interval); gameArea.interval = null;
 }
 
-// Code for the player's actions during normal gameplay, or for returning to the main hub during specific circumstances
+// Code for the player's actions during normal gameplay, or for warping the player during specific circumstances
 function playerAction()
 {
-    if (!gameArea.gameStarted)
+    if (!gameArea.gameStarted) // While on the title screen
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2184,7 +2191,7 @@ function playerAction()
         
         levelSetup.menuScreen();
     }
-    else if (!gameArea.interval && gameArea.levelComplete)
+    else if (!gameArea.interval && gameArea.levelComplete) // After completing a level
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2194,9 +2201,10 @@ function playerAction()
         sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
 
-        levelSetup.mainHub();
+        if (gameArea.currentLevel == "Level 10") { levelSetup.credits(); }
+        else { levelSetup.mainHub(); }
     }
-    else if (!gameArea.interval && gameArea.gameIsOver)
+    else if (!gameArea.interval && gameArea.gameIsOver) // After getting a Game Over
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2208,7 +2216,7 @@ function playerAction()
 
         levelSetup.mainHub();
     }
-    else if (!gameArea.interval && !gameArea.gameIsOver)
+    else if (!gameArea.interval && !gameArea.gameIsOver) // After pausing the game
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2226,7 +2234,7 @@ function pauseGame()
 {
     if (gameArea.gameStarted && !gameArea.levelComplete && !gameArea.gameIsOver && !player.falling)
     {
-        if (gameArea.interval)
+        if (gameArea.interval) // Pausing the game
         {
             document.querySelector("#actionButton").innerHTML = "🏠";
             document.querySelector("#pauseButton").innerHTML = "▶️";
@@ -2245,7 +2253,7 @@ function pauseGame()
             sfx.sound.src = "resources/sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
             clearInterval(gameArea.interval); gameArea.interval = null;
         }
-        else if (!gameArea.interval)
+        else if (!gameArea.interval) // Unpausing the game
         {
             document.querySelector("#actionButton").innerHTML = "🅰️";
             document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2254,7 +2262,7 @@ function pauseGame()
             gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
         }
     }
-    else if (gameArea.gameStarted && gameArea.gameIsOver && !gameArea.interval)
+    else if (gameArea.gameStarted && gameArea.gameIsOver && !gameArea.interval) // After getting a Game Over
     {
         document.querySelector("#actionButton").innerHTML = "🅰️";
         document.querySelector("#pauseButton").innerHTML = "⏸️";
@@ -2275,6 +2283,7 @@ function toggleAudioMuting()
 
 // IDEAS
 // - Create new "instructions" level and move all info from webpage into it, or put instructions across menu screen
+// - Make the background music loop properly instead of fading out and restarting
 // - Sound effects to add:
 //    - "Thank you so much" when going to the credits screen from Level 10
 
