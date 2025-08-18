@@ -1928,7 +1928,7 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
         else if (this.type == "Timer" && this.startingTime > 0)
         {
             if (this.timeRemaining > 0) { this.timeRemaining = (this.startingTime - (gameArea.frameNum / 50)).toFixed(1); }
-            if (this.timeRemaining < 10) { this.fillColor = colors.Red; }
+            if (this.timeRemaining < 20) { this.fillColor = colors.Red; music.sound.playbackRate = 1.5; }
 
             this.text = "⏱️";
             if (this.timeRemaining < 10) { this.text += "00"; }
@@ -2107,7 +2107,7 @@ function gameOver()
                             "Click 🏠 to return to the hub.", 0, "N/A"))];
     for (i = 0; i < gameOverText.length; i++) { gameOverText[i].update(); }
 
-    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Oof.wav"; sfx.play();
+    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Oof.wav"; sfx.play(); music.sound.playbackRate = 1.0;
     clearInterval(gameArea.interval); gameArea.interval = null;
 }
 
@@ -2284,8 +2284,14 @@ function toggleAudioMuting()
 // IDEAS
 // - Create new "instructions" level and move all info from webpage into it, or put instructions across menu screen
 // - Make the background music loop properly instead of fading out and restarting
-// - Sound effects to add:
-//    - "Thank you so much" when going to the credits screen from Level 10
+// - Suggestions given for tailoring time limits to each level:
+//    - "Speedrun the level and set it close to that time"
+//    - "What I would do, is to play the levels the best I can (since I'm devleoping the game, I can do things very fast
+//      since I know the quirks and all). Log the time you took to complete the level and you caa use a factor multiplier
+//      (or divider) of your choice based on your own time so you can have a sweet spot to tweak from 'beginner' to 'super pro'.
+//      And if you want a more viable option, is to later on make playtests, ask players their time (or log them into a file
+//      and ask your playtester to send you that file) and you can then process those batch to get the average time."
+//    - "Have people of different skill levels play it and test how long they take."
 
 // ISSUES
 // - Sound effects not properly muting when the game interval is paused
