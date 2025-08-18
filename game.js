@@ -1952,13 +1952,11 @@ function componentSound(source, type)
     this.sound = document.createElement("audio");
     this.sound.src = source; this.type = type;
 
+    this.sound.preload = "auto"; this.sound.controls = "none"; this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+
     if (this.type == "BGM") { this.sound.loop = true; this.sound.volume = 0.3; }
     else if (this.type == "SFX") { this.sound.loop = false; this.sound.volume = 0.5; }
-
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
 
     this.update = function()
     {
@@ -2322,7 +2320,6 @@ function changeAudioVolume()
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
 // - Dotted "X" of the lowest cracked wall in Level 7 when broken turns brown when the big switch door is opened
-// - Visible cut to the player's normal face during the transition from their looking to sleeping idle animations
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
