@@ -771,17 +771,61 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.Tan, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [];
-        holes = [];
-        treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [];
+        player = new componentPlayer(50, 80, 20, 0, 2, colors.Red, 2, colors.Black);
+        walls = [(new componentWall(-1, 236, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(-1, 492, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(321, -1, 40, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(663, -1, 40, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(866, 534, 30, 233, colors.SaddleBrown, 2, colors.Black, true, "Door", 2))];
+        holes = [(new componentHole(705, 534, 159, 233, colors.Black, 2, colors.SaddleBrown, false, "Door", 1))];
+        treasure = [(new componentTreasure(50, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(270, 40, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(755, 384, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(980, 450, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(755, 40, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(980, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(160, 575, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(160, 725, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(50, 650, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(270, 650, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(50, 575, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(50, 725, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(270, 575, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(270, 725, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(50, 450, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(270, 384, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(412, 190, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(612, 190, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(612, 320, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(512, 450, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(412, 575, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(512, 725, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(980, 575, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(755, 725, 10, 0, 2, colors.Gold, 2, colors.Black))];
+        warps = [(new componentWarp(980, 725, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
+        switches = [(new componentSwitch(592, 555, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 1)),
+                    (new componentSwitch(392, 300, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2))];
         resizers = [];
-        teleporters = [];
+        teleporters = [[(new componentTeleporter(270, 190, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
+                        (new componentTeleporter(980, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))],
+                       [(new componentTeleporter(755, 320, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2)),
+                        (new componentTeleporter(45, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2))],
+                       [(new componentTeleporter(755, 450, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 3)),
+                        (new componentTeleporter(970, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 3))],
+                       [(new componentTeleporter(755, 190, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 4)),
+                        (new componentTeleporter(160, 650, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 4))],
+                       [(new componentTeleporter(862, 135, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 5)),
+                        (new componentTeleporter(160, 450, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 5))],
+                       [(new componentTeleporter(270, 320, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 6)),
+                        (new componentTeleporter(512, 190, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 6))],
+                       [(new componentTeleporter(512, 90, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 7)),
+                        (new componentTeleporter(755, 575, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 7))],
+                       [(new componentTeleporter(412, 90, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 8)),
+                        (new componentTeleporter(612, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 8))],
+                       [(new componentTeleporter(612, 90, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 9)),
+                        (new componentTeleporter(412, 650, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 9))],
+                       [(new componentTeleporter(412, 450, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 10)),
+                        (new componentTeleporter(612, 725, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 10))]];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 6", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -2350,6 +2394,7 @@ function toggleAudioVolume()
 // ISSUES
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place
 // - Music restarting when the player restarts the current level after getting a game over
+// - Still some general issues with sound effects not being muted properly
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
