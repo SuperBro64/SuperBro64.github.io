@@ -691,29 +691,19 @@ var levelSetup =
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(914, 384, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [(new componentWall(-1, 312, 158, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+        walls = [(new componentWall(387, -1, 20, 113, colors.SaddleBrown, 2, colors.Black, true, "Door", 8)),
+                 (new componentWall(617, 656, 20, 113, colors.SaddleBrown, 2, colors.Black, true, "Door", 9)),
+                 (new componentWall(-1, 312, 158, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(-1, 436, 158, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(867, 312, 158, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(867, 436, 158, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(157, -1, 20, 113, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(387, -1, 20, 113, colors.SaddleBrown, 2, colors.Black, true, "Door", 8)),
                  (new componentWall(617, -1, 20, 113, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(847, -1, 20, 113, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(157, 656, 20, 113, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(387, 656, 20, 113, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(617, 656, 20, 113, colors.SaddleBrown, 2, colors.Black, true, "Door", 9)),
                  (new componentWall(847, 656, 20, 113, colors.Gray, 2, colors.Black, true, "N/A", 0))];
-        holes = [(new componentHole(157, 112, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(361, 112, 302, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(767, 112, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(157, 276, 100, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(361, 276, 506, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(157, 436, 100, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(361, 436, 506, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(157, 596, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(361, 596, 302, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(767, 596, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(259, 436, 100, 220, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+        holes = [(new componentHole(259, 436, 100, 220, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentHole(361, 174, 506, 100, colors.Black, 2, colors.Orange, false, "Flip", -1)),
                  (new componentHole(665, 596, 100, 60, colors.Black, 2, colors.Orange, false, "Flip", -1)),
                  (new componentHole(259, 334, 608, 100, colors.Black, 2, colors.SaddleBrown, false, "Door", 1)),
@@ -722,7 +712,17 @@ var levelSetup =
                  (new componentHole(157, 174, 100, 100, colors.Black, 2, colors.SaddleBrown, false, "Door", 4)),
                  (new componentHole(665, 112, 100, 60, colors.Black, 2, colors.SaddleBrown, false, "Door", 5)),
                  (new componentHole(157, 494, 100, 100, colors.Black, 2, colors.SaddleBrown, false, "Door", 6)),
-                 (new componentHole(157, 334, 100, 100, colors.Black, 2, colors.SaddleBrown, false, "Door", 7))];
+                 (new componentHole(157, 334, 100, 100, colors.Black, 2, colors.SaddleBrown, false, "Door", 7)),
+                 (new componentHole(157, 112, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(361, 112, 302, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(767, 112, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(157, 276, 100, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(361, 276, 506, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(157, 436, 100, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(361, 436, 506, 56, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(157, 596, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(361, 596, 302, 60, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(767, 596, 100, 60, colors.Black, 2, colors.Black, false, "N/A", 0))];
         treasure = [(new componentTreasure(309, 56, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(512, 71, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(715, 56, 10, 0, 2, colors.Gold, 2, colors.Black)),
@@ -772,11 +772,11 @@ var levelSetup =
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(50, 80, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [(new componentWall(-1, 236, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+        walls = [(new componentWall(866, 534, 30, 233, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
+                 (new componentWall(-1, 236, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(-1, 492, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(321, -1, 40, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(663, -1, 40, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(866, 534, 30, 233, colors.SaddleBrown, 2, colors.Black, true, "Door", 2))];
+                 (new componentWall(663, -1, 40, 770, colors.Gray, 2, colors.Black, true, "N/A", 0))];
         holes = [(new componentHole(705, 534, 159, 233, colors.Black, 2, colors.SaddleBrown, false, "Door", 1))];
         treasure = [(new componentTreasure(50, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(270, 40, 10, 0, 2, colors.Gold, 2, colors.Black)),
@@ -1099,23 +1099,23 @@ var levelSetup =
 
         player = new componentPlayer(512, 692, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
-        holes = [(new componentHole(206, 1, 203, 152, colors.Black, 2, colors.SaddleBrown, false, "Door", 3)),
-                 (new componentHole(616, 1, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+        holes = [(new componentHole(616, 1, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentHole(1, 155, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentHole(206, 155, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
-                 (new componentHole(411, 155, 203, 152, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(616, 155, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
                  (new componentHole(821, 155, 202, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
                  (new componentHole(1, 309, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
-                 (new componentHole(411, 309, 203, 152, colors.Black, 2, colors.SaddleBrown, false, "Door", 2)),
                  (new componentHole(821, 309, 202, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentHole(1, 463, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
-                 (new componentHole(206, 463, 203, 152, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(411, 463, 203, 152, colors.Black, 2, colors.Orange, false, "Flip", -1)),
                  (new componentHole(616, 463, 203, 152, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentHole(206, 617, 203, 150, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentHole(616, 617, 203, 150, colors.Black, 2, colors.Orange, false, "Flip", -1)),
-                 (new componentHole(821, 617, 202, 150, colors.Black, 2, colors.SaddleBrown, false, "Door", 1))];
+                 (new componentHole(206, 1, 203, 152, colors.Black, 2, colors.SaddleBrown, false, "Door", 3)),
+                 (new componentHole(411, 309, 203, 152, colors.Black, 2, colors.SaddleBrown, false, "Door", 2)),
+                 (new componentHole(821, 617, 202, 150, colors.Black, 2, colors.SaddleBrown, false, "Door", 1)),
+                 (new componentHole(411, 155, 203, 152, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(206, 463, 203, 152, colors.Black, 2, colors.Black, false, "N/A", 0))];
         treasure = [(new componentTreasure(307, 77, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(717, 77, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(102, 232, 10, 0, 2, colors.Gold, 2, colors.Black)),
@@ -1731,6 +1731,8 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
 
     this.toDestination = function()
     {
+        if (player.falling) { return; }
+
         if (this.type == "Goal")
         {
             saveProgress.save("saveProgress"); gameArea.levelComplete = true; this.update(); return;
@@ -1820,7 +1822,7 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
 
     this.changeState = function()
     {
-        if (!this.sfx[0].sound.paused) { return; }
+        if (!this.sfx[0].sound.paused || player.falling) { return; }
         if (!this.activatable) { this.sfx[1].play(); return; }
         
         this.sfx[0].play();
@@ -1936,7 +1938,7 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
 
     this.resizePlayer = function()
     {
-        if (!this.sfx[0].sound.paused || !this.sfx[1].sound.paused) { return; }
+        if (!this.sfx[0].sound.paused || !this.sfx[1].sound.paused || player.falling) { return; }
 
         if (this.type == "Tiny")
         {
@@ -1986,6 +1988,8 @@ function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, l
 
     this.teleportPlayer = function()
     {
+        if (player.falling) { return; }
+
         for (i = 0; i < teleporters.length; i++)
         {
             if (!teleporters[i][0].sfx.sound.paused || !teleporters[i][1].sfx.sound.paused) { return; }
