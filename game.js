@@ -772,7 +772,7 @@ var levelSetup =
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(50, 80, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [(new componentWall(866, 534, 30, 233, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
+        walls = [(new componentWall(866, 532, 30, 237, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
                  (new componentWall(-1, 236, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(-1, 492, 1026, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(321, -1, 40, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
@@ -931,17 +931,73 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkOrange, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [];
-        holes = [];
-        treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [];
-        resizers = [];
-        teleporters = [];
+        player = new componentPlayer(80, 384, 20, 0, 2, colors.Red, 2, colors.Black);
+        walls = [(new componentWall(-1, 229, 321, 20, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(180, 519, 140, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(849, 229, 30, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(180, -1, 55, 110, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(180, 709, 55, 60, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(-1, 519, 161, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
+                 (new componentWall(849, 519, 30, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
+                 (new componentWall(684, 324, 20, 120, colors.SaddleBrown, 2, colors.Black, true, "Door", 3)),
+                 (new componentWall(-1, 169, 161, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 5)),
+                 (new componentWall(-1, 189, 161, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 6)),
+                 (new componentWall(-1, 658, 161, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 7)),
+                 (new componentWall(-1, 129, 65, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(94, 129, 66, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+
+                 (new componentWall(160, -1, 20, 250, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(160, 519, 20, 250, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(704, 229, 145, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(879, 229, 146, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(704, 519, 145, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(879, 519, 146, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(816.5, 72.5, 100, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(816.5, 92.5, 20, 55, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(816.5, 145, 100, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(380, 135, 264, 20, colors.Gray, 2, colors.Black, true, "N/A", 0))];
+        holes = [(new componentHole(320, 641, 384, 48, colors.Black, 2, colors.SaddleBrown, false, "Door", 4)),
+                 (new componentHole(320, -1, 60, 105, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(410, -1, 204, 105, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(644, -1, 60, 105, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(320, 135, 60, 189, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(380, 155, 264, 169, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(644, 135, 60, 189, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(440, 324, 144, 120, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(320, 444, 384, 120, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(320, 564, 177, 75, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(527, 564, 177, 75, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(320, 719, 384, 50, colors.Black, 2, colors.Black, false, "N/A", 0))];
+        treasure = [(new componentTreasure(80, 723, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(250, 160, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(250, 384, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(250, 608, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(395, 20, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(629, 20, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(512, 585, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(729, 20, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(729, 204, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(729, 274, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(729, 494, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(729, 564, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(729, 743, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(999, 204, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(999, 274, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(999, 494, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(999, 564, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(999, 743, 10, 0, 2, colors.Gold, 2, colors.Black))];
+        warps = [(new componentWarp(80, 80, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
+        switches = [(new componentSwitch(856.5, 110, 15, 15, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(370, 364, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(814, 690, 15, 15, colors.White, 2, colors.Black, "Door", "OFF", 2)),
+                    (new componentSwitch(899, 690, 15, 15, colors.White, 2, colors.Black, "Door", "OFF", 3)),
+                    (new componentSwitch(614, 364, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 4)),
+                    (new componentSwitch(844, 600, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 5)),
+                    (new componentSwitch(200, 20, 15, 15, colors.White, 2, colors.Black, "Door", "OFF", 6)),
+                    (new componentSwitch(200, 733, 15, 15, colors.White, 2, colors.Black, "Door", "OFF", 7))];
+        resizers = [(new componentResizer(974, 384, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny"))];
+        teleporters = [[(new componentTeleporter(80, 598, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
+                        (new componentTeleporter(839, 384, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 8", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
