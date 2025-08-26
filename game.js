@@ -197,7 +197,7 @@ var saveProgress =
 var gameArea =
 {
     canvas: document.createElement("canvas"),
-    currentLevel: "", levelComplete: false, gameStarted: false, gameIsOver: false, mirrorMode: false,
+    currentLevel: "", levelComplete: false, gameStarted: false, gameIsOver: false, soundMuted: false, mirrorMode: false,
 
     start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
     {
@@ -2248,7 +2248,7 @@ function componentSound(source, type)
 
     this.changeTimeEndpoints = function(newRestart, newEnd) { this.restartTime = newRestart; this.endTime = newEnd; }
 
-    this.play = function() { this.sound.play(); }
+    this.play = function() { if (this.type == "BGM" || (this.type == "SFX" && !gameArea.soundMuted)) { this.sound.play(); } }
     this.stop = function() { this.sound.pause(); }
 }
 
@@ -2556,16 +2556,16 @@ function pauseGame()
 }
 
 // Code for altering the volume of the background music and all sound effects
-function toggleAudioVolume()
+function toggleAudioMuting()
 {
-    if (!music.sound.muted)
+    if (!gameArea.soundMuted)
     {
-        document.querySelector("#audioButton").innerHTML = "🔇";
+        document.querySelector("#audioButton").innerHTML = "🔇"; gameArea.soundMuted = true;
         document.querySelectorAll("audio").forEach((element) => element.muted = true);
     }
-    else if (music.sound.muted)
+    else if (gameArea.soundMuted)
     {
-        document.querySelector("#audioButton").innerHTML = "🔊";
+        document.querySelector("#audioButton").innerHTML = "🔊"; gameArea.soundMuted = false;
         document.querySelectorAll("audio").forEach((element) => element.muted = false);
     }
 }
@@ -2585,7 +2585,6 @@ function toggleAudioVolume()
 // ISSUES
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place
 // - Music restarting when the player restarts the current level after getting a game over
-// - Still some general issues with sound effects not being muted properly
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
