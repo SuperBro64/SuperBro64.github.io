@@ -2248,7 +2248,13 @@ function componentSound(source, type)
 
     this.changeTimeEndpoints = function(newRestart, newEnd) { this.restartTime = newRestart; this.endTime = newEnd; }
 
-    this.play = function() { if (this.type == "BGM" || (this.type == "SFX" && !gameArea.soundMuted)) { this.sound.play(); } }
+    this.play = function()
+    {
+        if (!gameArea.soundMuted) { this.sound.muted = false; }
+        else if (gameArea.soundMuted) { this.sound.muted = true; }
+
+        this.sound.play();
+    }
     this.stop = function() { this.sound.pause(); }
 }
 
