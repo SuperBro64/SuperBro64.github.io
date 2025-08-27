@@ -274,7 +274,7 @@ var levelSetup =
                (new componentHud("70px NewSuperMarioFontU", colors.Red, colors.Black, 705, 660, "000%", 0, "Completion"))];
 
         music.sound.src = "";
-        music.changeTimeEndpoints(0.00, 0.00); music.stop();
+        music.changeLoopEndpoints(0.00, 0.00); music.stop();
 
         document.querySelector("#actionButton").innerHTML = "🚩";
         document.querySelector("#pauseButton").innerHTML = "❌";
@@ -313,7 +313,7 @@ var levelSetup =
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 450, "⬊", 0, "N/A"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for the credits screen
@@ -354,7 +354,7 @@ var levelSetup =
                 "❤️ Thank you so much for a-playing my game! ❤️", 0, "N/A"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for the main hub
@@ -442,13 +442,13 @@ var levelSetup =
 
         if (saveProgress.completion[14][1] == 101)
         {
-            music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3", "BGM";
-            music.changeTimeEndpoints(0.00, 0.00);
+            music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Clear.mp3";
+            music.changeLoopEndpoints(0.00, 0.00);
         }
         else
         {
-            music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3", "BGM";
-            music.changeTimeEndpoints(0.00, 0.00);
+            music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Menu.mp3";
+            music.changeLoopEndpoints(0.00, 0.00);
         }
         music.play();
     },
@@ -498,8 +498,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 2
@@ -551,8 +551,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 3
@@ -610,8 +610,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 4
@@ -679,8 +679,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_4.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_4.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 5
@@ -760,8 +760,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_5.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_5.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 6
@@ -831,8 +831,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_6.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_6.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 7
@@ -920,8 +920,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_7.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_7.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 8
@@ -1003,8 +1003,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_8.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_8.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 9
@@ -1030,8 +1030,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_9.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_9.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level 10
@@ -1057,8 +1057,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level A
@@ -1142,8 +1142,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Bonus.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Bonus.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level B
@@ -1202,8 +1202,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Target.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Target.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level C
@@ -1317,8 +1317,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     },
 
     // Setup for level ?
@@ -1393,8 +1393,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
 
-        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Billiards.mp3", "BGM";
-        music.changeTimeEndpoints(0.00, 0.00); music.play();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Billiards.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
     }
 }
 
@@ -2246,7 +2246,7 @@ function componentSound(source, type)
         }
     }
 
-    this.changeTimeEndpoints = function(newRestart, newEnd) { this.restartTime = newRestart; this.endTime = newEnd; }
+    this.changeLoopEndpoints = function(newRestart, newEnd) { this.restartTime = newRestart; this.endTime = newEnd; }
 
     this.play = function()
     {
@@ -2590,7 +2590,6 @@ function toggleAudioMuting()
 
 // ISSUES
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place
-// - Music restarting when the player restarts the current level after getting a game over
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
