@@ -190,6 +190,15 @@ var saveProgress =
         for (i = 0; i < this.completion.length; i++) { this.completion[i][1] = 0; }
 
         if (typeof(Storage) !== "undefined") { localStorage.removeItem(storageName); }
+    },
+
+    // Immediately sets the player's current game progress to full completion and saves it to web storage
+    debug: function(storageName)
+    {
+        for (i = 0; i < this.completion.length - 1; i++) { this.completion[i][1] = 2; }
+        this.completion[14][1] = 101;
+
+        if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
     }
 }
 
@@ -295,6 +304,7 @@ var levelSetup =
         treasure = [];
         warps = [(new componentWarp(120, 100, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Credits", "N/A")),
                  (new componentWarp(512, 100, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Main Hub", "N/A")),
+                 // (new componentWarp(904, 100, 30, 30, 0, colors.Goldenrod, 2, colors.Black, "Menu Screen", "Debugging")),
                  (new componentWarp(120, 718, 30, 30, 0, colors.RoyalBlue, 2, colors.Black, "Title Screen", "N/A")),
                  (new componentWarp(512, 718, 30, 30, 0, colors.Orange, 2, colors.Black, "Menu Screen", "Mirror")),
                  (new componentWarp(904, 718, 30, 30, 0, colors.Crimson, 2, colors.Black, "Menu Screen", "Deletion"))];
@@ -304,8 +314,9 @@ var levelSetup =
         burners = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 360, 50, "MAIN MENU", 0, "Level")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 400, 160, "Start Game!", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 160, "Credits", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 400, 160, "Start Game!", 0, "N/A")),
+               // (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 840, 160, "Debug", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 25, 680, "Quit Game", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 395, 680, "Mirror Mode", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 780, 680, "Erase Game", 0, "N/A")),
@@ -1426,7 +1437,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.action = false, this.falling = false, this.burning = false;
     this.originalX = x, this.originalY = y, this.originalRadius = radius;
-    this.sprite = new Image(), this.crown = new Image(), this.idleTimer = 0;
+    this.sprite = new Image(), this.hat = new Image(), this.idleTimer = 0;
 
     this.update = function()
     {
@@ -1477,8 +1488,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         if (saveProgress.completion[14][1] == 101)
         {
-            this.crown.src = "resources/images/player_crown.png";
-            this.context.drawImage(this.crown, this.x - this.radius, this.y - (2.2 * this.radius), 2 * this.radius, 2 * this.radius);
+            this.hat.src = "resources/images/player_hat_crown.png";
+            this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.2 * this.radius), 2 * this.radius, 2 * this.radius);
         }
     }
 
@@ -1908,6 +1919,7 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
             saveProgress.save("saveProgress"); gameArea.levelComplete = true; this.update(); return;
         }
         else if (this.type == "Deletion") { saveProgress.delete("saveProgress"); }
+        else if (this.type == "Debugging") { saveProgress.debug("saveProgress"); }
         else if (this.type == "Mirror")
         {
             if (!gameArea.mirrorMode) { gameArea.mirrorMode = true; }
@@ -2497,10 +2509,16 @@ function gameOver(type)
     document.querySelector("#pauseButton").innerHTML = "🔄️";
 
     if (type == "Time Up") { player.sprite.src = "resources/images/player_game_over_time_up.png"; }
-    else if (type == "Burning") { player.sprite.src = "resources/images/player_game_over_burning.png"; }
+    else if (type == "Burning")
+    {
+        player.sprite.src = "resources/images/player_game_over_burning.png";
+        player.hat.src = "resources/images/player_hat_fire.png";
+    }
 
     player.context.drawImage(player.sprite,
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
+    player.context.drawImage(player.hat,
+        player.x - player.radius, player.y - (2.25 * player.radius), 2 * player.radius, 2 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
                             colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
