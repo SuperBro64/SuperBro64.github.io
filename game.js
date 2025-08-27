@@ -1560,13 +1560,11 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         {
             if (overlapX < overlapY)
             {
-                if (this.x < wall.x) { this.x -= overlapX; }
-                else { this.x += overlapX; }
+                if (this.x < wall.x) { this.x -= overlapX; } else { this.x += overlapX; }
             }
             else
             {
-                if (this.y < wall.y) { this.y -= overlapY; }
-                else { this.y += overlapY; }
+                if (this.y < wall.y) { this.y -= overlapY; } else { this.y += overlapY; }
             }
         }
     }
@@ -2052,6 +2050,7 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
     this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.type = type, this.activatable = false;
+    this.animationCycle = 15;
     this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Enter.wav", "SFX")),
                 (new componentSound("resources/sounds/Super_Mario_64_-_Pipe_Exit.wav", "SFX"))];
 
@@ -2062,12 +2061,32 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
         if (this.type == "Tiny")
         {
             if (this.activatable) { if (this.radius >= 15) { this.radius -= 0.5; } else { this.radius = 30; } }
-            else (this.radius = 15);
+            else
+            {
+                if (this.animationCycle < 15) { this.animationCycle = 30; } this.animationCycle -= 0.5;
+
+                this.context.beginPath();
+                this.context.arc(this.x, this.y, this.animationCycle, this.startAngle, this.endAngle * Math.PI);
+                this.context.strokeStyle = this.fillColor;
+                this.context.stroke();
+
+                this.radius = 15;
+            }
         }
         else if (this.type == "Huge")
         {
             if (this.activatable) { if (this.radius <= 30) { this.radius += 0.5; } else { this.radius = 15; }; }
-            else (this.radius = 15);
+            else
+            {
+                this.context.beginPath();
+                this.context.arc(this.x, this.y, this.animationCycle, this.startAngle, this.endAngle * Math.PI);
+                this.context.strokeStyle = this.fillColor;
+                this.context.stroke();
+
+                if (this.animationCycle > 30) { this.animationCycle = 15; } this.animationCycle += 0.5;
+
+                this.radius = 15;
+            }
         }
 
         this.context.beginPath();
