@@ -2544,7 +2544,7 @@ function gameOver(type)
     player.context.drawImage(player.sprite,
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
     player.context.drawImage(player.hat,
-        player.x - player.radius, player.y - (2.25 * player.radius), 2 * player.radius, 2 * player.radius);
+        player.x - (1.1 * player.radius), player.y - (2.75 * player.radius), 2.2 * player.radius, 2.1 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
                             colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
