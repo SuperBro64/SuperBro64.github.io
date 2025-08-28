@@ -1045,11 +1045,12 @@ var levelSetup =
                     (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
         warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [];
-        resizers = [(new componentResizer(101, 692.5, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
+        resizers = [(new componentResizer(512, 484, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
         teleporters = [];
-        burners = [(new componentBurner(350, 300, 40, 40, colors.LightGray, 2, colors.Black, 4, "OFF")),
-                   (new componentBurner(650, 300, 40, 120, colors.LightGray, 2, colors.Black, 4, "ON")),
-                   (new componentBurner(650, 500, 120, 40, colors.LightGray, 2, colors.Black, 2, "ON")),
+        burners = [(new componentBurner(350, 300, 40, 40, colors.LightGray, 2, colors.Black, 4, "OFF", true)),
+                   (new componentBurner(350, 250, 40, 40, colors.LightGray, 2, colors.Black, 4, "OFF", false)),
+                   (new componentBurner(650, 300, 40, 120, colors.LightGray, 2, colors.Black, 2, "ON", true)),
+                   (new componentBurner(650, 500, 120, 40, colors.LightGray, 2, colors.Black, 1, "ON", true)),
                    (new componentBurner(350, 500, 40, 40, colors.DarkGray, 2, colors.Black, 0, "ON"))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
@@ -2226,12 +2227,13 @@ function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, l
 }
 
 // Code for the burners
-function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, intermittence, state)
+function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, intermittence, state, playSound)
 {
     this.x = x, this.y = y, this.width = width, this.height = height;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-    this.intermittence = intermittence, this.state = state;
+    this.intermittence = intermittence, this.state = state, this.playSound = playSound;
     this.animationCycle = 3, this.animationReverse = false;
+    this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Fire.wav", "SFX");
 
     if (this.intermittence > 0) { this.timer = this.intermittence * 50; }
 
@@ -2260,7 +2262,7 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
             this.timer = this.intermittence * 50;
 
             if (this.state == "ON") { this.state = "OFF"; }
-            else if (this.state == "OFF") { this.state = "ON"; }
+            else if (this.state == "OFF") { this.state = "ON"; if (this.playSound) { this.sfx.play(); } }
         }
 
         if (this.state == "ON")
