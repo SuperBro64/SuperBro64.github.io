@@ -1036,22 +1036,36 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.DimGray, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [];
+        player = new componentPlayer(100, 710, 20, 0, 2, colors.Red, 2, colors.Black);
+        walls = [(new componentWall(870, 649, 30, 120, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(900, 619, 125, 30, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(-1, 140, 201, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
+                 (new componentWall(900, 140, 125, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
+                 (new componentWall(200, -1, 40, 650, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(240, 140, 660, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(240, 609, 660, 40, colors.Gray, 2, colors.Black, true, "N/A", 0))];
         holes = [];
         treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [];
-        resizers = [(new componentResizer(512, 484, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
-        teleporters = [];
-        burners = [(new componentBurner(350, 300, 40, 40, colors.LightGray, 2, colors.Black, 4, "OFF", true)),
-                   (new componentBurner(350, 250, 40, 40, colors.LightGray, 2, colors.Black, 4, "OFF", false)),
-                   (new componentBurner(650, 300, 40, 120, colors.LightGray, 2, colors.Black, 2, "ON", true)),
-                   (new componentBurner(650, 500, 120, 40, colors.LightGray, 2, colors.Black, 1, "ON", true)),
-                   (new componentBurner(350, 500, 40, 40, colors.DarkGray, 2, colors.Black, 0, "ON"))];
+        warps = [(new componentWarp(512, 300, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
+        switches = [(new componentSwitch(930, 675, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(800, 690, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(370, 364, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2))];
+        resizers = [(new componentResizer(984, 80, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
+        teleporters = [[(new componentTeleporter(100, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
+                        (new componentTeleporter(300, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
+        burners = [(new componentBurner(370, -1, 40, 141, colors.LightGray, 2, colors.Black, 4, "ON", true)),
+                   (new componentBurner(570, -1, 40, 141, colors.LightGray, 2, colors.Black, 2, "ON", true)),
+                   (new componentBurner(770, -1, 80, 141, colors.LightGray, 2, colors.Black, 4, "OFF", true)),
+                   (new componentBurner(80, 590, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(-1, 410, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(160, 410, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(80, 230, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(270, 649, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(470, 729, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(670, 649, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -2232,7 +2246,7 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
     this.x = x, this.y = y, this.width = width, this.height = height;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.intermittence = intermittence, this.state = state, this.playSound = playSound;
-    this.animationCycle = 3, this.animationReverse = false;
+    this.animationCycle = 2.5, this.animationReverse = false;
     this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Fire.wav", "SFX");
 
     if (this.intermittence > 0) { this.timer = this.intermittence * 50; }
@@ -2250,7 +2264,7 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
 
         this.context.beginPath();
         this.context.ellipse(this.x + (this.width / 2), this.y + (this.height / 2),
-            (this.width / 2.5), (this.height / 2.5), 0, 0, 2 * Math.PI);
+            (this.width / 2), (this.height / 2), 0, 0, 2 * Math.PI);
 
         this.context.fillStyle = colors.Gray;
         this.context.fill();
@@ -2265,7 +2279,17 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
             else if (this.state == "OFF") { this.state = "ON"; if (this.playSound) { this.sfx.play(); } }
         }
 
-        if (this.state == "ON")
+        if (this.state == "OFF")
+        {
+            this.context.beginPath();
+            this.context.ellipse(this.x + (this.width / 2), this.y + (this.height / 2),
+                (this.width / 2.5), (this.height / 2.5), 0, 0, 2 * Math.PI);
+            
+            this.context.fillStyle = colors.Black;
+            this.context.fill();
+            this.context.stroke();
+        }
+        else if (this.state == "ON")
         {
             this.context.fillStyle = colors.DarkOrange;
             this.context.fill();
@@ -2278,8 +2302,8 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
             this.context.fillStyle = colors.Yellow;
             this.context.fill();
 
-            if (this.animationCycle > 3.5) { this.animationReverse = true; }
-            else if (this.animationCycle < 3) { this.animationReverse = false; }
+            if (this.animationCycle > 3) { this.animationReverse = true; }
+            else if (this.animationCycle < 2.5) { this.animationReverse = false; }
             
             if (!this.animationReverse) { this.animationCycle += 0.1; }
             else if (this.animationReverse) { this.animationCycle -= 0.1; }
