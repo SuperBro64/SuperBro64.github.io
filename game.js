@@ -1036,36 +1036,45 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.DimGray, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        player = new componentPlayer(100, 710, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [(new componentWall(870, 649, 30, 120, colors.Orange, 2, colors.Black, false, "Flip", -1)),
-                 (new componentWall(900, 619, 125, 30, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
-                 (new componentWall(-1, 140, 201, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
+        player = new componentPlayer(105, 710, 20, 0, 2, colors.Red, 2, colors.Black);
+        walls = [(new componentWall(870, 639, 30, 130, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(900, 609, 125, 30, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(-1, 140, 211, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
                  (new componentWall(900, 140, 125, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 2)),
-                 (new componentWall(200, -1, 40, 650, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(240, 140, 660, 40, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(240, 609, 660, 40, colors.Gray, 2, colors.Black, true, "N/A", 0))];
+                 (new componentWall(210, -1, 30, 640, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(240, 140, 660, 30, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(240, 609, 660, 30, colors.Gray, 2, colors.Black, true, "N/A", 0))];
         holes = [];
-        treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 300, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [(new componentSwitch(930, 675, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
-                    (new componentSwitch(800, 690, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
-                    (new componentSwitch(370, 364, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2))];
-        resizers = [(new componentResizer(984, 80, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
+        treasure = [(new componentTreasure(42.5, 619, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(167.5, 619, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(105, 439, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(42.5, 259, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(167.5, 259, 10, 0, 2, colors.Gold, 2, colors.Black))];
+        warps = [(new componentWarp(305, 220, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
+        switches = [(new componentSwitch(930, 670, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(943, 200, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(800, 685, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(450, 364, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2))];
+        resizers = [(new componentResizer(963, 80, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
         teleporters = [[(new componentTeleporter(100, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
-                        (new componentTeleporter(300, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
+                        (new componentTeleporter(305, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
         burners = [(new componentBurner(370, -1, 40, 141, colors.LightGray, 2, colors.Black, 4, "ON", true)),
                    (new componentBurner(570, -1, 40, 141, colors.LightGray, 2, colors.Black, 2, "ON", true)),
                    (new componentBurner(770, -1, 80, 141, colors.LightGray, 2, colors.Black, 4, "OFF", true)),
-                   (new componentBurner(80, 590, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(-1, 410, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(160, 410, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(80, 230, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(270, 649, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+
+                   (new componentBurner(370, 509, 40, 100, colors.LightGray, 2, colors.Black, 2, "OFF", true)),
+
+                   (new componentBurner(85, 599, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(-1, 419, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(170, 419, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(85, 239, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(270, 639, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
                    (new componentBurner(470, 729, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(670, 649, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true))];
+                   (new componentBurner(670, 639, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                
+                   (new componentBurner(370, 170, 40, 170, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(370, 340, 40, 129, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(340, 469, 200, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -2544,10 +2553,10 @@ function gameOver(type)
     player.context.drawImage(player.sprite,
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
     player.context.drawImage(player.hat,
-        player.x - (1.1 * player.radius), player.y - (2.75 * player.radius), 2.2 * player.radius, 2.1 * player.radius);
+        player.x - player.radius, player.y - (2.25 * player.radius), 2 * player.radius, 2 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                            colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
+                            colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < gameOverOverlay.length; i++) { gameOverOverlay[i].update(); }
     
     var gameOverText = [(new componentHud("60px NewSuperMarioFontU", colors.Red, colors.Black, 350, 364, "GAME OVER", 0, "N/A")),
@@ -2602,7 +2611,7 @@ function levelEnd()
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
 
     var levelCompleteOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                 colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
+                                 colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < levelCompleteOverlay.length; i++) { levelCompleteOverlay[i].update(); }
 
     var levelCompleteText = [(new componentHud("60px NewSuperMarioFontU", colors.Gold, colors.Black, 425, 364, "GOAL!!", 0, "N/A")),
@@ -2692,7 +2701,7 @@ function pauseGame()
             document.querySelector("#pauseButton").innerHTML = "▶️";
 
             var pauseOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                    colors.transparency(colors.Gray, 0.5), 0, colors.Black, false, "N/A", 0))];
+                                    colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
             for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
             var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 400, 364, "PAUSED", 0, "N/A")),
