@@ -1088,25 +1088,25 @@ var levelSetup =
                    (new componentBurner(370, 259, 120, 20, colors.LightGray, 2, colors.Black, 2, "OFF", true)),
                    (new componentBurner(490, 519, 20, 100, colors.LightGray, 2, colors.Black, 2, "OFF", false)),
                    (new componentBurner(230, 315, 120, 20, colors.LightGray, 2, colors.Black, 1, "ON", true)),
-                   (new componentBurner(85, 599, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(-1, 419, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(170, 419, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(85, 239, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(270, 639, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(470, 729, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(670, 639, 40, 40, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(910, 379, 20, 140, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(770, 499, 140, 20, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(900, 259, 125, 20, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(770, 259, 130, 20, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(630, 379, 160, 20, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(630, 160, 20, 119, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(490, 259, 20, 130, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(490, 389, 20, 130, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(350, 160, 20, 170, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(350, 330, 20, 169, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(290, 499, 200, 20, colors.LightSlateGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(510, 499, 140, 20, colors.LightSlateGray, 2, colors.Black, 0, "ON", true))];
+                   (new componentBurner(85, 599, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(-1, 419, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(170, 419, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(85, 239, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(270, 639, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(470, 729, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(670, 639, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(910, 379, 20, 140, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(770, 499, 140, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(900, 259, 125, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(770, 259, 130, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(630, 379, 160, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(630, 160, 20, 119, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(490, 259, 20, 130, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(490, 389, 20, 130, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(350, 160, 20, 170, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(350, 330, 20, 169, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(290, 499, 200, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(510, 499, 140, 20, colors.LightGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -1491,7 +1491,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.speedX = 0, this.speedY = 0;
     this.x = x, this.y = y, this.radius = radius; this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-    this.action = false, this.falling = false, this.burning = false;
+    this.action = false, this.falling = false, this.burning = false, this.burnTimer = 25;
     this.originalX = x, this.originalY = y, this.originalRadius = radius;
     this.sprite = new Image(), this.hat = new Image(), this.idleTimer = 0;
 
@@ -1542,11 +1542,25 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             }
         }
 
-        if (saveProgress.completion[14][1] == 101)
+        if (!this.burning) { this.burnTimer = 25; }
+        else if (this.burning)
+        {
+            this.burnTimer--; this.sprite.src = "resources/images/player_burning.png";
+            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+        }
+
+        if (saveProgress.completion[14][1] == 101 && !this.burning)
         {
             this.hat.src = "resources/images/player_hat_crown.png";
             this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.2 * this.radius), 2 * this.radius, 2 * this.radius);
         }
+        else if (this.burning)
+        {
+            this.hat.src = "resources/images/player_hat_fire.png";
+            this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.25 * this.radius), 2 * this.radius, 2 * this.radius);
+        }
+
+        this.burning = false;
     }
 
     // Calculates each frame the new x and y positions of the player as they move around
@@ -1581,6 +1595,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
             if (stickX < 75 && stickX > -75) { this.speedX /= 2; }
             if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
+
+            if (this.burning) { this.speedX /= 2; this.speedY /= 2; }
 
             if (gameArea.mirrorMode) { this.speedX *= -1; }
 
@@ -2332,7 +2348,8 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
         }
         else if (this.state == "ON")
         {
-            this.context.fillStyle = colors.DarkOrange;
+            if (this.intermittence > 0) { this.context.fillStyle = colors.RoyalBlue; }
+            else { this.context.fillStyle = colors.DarkOrange; }
             this.context.fill();
             this.context.stroke();
 
@@ -2340,7 +2357,8 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
             this.context.ellipse(this.x + (this.width / 2), this.y + (this.height / 2),
                 (this.width / this.animationCycle), (this.height / this.animationCycle), 0, 0, 2 * Math.PI);
 
-            this.context.fillStyle = colors.Yellow;
+            if (this.intermittence > 0) { this.context.fillStyle = colors.SkyBlue; }
+            else { this.context.fillStyle = colors.Yellow; }
             this.context.fill();
 
             if (this.animationCycle > 3) { this.animationReverse = true; }
@@ -2564,7 +2582,7 @@ function updateGameArea()
 
     // Checking conditions for a Game Over occuring
     if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver("Time Up"); }
-    if (player.burning && !gameArea.gameIsOver) { gameOver("Burning"); }
+    if (player.burnTimer <= 0 && !gameArea.gameIsOver) { gameOver("Burning"); }
 }
 
 // Code for the Game Over that occurs when the level time has run out
@@ -2578,7 +2596,7 @@ function gameOver(type)
     if (type == "Time Up") { player.sprite.src = "resources/images/player_game_over_time_up.png"; }
     else if (type == "Burning")
     {
-        player.sprite.src = "resources/images/player_game_over_burning.png";
+        player.sprite.src = "resources/images/player_game_over_burn.png";
         player.hat.src = "resources/images/player_hat_fire.png";
     }
 
