@@ -1479,15 +1479,16 @@ var levelSetup =
         warps = [(new componentWarp(512, 90, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [(new componentSwitch(48, 70, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
                     (new componentSwitch(918, 75, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
-                    (new componentSwitch(63, 415, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
-                    (new componentSwitch(110, 695, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 2)),
+                    (new componentSwitch(85, 370, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(105, 695, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 2)),
                     (new componentSwitch(761.5, 97, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 3)),
                     (new componentSwitch(265, 75, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 4))];
         resizers = [(new componentResizer(935, 685, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
                     (new componentResizer(965, 580, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
         teleporters = [[(new componentTeleporter(965, 405, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
                         (new componentTeleporter(105, 620, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
-        burners = [];
+        burners = [(new componentBurner(145, 350, 20, 100, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(55, 430, 90, 20, colors.LightGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level ?", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
