@@ -1491,8 +1491,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.speedX = 0, this.speedY = 0;
     this.x = x, this.y = y, this.radius = radius; this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-    this.action = false, this.falling = false, this.burning = false, this.burnTimer = 25;
-    this.originalX = x, this.originalY = y, this.originalRadius = radius;
+    this.falling = false, this.teetering = false, this.teeterTimer = 25, this.burning = false, this.burnTimer = 25;
+    this.action = false, this.originalX = x, this.originalY = y, this.originalRadius = radius;
     this.sprite = new Image(), this.hat = new Image(), this.idleTimer = 0;
 
     this.update = function()
@@ -1512,8 +1512,10 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         this.action = false;
 
-        if (!this.falling)
+        if (!this.teetering && !this.falling && !this.burning)
         {
+            this.teeterTimer = this.burnTimer = 25;
+
             if (gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
 
             if (this.idleTimer < 750)
@@ -1527,7 +1529,18 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
         }
-        else if (this.falling)
+        else if (this.teetering)
+        {
+            this.teeterTimer--; this.sprite.src = "resources/images/player_teetering.png";
+            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+        }
+        else if (this.burning)
+        {
+            this.burnTimer--; this.sprite.src = "resources/images/player_burning.png";
+            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+        }
+
+        if (this.falling)
         {
             this.radius -= 0.15; this.sprite.src = "resources/images/player_falling.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
@@ -1542,13 +1555,6 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             }
         }
 
-        if (!this.burning) { this.burnTimer = 25; }
-        else if (this.burning)
-        {
-            this.burnTimer--; this.sprite.src = "resources/images/player_burning.png";
-            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
-        }
-
         if (saveProgress.completion[14][1] == 101 && !this.burning)
         {
             this.hat.src = "resources/images/player_hat_crown.png";
@@ -1560,7 +1566,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.25 * this.radius), 2 * this.radius, 2 * this.radius);
         }
 
-        this.burning = false;
+        this.teetering = this.burning = false;
     }
 
     // Calculates each frame the new x and y positions of the player as they move around
@@ -1577,10 +1583,10 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         else
         {
             if ((stickAngle >= 0 && stickAngle < 11.25) || (stickAngle >= 348.75 && stickAngle < 360)) { this.moveRight(); }
-            else if (stickAngle >= 11.25 && stickAngle < 33.75) { this.moveRightDownRight(); }
-            else if (stickAngle >= 33.75 && stickAngle < 56.25) { this.moveDownRight(); }
-            else if (stickAngle >= 56.25 && stickAngle < 78.75) { this.moveDownDownRight(); }
-            else if (stickAngle >= 78.75 && stickAngle < 101.25) { this.moveDown(); }
+            else if (stickAngle >=  11.25 && stickAngle <  33.75) { this.moveRightDownRight(); }
+            else if (stickAngle >=  33.75 && stickAngle <  56.25) { this.moveDownRight(); }
+            else if (stickAngle >=  56.25 && stickAngle <  78.75) { this.moveDownDownRight(); }
+            else if (stickAngle >=  78.75 && stickAngle < 101.25) { this.moveDown(); }
             else if (stickAngle >= 101.25 && stickAngle < 123.75) { this.moveDownDownLeft(); }
             else if (stickAngle >= 123.75 && stickAngle < 146.25) { this.moveDownLeft(); }
             else if (stickAngle >= 146.25 && stickAngle < 168.75) { this.moveLeftDownLeft(); }
@@ -1596,6 +1602,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (stickX < 75 && stickX > -75) { this.speedX /= 2; }
             if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
 
+            if (this.teetering) { this.speedX /= 4; this.speedY /= 4; }
             if (this.burning) { this.speedX /= 2; this.speedY /= 2; }
 
             if (gameArea.mirrorMode) { this.speedX *= -1; }
@@ -1676,6 +1683,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.handleHoleFalling = function(hole)
     {
         if (hole.walkability || this.falling) { return; }
+
+        this.teetering = true; if (this.teeterTimer > 0) { return; }
 
         this.radius = 20;
 
