@@ -1123,18 +1123,75 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.SlateGray, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        player = new componentPlayer(512, 384, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [];
-        holes = [];
-        treasure = [(new componentTreasure(256, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(256, 576, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 192, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(768, 576, 10, 0, 2, colors.Gold, 2, colors.Black))];
-        warps = [(new componentWarp(512, 100, 30, 30, 0, colors.Cyan, 2, colors.Black, "Credits", "Goal"))];
-        switches = [];
-        resizers = [];
-        teleporters = [];
-        burners = [];
+        player = new componentPlayer(512, 710, 20, 0, 2, colors.Red, 2, colors.Black);
+        walls = [(new componentWall(295, 134, 102, 20, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(815, -1, 20, 102, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(-1, 247, 102, 20, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(295, 247, 102, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(922, 101, 103, 20, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(-1, 101, 102, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 5)),
+                 (new componentWall(627, 101, 101, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 6)),
+                 (new componentWall(121, 648, 154, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 7)),
+                 (new componentWall(902, 502, 20, 146, colors.SaddleBrown, 2, colors.Black, true, "Door", 8)),
+                 (new componentWall(397, -1, 30, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(597, -1, 30, 770, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(-1, 369, 398, 30, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(627, 369, 398, 30, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 // Width: 394, Height: 366
+                 // H
+                 (new componentWall(101, 101, 20, 166, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(275, 101, 20, 166, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(121, 174, 154, 20, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 // T
+                 (new componentWall(728, 101, 194, 20, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(815, 121, 20, 146, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 // M
+                 (new componentWall(101, 502, 20, 166, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(275, 502, 20, 166, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(121, 502, 154, 20, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(188, 522, 20, 83, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 // L
+                 (new componentWall(728, 502, 20, 166, colors.Silver, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(748, 648, 174, 20, colors.Silver, 2, colors.Black, true, "N/A", 0))];
+        holes = [(new componentHole(837, 223, 75, 144, colors.Black, 2, colors.Orange, false, "Flip", -1)),
+                 (new componentHole(429, 306, 166, 50, colors.Black, 2, colors.SaddleBrown, false, "Door", 1)),
+                 (new componentHole(429, 254, 166, 50, colors.Black, 2, colors.SaddleBrown, false, "Door", 2)),
+                 (new componentHole(429, 202, 166, 50, colors.Black, 2, colors.SaddleBrown, false, "Door", 3)),
+                 (new componentHole(429, 150, 166, 50, colors.Black, 2, colors.SaddleBrown, false, "Door", 4)),
+                 (new componentHole(-1, 329, 122, 40, colors.Black, 2, colors.Black, false, "N/A", 0))];
+        treasure = [(new componentTreasure(462, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(562, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(462, 710, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(562, 710, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(241.5, 37.5, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(50.5, 184, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(198, 318, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(346, 200.5, 10, 0, 2, colors.Gold, 2, colors.Black))];
+        warps = [(new componentWarp(512, 90, 30, 30, 0, colors.Cyan, 2, colors.Black, "Credits", "Goal"))];
+        switches = [(new componentSwitch(492, 405, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(178, 111, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 1)),
+                    (new componentSwitch(859, 141, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 2)),
+                    (new componentSwitch(147, 542, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 3)),
+                    (new componentSwitch(768, 558, 70, 70, colors.White, 2, colors.Black, "Door", "ON", 4)),
+
+                    (new componentSwitch(325, 30, 15, 15, colors.White, 2, colors.Black, "Door", "OFF", 6)),
+                
+                    (new componentSwitch(934, 260, 70, 70, colors.White, 2, colors.Black, "Door", "OFF", 8))];
+        resizers = [(new componentResizer(772, 161, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
+                    (new componentResizer(198, 236, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
+        teleporters = [[(new componentTeleporter(467, 520, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
+                        (new componentTeleporter(357, 329, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))],
+                       [(new componentTeleporter(557, 520, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2)),
+                        (new componentTeleporter(667, 329, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 2))],
+                       [(new componentTeleporter(467, 610, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 3)),
+                        (new componentTeleporter(357, 439, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 3))],
+                       [(new componentTeleporter(557, 610, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 4)),
+                        (new componentTeleporter(667, 439, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 4))]];
+        burners = [(new componentBurner(188, -1, 20, 75, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(275, -1, 20, 102, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(295, 81, 75, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(728, 201, 87, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(835, 201, 190, 20, colors.LightGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 10", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -2824,8 +2881,12 @@ function toggleAudioMuting()
 }
 
 // IDEAS
-// - Create new "instructions" level and move all info from webpage into it, or put instructions across menu screen
+// - Write general game instructions across the menu screen, or put it all into separate "Instructions" level
+// - Replace emoji text in HUD elements with emoji images so that the emojis are consistent between devices
 // - Make the background music loop properly instead of fading out and restarting
+// - Add toggle button that forces the player to move more slowly, for accessibility reasons
+// - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
+// - Add Time Trial mode by having target completion times for each level, earning the player platinum level warps if they beat them
 // - Suggestions given for tailoring time limits to each level:
 //    - "Speedrun the level and set it close to that time"
 //    - "What I would do, is to play the levels the best I can (since I'm devleoping the game, I can do things very fast
@@ -2841,6 +2902,8 @@ function toggleAudioMuting()
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
+// - Tiny player can pass through thin burners using the leeway time, because they move faster due to their smaller size
+// - Huge player moves slower due to their bigger size and the player movement being a specific number of units each frame
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
