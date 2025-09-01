@@ -283,8 +283,8 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 165, 660, "TOTAL GAME COMPLETION:", 0, "N/A")),
                (new componentHud("70px NewSuperMarioFontU", colors.Red, colors.Black, 705, 660, "000%", 0, "Completion"))];
 
-        music.sound.src = "";
-        music.changeLoopEndpoints(0.00, 0.00); music.stop();
+        music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Continue.mp3";
+        music.changeLoopEndpoints(0.00, 0.00); music.play();
 
         document.querySelector("#actionButton").innerHTML = "🚩";
         document.querySelector("#pauseButton").innerHTML = "❌";
