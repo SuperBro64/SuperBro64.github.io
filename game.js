@@ -1,10 +1,20 @@
 // Setup for the start of the game
 function startGame()
 {
-    gameArea.start(1024, 768, "border: 5px solid black", colors.LightGray, 0, 0, 0, 20); 
-    saveProgress.load("saveProgress"); music = new componentSound("", "BGM"); sfx = new componentSound("", "SFX");
+    gameArea.start(1024, 768, "border: 5px solid black", colors.Black, 0, 0, 0, 20);
+    gameArea.fillColor = colors.diagonalLinearGradient(colors.shading(colors.Black, 25), -25, gameArea,
+                                0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-    levelSetup.titleScreen();
+    player = new componentPlayer(512, 135, 20, 0, 2, colors.Red, 2, colors.Black);
+    
+    hud = [(new componentHud("70px NewSuperMarioFontU", colors.White, colors.Black, 180, 309, "Game Developed By", 0, "N/A")),
+           (new componentHud("80px NewSuperMarioFontU", colors.Red, colors.Black, 270, 389, "SUPERBRO64", 0, "Developer")),
+           (new componentHud("50px NewSuperMarioFontU", colors.White, colors.Black, 210, 743, "Click on 🚩 to continue.", 0, "N/A"))];
+
+    document.querySelector("#actionButton").textContent = "🚩";
+    document.querySelector("#pauseButton").textContent = "❌";
+
+    saveProgress.load("saveProgress"); music = new componentSound("", "BGM"); sfx = new componentSound("", "SFX");
 }
 
 // Variables for all game objects along with important global variables
@@ -205,8 +215,8 @@ var saveProgress =
 // Variable for the playable game area
 var gameArea =
 {
-    canvas: document.createElement("canvas"),
-    currentLevel: "", levelComplete: false, gameStarted: false, gameIsOver: false, soundMuted: false, mirrorMode: false,
+    canvas: document.createElement("canvas"), gameLoaded: false, gameStarted: false, gameIsOver: false,
+    currentLevel: "", levelComplete: false, soundMuted: false, mirrorMode: false,
 
     start: function(width, height, style, fillColor, x, y, frameNum, updateSpeed)
     {
@@ -286,8 +296,8 @@ var levelSetup =
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Continue.mp3";
         music.changeLoopEndpoints(0.00, 0.00); music.play();
 
-        document.querySelector("#actionButton").innerHTML = "🚩";
-        document.querySelector("#pauseButton").innerHTML = "❌";
+        document.querySelector("#actionButton").textContent = "🚩";
+        document.querySelector("#pauseButton").textContent = "❌";
 
     },
 
@@ -1591,7 +1601,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         {
             this.teeterTimer = this.burnTimer = 25;
 
-            if (gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
+            if (gameArea.gameLoaded && gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
 
             if (this.idleTimer < 750)
             {
@@ -1601,8 +1611,14 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             }
             else if (this.idleTimer < 1500) { this.sprite.src = "resources/images/player_idle_looking.png"; }
             else { this.sprite.src = "resources/images/player_idle_sleeping.png"; }
-            
-            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+
+            if (!gameArea.gameLoaded)
+            {
+                this.sprite.src = "resources/images/nontendo_logo.png";
+                this.context.drawImage(this.sprite, this.x - (this.sprite.width / 4), this.y - (this.sprite.height / 4),
+                    this.sprite.width / 2, this.sprite.height / 2);
+            }
+            else { this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius); }
         }
         else if (this.teetering)
         {
@@ -1625,12 +1641,12 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
                 this.falling = false;
                 this.x = this.originalX; this.y = this.originalY; this.radius = this.originalRadius;
 
-                document.querySelector("#actionButton").innerHTML = "🅰️";
-                document.querySelector("#pauseButton").innerHTML = "⏸️";
+                document.querySelector("#actionButton").textContent = "🅰️";
+                document.querySelector("#pauseButton").textContent = "⏸️";
             }
         }
 
-        if (saveProgress.completion[14][1] == 101 && !this.burning)
+        if (gameArea.gameLoaded && saveProgress.completion[14][1] == 101 && !this.burning)
         {
             this.hat.src = "resources/images/player_hat_crown.png";
             this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.2 * this.radius), 2 * this.radius, 2 * this.radius);
@@ -1640,6 +1656,12 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             this.hat.src = "resources/images/player_hat_fire.png";
             this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.25 * this.radius), 2 * this.radius, 2 * this.radius);
         }
+        else if (!gameArea.gameLoaded)
+        {
+            this.hat.src = "resources/images/superbro64_dev_photo.png";
+            this.context.drawImage(this.hat, this.x - (this.hat.width / 14), this.y - (this.hat.height / 14) + 410,
+                    this.hat.width / 7, this.hat.height / 7);
+        }
 
         this.teetering = this.burning = false;
     }
@@ -1647,7 +1669,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     // Calculates each frame the new x and y positions of the player as they move around
     this.newPosition = function()
     {
-        if (!gameArea.gameStarted || this.falling) { return; }
+        if (!gameArea.gameLoaded || !gameArea.gameStarted || this.falling) { return; }
 
         var stickX = joystick.getX(), stickY = joystick.getY();
         var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
@@ -1770,8 +1792,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         this.falling = true; hole.sfx.play();
 
-        document.querySelector("#actionButton").innerHTML = "❌";
-        document.querySelector("#pauseButton").innerHTML = "❌";
+        document.querySelector("#actionButton").textContent = "❌";
+        document.querySelector("#pauseButton").textContent = "❌";
     }
 
     // Handle the player touching an active burner
@@ -2499,6 +2521,10 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
             else if (this.timeRemaining < 100) { this.text += "0"; }
             this.text += this.timeRemaining;
         }
+        else if (this.type == "Developer")
+        {
+            this.fillColor = colors.rainbow(this.fillColor, 1);
+        }
 
         this.context = gameArea.context;
         this.context.font = this.font;
@@ -2550,105 +2576,128 @@ function updateGameArea()
 {
     // Clearing the game area
     gameArea.clear();
-    if (!player.falling) { gameArea.frameNum += 1; }
+    if (player && !player.falling) { gameArea.frameNum += 1; }
 
     // Updating the walls
     for (i = 0; i < walls.length; i++)
     {
-        if (player.objectCollision(walls[i])) { player.handleWallCollision(walls[i]); }
-
-        if (walls[i]) { walls[i].update(); }
+        if (walls[i])
+        {
+            walls[i].update();
+        
+            if (player && player.objectCollision(walls[i])) { player.handleWallCollision(walls[i]); }
+        }
     }
 
     // Updating the bottomless holes
     for (i = 0; i < holes.length; i++)
     {
-        if (player.objectCollision(holes[i])) { player.handleHoleFalling(holes[i]); }
+        if (holes[i])
+        {
+            holes[i].update();
 
-        if (holes[i]) { holes[i].update(); }
+            if (player && player.objectCollision(holes[i])) { player.handleHoleFalling(holes[i]); }
+        }
     }
 
     // Updating the treasure
     for (i = 0; i < treasure.length; i++)
     {
-        if (player.objectCollision(treasure[i]) && treasure[i].radius != 0)
+        if (treasure[i])
         {
-            treasure[i].disappear();
-            hud[1].treasureCollected += 1;
-        }
+            treasure[i].update();
 
-        if (treasure[i]) { treasure[i].update(); }
+            if (player && player.objectCollision(treasure[i]) && treasure[i].radius != 0)
+            {
+                treasure[i].disappear();
+                hud[1].treasureCollected += 1;
+            }
+        }
     }
 
     // Updating the warps
     for (i = 0; i < warps.length; i++)
     {
-        if (player.objectCollision(warps[i]))
+        if (warps[i])
         {
-            warps[i].rotationSpeed = 45;
+            warps[i].update();
 
-            if (player.action) { warps[i].toDestination(); }
+            if (player && player.objectCollision(warps[i]))
+            {
+                warps[i].rotationSpeed = 45;
+
+                if (player.action) { warps[i].toDestination(); }
+            }
+            else { warps[i].rotationSpeed = 180; }
         }
-        else { warps[i].rotationSpeed = 180; }
-
-        if (warps[i]) { warps[i].update(); }
     }
 
     // Updating the switches
     for (i = 0; i < switches.length; i++)
     {
-        if (player.objectCollision(switches[i]))
+        if (switches[i])
         {
-            switches[i].enoughPlayerWeightToActivate();
+            switches[i].update();
 
-            if (player.action) { switches[i].changeState(); }
+            if (player && player.objectCollision(switches[i]))
+            {
+                switches[i].enoughPlayerWeightToActivate();
+
+                if (player.action) { switches[i].changeState(); }
+            }
+            else { switches[i].activatable = false; }
         }
-        else { switches[i].activatable = false; }
-
-        if (switches[i]) { switches[i].update(); }
     }
 
     // Updating the resizers
     for (i = 0; i < resizers.length; i++)
     {
-        if (player.objectCollision(resizers[i]))
+        if (resizers[i])
         {
-            resizers[i].activatable = true;
+            resizers[i].update();
 
-            if (player.action) { resizers[i].resizePlayer(); }
+            if (player && player.objectCollision(resizers[i]))
+            {
+                resizers[i].activatable = true;
+
+                if (player.action) { resizers[i].resizePlayer(); }
+            }
+            else { resizers[i].activatable = false; }
         }
-        else { resizers[i].activatable = false; }
-
-        if (resizers[i]) { resizers[i].update(); }
     }
 
     // Updating the teleporters
     for (i = 0; i < teleporters.length; i++)
     {
-        if (player.objectCollision(teleporters[i][0]))
+        if (teleporters[i][0] && teleporters[i][1])
         {
-            teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
+            teleporters[i][0].update(); teleporters[i][1].update();
 
-            if (player.action) { teleporters[i][0].teleportPlayer(); }
+            if (player && player.objectCollision(teleporters[i][0]))
+            {
+                teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
+
+                if (player.action) { teleporters[i][0].teleportPlayer(); }
+            }
+            else if (player && player.objectCollision(teleporters[i][1]))
+            {
+                teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
+
+                if (player.action) { teleporters[i][1].teleportPlayer(); }
+            }
+            else { teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 90; }
         }
-        else if (player.objectCollision(teleporters[i][1]))
-        {
-            teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
-
-            if (player.action) { teleporters[i][1].teleportPlayer(); }
-        }
-        else { teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 90; }
-
-        if (teleporters[i][0]) { teleporters[i][0].update(); }
-        if (teleporters[i][1]) { teleporters[i][1].update(); }
     }
 
     // Updating the burners
     for (i = 0; i < burners.length; i++)
     {
-        if (player.objectCollision(burners[i])) { player.handleBurnerTouching(burners[i]); }
+        if (burners[i])
+        {
+            burners[i].update();
 
-        if (burners[i]) { burners[i].update(); }
+            if (player && player.objectCollision(burners[i])) { player.handleBurnerTouching(burners[i]); }
+        }
     }
 
     // Updating the HUD
@@ -2664,8 +2713,8 @@ function updateGameArea()
     if (gameArea.levelComplete) { levelEnd(); }
 
     // Checking conditions for a Game Over occuring
-    if (hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver("Time Up"); }
-    if (player.burnTimer <= 0 && !gameArea.gameIsOver) { gameOver("Burning"); }
+    if (hud[2] && hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver("Time Up"); }
+    if (player && player.burnTimer <= 0 && !gameArea.gameIsOver) { gameOver("Burning"); }
 }
 
 // Code for the Game Over that occurs when the level time has run out
@@ -2673,8 +2722,8 @@ function gameOver(type)
 {
     gameArea.gameIsOver = true;
 
-    document.querySelector("#actionButton").innerHTML = "🏠";
-    document.querySelector("#pauseButton").innerHTML = "🔄️";
+    document.querySelector("#actionButton").textContent = "🏠";
+    document.querySelector("#pauseButton").textContent = "🔄️";
 
     if (type == "Time Up") { player.sprite.src = "resources/images/player_game_over_time_up.png"; }
     else if (type == "Burning")
@@ -2736,8 +2785,8 @@ function levelRestart()
 // Code for the victory screen that occurs after completing a level
 function levelEnd()
 {
-    document.querySelector("#actionButton").innerHTML = "🏠";
-    document.querySelector("#pauseButton").innerHTML = "❌";
+    document.querySelector("#actionButton").textContent = "🏠";
+    document.querySelector("#pauseButton").textContent = "❌";
 
     player.sprite.src = "resources/images/player_level_complete.png";
     player.context.drawImage(player.sprite,
@@ -2776,10 +2825,14 @@ function levelEnd()
 // Code for the player's actions during normal gameplay, or for warping the player during specific circumstances
 function playerAction()
 {
-    if (!gameArea.gameStarted) // While on the title screen
+    if (!gameArea.gameLoaded) // Before the game loads
     {
-        document.querySelector("#actionButton").innerHTML = "🅰️";
-        document.querySelector("#pauseButton").innerHTML = "⏸️";
+        gameArea.gameLoaded = true; levelSetup.titleScreen();
+    }
+    else if (!gameArea.gameStarted) // While on the title screen
+    {
+        document.querySelector("#actionButton").textContent = "🅰️";
+        document.querySelector("#pauseButton").textContent = "⏸️";
 
         sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
         gameArea.gameStarted = true;
@@ -2788,8 +2841,8 @@ function playerAction()
     }
     else if (!gameArea.interval && gameArea.levelComplete) // After completing a level
     {
-        document.querySelector("#actionButton").innerHTML = "🅰️";
-        document.querySelector("#pauseButton").innerHTML = "⏸️";
+        document.querySelector("#actionButton").textContent = "🅰️";
+        document.querySelector("#pauseButton").textContent = "⏸️";
 
         gameArea.levelComplete = false; sfx.stop();
 
@@ -2800,8 +2853,8 @@ function playerAction()
     }
     else if (!gameArea.interval && gameArea.gameIsOver) // After getting a Game Over
     {
-        document.querySelector("#actionButton").innerHTML = "🅰️";
-        document.querySelector("#pauseButton").innerHTML = "⏸️";
+        document.querySelector("#actionButton").textContent = "🅰️";
+        document.querySelector("#pauseButton").textContent = "⏸️";
 
         gameArea.gameIsOver = false; sfx.stop();
 
@@ -2812,8 +2865,8 @@ function playerAction()
     }
     else if (!gameArea.interval && !gameArea.gameIsOver) // After pausing the game
     {
-        document.querySelector("#actionButton").innerHTML = "🅰️";
-        document.querySelector("#pauseButton").innerHTML = "⏸️";
+        document.querySelector("#actionButton").textContent = "🅰️";
+        document.querySelector("#pauseButton").textContent = "⏸️";
 
         sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
@@ -2830,8 +2883,8 @@ function pauseGame()
     {
         if (gameArea.interval) // Pausing the game
         {
-            document.querySelector("#actionButton").innerHTML = "🏠";
-            document.querySelector("#pauseButton").innerHTML = "▶️";
+            document.querySelector("#actionButton").textContent = "🏠";
+            document.querySelector("#pauseButton").textContent = "▶️";
 
             var pauseOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
                                     colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
@@ -2849,8 +2902,8 @@ function pauseGame()
         }
         else if (!gameArea.interval) // Unpausing the game
         {
-            document.querySelector("#actionButton").innerHTML = "🅰️";
-            document.querySelector("#pauseButton").innerHTML = "⏸️";
+            document.querySelector("#actionButton").textContent = "🅰️";
+            document.querySelector("#pauseButton").textContent = "⏸️";
 
             sfx.sound.src = "resources/sounds/Super_Mario_64_-_Pause.wav"; sfx.play();
             gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
@@ -2858,8 +2911,8 @@ function pauseGame()
     }
     else if (gameArea.gameStarted && gameArea.gameIsOver && !gameArea.interval) // After getting a Game Over
     {
-        document.querySelector("#actionButton").innerHTML = "🅰️";
-        document.querySelector("#pauseButton").innerHTML = "⏸️";
+        document.querySelector("#actionButton").textContent = "🅰️";
+        document.querySelector("#pauseButton").textContent = "⏸️";
 
         gameArea.gameIsOver = false; sfx.stop();
         gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
@@ -2873,12 +2926,12 @@ function toggleAudioMuting()
 {
     if (!gameArea.soundMuted)
     {
-        document.querySelector("#audioButton").innerHTML = "🔇"; gameArea.soundMuted = true;
+        document.querySelector("#audioButton").textContent = "🔇"; gameArea.soundMuted = true;
         document.querySelectorAll("audio").forEach((element) => element.muted = true);
     }
     else if (gameArea.soundMuted)
     {
-        document.querySelector("#audioButton").innerHTML = "🔊"; gameArea.soundMuted = false;
+        document.querySelector("#audioButton").textContent = "🔊"; gameArea.soundMuted = false;
         document.querySelectorAll("audio").forEach((element) => element.muted = false);
     }
 }
@@ -2915,11 +2968,16 @@ var JoyStick = (function (container, parameters, callback)
     var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title);
     var width = (typeof parameters.width === "undefined" ? 0 : parameters.width);
     var height = (typeof parameters.height === "undefined" ? 0 : parameters.height);
-    var innerFillColor = (typeof parameters.innerFillColor === "undefined" ? colors.DarkGray : parameters.innerFillColor);
+    var innerFillColor = (typeof parameters.innerFillColor === "undefined" ?
+                            colors.shading(colors.Gray, 15) : parameters.innerFillColor);
     var innerLineWidth = (typeof parameters.innerLineWidth === "undefined" ? 5 : parameters.innerLineWidth);
-    var innerStrokeColor = (typeof parameters.innerStrokeColor === "undefined" ? colors.DimGray : parameters.innerStrokeColor);
+    var innerStrokeColor = (typeof parameters.innerStrokeColor === "undefined" ?
+                            colors.shading(colors.Gray, -25) : parameters.innerStrokeColor);
+    var outerFillColor = (typeof parameters.outerFillColor === "undefined" ?
+                            colors.shading(colors.Gray, 50) : parameters.outerFillColor);
     var outerLineWidth = (typeof parameters.outerLineWidth === "undefined" ? 5 : parameters.outerLineWidth);
-    var outerStrokeColor = (typeof parameters.outerStrokeColor === "undefined" ? colors.DimGray : parameters.outerStokeColor);
+    var outerStrokeColor = (typeof parameters.outerStrokeColor === "undefined" ?
+                            colors.shading(colors.Gray, -25) : parameters.outerStokeColor);
     var autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
     
     callback = callback || function(StickStatus) {};
@@ -2970,6 +3028,12 @@ var JoyStick = (function (container, parameters, callback)
     {
         context.beginPath();
         context.arc(centerX, centerY, outerRadius, 0, circumference, false);
+
+        var grd = context.createRadialGradient(centerX, centerY, 5, centerX, centerY, 200);
+        grd.addColorStop(0, outerFillColor);
+        grd.addColorStop(1, outerStrokeColor);
+        context.fillStyle = grd;
+        context.fill();
         context.lineWidth = outerLineWidth;
         context.strokeStyle = outerStrokeColor;
         context.stroke();
@@ -2999,8 +3063,10 @@ var JoyStick = (function (container, parameters, callback)
 
     function onTouchMove(event)
     {
-        if (pressed === 1 && event.targetTouches[0].target === canvas)
+        if (pressed === 1 && event.targetTouches[0].target === canvas && gameArea.gameLoaded && gameArea.gameStarted)
         {
+            innerFillColor = colors.shading(colors.Gray, 0);
+
             movedX = event.targetTouches[0].pageX, movedY = event.targetTouches[0].pageY;
 
             if (canvas.offsetParent.tagName.toUpperCase() === "BODY")
@@ -3027,7 +3093,7 @@ var JoyStick = (function (container, parameters, callback)
     {
         if (event.changedTouches[0].identifier !== touchId) { return; }
 
-        pressed = 0;
+        pressed = 0; innerFillColor = colors.shading(colors.Gray, 15);
 
         if (autoReturnToCenter) { movedX = centerX, movedY = centerY; }
 
@@ -3045,8 +3111,10 @@ var JoyStick = (function (container, parameters, callback)
 
     function onMouseMove(event)
     {
-        if (pressed === 1)
+        if (pressed === 1 && gameArea.gameLoaded && gameArea.gameStarted)
         {
+            innerFillColor = colors.shading(colors.Gray, 0)
+
             movedX = event.pageX, movedY = event.pageY;
 
             if (canvas.offsetParent.tagName.toUpperCase() === "BODY")
@@ -3071,7 +3139,7 @@ var JoyStick = (function (container, parameters, callback)
 
     function onMouseUp(event)
     {
-        pressed = 0;
+        pressed = 0; innerFillColor = colors.shading(colors.Gray, 15);
 
         if (autoReturnToCenter) { movedX = centerX, movedY = centerY; }
 
