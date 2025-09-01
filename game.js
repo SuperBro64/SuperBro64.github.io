@@ -5,11 +5,11 @@ function startGame()
     gameArea.fillColor = colors.diagonalLinearGradient(colors.shading(colors.Black, 25), -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-    player = new componentPlayer(512, 135, 20, 0, 2, colors.Red, 2, colors.Black);
+    player = new componentPlayer(512, 110, 20, 0, 2, colors.Red, 2, colors.Black);
     
-    hud = [(new componentHud("70px NewSuperMarioFontU", colors.White, colors.Black, 180, 309, "Game Developed By", 0, "N/A")),
-           (new componentHud("80px NewSuperMarioFontU", colors.Red, colors.Black, 270, 389, "SUPERBRO64", 0, "Developer")),
-           (new componentHud("50px NewSuperMarioFontU", colors.White, colors.Black, 210, 743, "Click on 🚩 to continue.", 0, "N/A"))];
+    hud = [(new componentHud("70px NewSuperMarioFontU", colors.White, colors.Black, 180, 270, "Game Developed By", 0, "N/A")),
+           (new componentHud("80px NewSuperMarioFontU", colors.Red, colors.Black, 270, 350, "SUPERBRO64", 0, "Developer")),
+           (new componentHud("50px NewSuperMarioFontU", colors.White, colors.Black, 220, 743, "Click on 🚩 to continue.", 0, "N/A"))];
 
     document.querySelector("#actionButton").textContent = "🚩";
     document.querySelector("#pauseButton").textContent = "❌";
@@ -1615,8 +1615,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (!gameArea.gameLoaded)
             {
                 this.sprite.src = "resources/images/nontendo_logo.png";
-                this.context.drawImage(this.sprite, this.x - (this.sprite.width / 4), this.y - (this.sprite.height / 4),
-                    this.sprite.width / 2, this.sprite.height / 2);
+                this.context.drawImage(this.sprite, this.x - (this.sprite.width / 2), this.y - (this.sprite.height / 2),
+                    this.sprite.width, this.sprite.height);
             }
             else { this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius); }
         }
@@ -1659,8 +1659,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         else if (!gameArea.gameLoaded)
         {
             this.hat.src = "resources/images/superbro64_dev_photo.png";
-            this.context.drawImage(this.hat, this.x - (this.hat.width / 14), this.y - (this.hat.height / 14) + 410,
-                    this.hat.width / 7, this.hat.height / 7);
+            this.context.drawImage(this.hat, this.x - (this.hat.width / 2.5), this.y - (this.hat.height / 2.5) + 415,
+                    this.hat.width / 1.25, this.hat.height / 1.25);
         }
 
         this.teetering = this.burning = false;
