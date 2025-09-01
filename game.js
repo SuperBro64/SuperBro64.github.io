@@ -1079,13 +1079,13 @@ var levelSetup =
         resizers = [(new componentResizer(963, 80, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
         teleporters = [[(new componentTeleporter(100, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
                         (new componentTeleporter(307.5, 80, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
-        burners = [(new componentBurner(385, -1, 40, 141, colors.LightGray, 2, colors.Black, 4, "ON", true)),
-                   (new componentBurner(585, -1, 40, 141, colors.LightGray, 2, colors.Black, 2, "ON", true)),
-                   (new componentBurner(785, -1, 80, 141, colors.LightGray, 2, colors.Black, 4, "OFF", true)),
+        burners = [(new componentBurner(385, -1, 40, 141, colors.LightGray, 2, colors.Black, 4, "ON", false)),
+                   (new componentBurner(585, -1, 40, 141, colors.LightGray, 2, colors.Black, 2, "ON", false)),
+                   (new componentBurner(785, -1, 80, 141, colors.LightGray, 2, colors.Black, 4, "OFF", false)),
                    (new componentBurner(930, 379, 95, 20, colors.LightGray, 2, colors.Black, 4, "OFF", false)),
                    (new componentBurner(770, 160, 20, 99, colors.LightGray, 2, colors.Black, 2, "ON", false)),
                    (new componentBurner(630, 399, 20, 100, colors.LightGray, 2, colors.Black, 4, "ON", false)),
-                   (new componentBurner(370, 259, 120, 20, colors.LightGray, 2, colors.Black, 2, "OFF", true)),
+                   (new componentBurner(370, 259, 120, 20, colors.LightGray, 2, colors.Black, 2, "OFF", false)),
                    (new componentBurner(490, 519, 20, 100, colors.LightGray, 2, colors.Black, 2, "OFF", false)),
                    (new componentBurner(230, 315, 120, 20, colors.LightGray, 2, colors.Black, 1, "ON", true)),
                    (new componentBurner(85, 599, 40, 40, colors.LightGray, 2, colors.Black, 0, "ON", true)),
@@ -1485,19 +1485,20 @@ var levelSetup =
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
         player = new componentPlayer(512, 484, 20, 0, 2, colors.Red, 2, colors.Black);
-        walls = [(new componentWall(909, 470, 116, 30, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+        walls = [(new componentWall(909, 470, 116, 20, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(417, 179, 190, 20, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
                  (new componentWall(-1, 189, 166, 30, colors.Orange, 2, colors.Black, false, "Flip", -1)),
                  (new componentWall(145, 540, 20, 25, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentWall(165, -1, 30, 180, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
-                 (new componentWall(482, 169, 60, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
+                 (new componentWall(482, 159, 60, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentWall(889, 350, 20, 120, colors.SaddleBrown, 2, colors.Black, true, "Door", 1)),
-                 (new componentWall(417, 189, 190, 30, colors.SaddleBrown, 2, colors.Black, true, "Door", 4)),
-                 (new componentWall(25, 725, 974, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(979, 645, 20, 80, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(417, 199, 190, 20, colors.SaddleBrown, 2, colors.Black, true, "Door", 4)),
+                 (new componentWall(25, 729, 974, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(979, 645, 20, 84, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(889, 625, 110, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(25, 585, 20, 140, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(25, 585, 20, 144, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(70, 660, 75, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(145, 585, 20, 140, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(145, 585, 20, 144, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(25, 565, 140, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(-1, 520, 166, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(889, 470, 20, 155, colors.Gray, 2, colors.Black, true, "N/A", 0)),
@@ -1505,8 +1506,8 @@ var levelSetup =
                  (new componentWall(889, 330, 136, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(377, -1, 40, 220, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(607, -1, 40, 220, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(417, 169, 65, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
-                 (new componentWall(542, 169, 65, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(417, 159, 65, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
+                 (new componentWall(542, 159, 65, 20, colors.Gray, 2, colors.Black, true, "N/A", 0)),
                  (new componentWall(165, 179, 212, 40, colors.Gray, 2, colors.Black, true, "N/A", 0))];
         holes = [(new componentHole(923, 179, 30, 40, colors.Black, 2, colors.SaddleBrown, false, "Door", 2)),
                  (new componentHole(719, 179, 100, 40, colors.Black, 2, colors.SaddleBrown, false, "Door", 3)),
@@ -1535,17 +1536,20 @@ var levelSetup =
                     (new componentTreasure(512, 649, 10, 0, 2, colors.Gold, 2, colors.Black))];
         warps = [(new componentWarp(512, 90, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
         switches = [(new componentSwitch(48, 70, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
-                    (new componentSwitch(918, 75, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
-                    (new componentSwitch(85, 370, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
-                    (new componentSwitch(105, 695, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 2)),
-                    (new componentSwitch(761.5, 97, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 3)),
-                    (new componentSwitch(265, 75, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 4))];
+                    (new componentSwitch(918, 69.5, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(80, 377.5, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
+                    (new componentSwitch(105, 697, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 2)),
+                    (new componentSwitch(761.5, 82, 15, 15, colors.White, 2, colors.Black, "Door", "ON", 3)),
+                    (new componentSwitch(265, 69.5, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 4))];
         resizers = [(new componentResizer(935, 685, 15, 0, 2, colors.SkyBlue, 2, colors.Black, "Tiny")),
                     (new componentResizer(965, 580, 15, 0, 2, colors.Orange, 2, colors.Black, "Huge"))];
         teleporters = [[(new componentTeleporter(965, 405, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1)),
                         (new componentTeleporter(105, 620, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 1))]];
-        burners = [(new componentBurner(145, 350, 20, 100, colors.LightGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(55, 430, 90, 20, colors.LightGray, 2, colors.Black, 0, "ON", true))];
+        burners = [(new componentBurner(212, 749, 100, 20, colors.LightGray, 2, colors.Black, 2, "ON", true)),
+                   (new componentBurner(462, 749, 100, 20, colors.LightGray, 2, colors.Black, 2, "OFF", true)),
+                   (new componentBurner(712, 749, 100, 20, colors.LightGray, 2, colors.Black, 2, "ON", false)),
+                   (new componentBurner(145, 350, 20, 115, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(50, 445, 95, 20, colors.LightGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level ?", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
@@ -1670,11 +1674,10 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             else if (stickAngle >= 303.75 && stickAngle < 326.25) { this.moveUpRight(); }
             else if (stickAngle >= 326.25 && stickAngle < 348.75) { this.moveRightUpRight(); }
 
-            if (stickX < 75 && stickX > -75) { this.speedX /= 2; }
-            if (stickY < 75 && stickY > -75) { this.speedY /= 2; }
+            if (stickX < 90 && stickX > -90) { this.speedX /= 2; }
+            if (stickY < 90 && stickY > -90) { this.speedY /= 2; }
 
-            if (this.teetering) { this.speedX /= 4; this.speedY /= 4; }
-            if (this.burning) { this.speedX /= 2; this.speedY /= 2; }
+            if (this.teetering || this.burning) { this.speedX /= 4; this.speedY /= 4; }
 
             if (gameArea.mirrorMode) { this.speedX *= -1; }
 
@@ -2902,8 +2905,6 @@ function toggleAudioMuting()
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
-// - Tiny player can pass through thin burners using the leeway time, because they move faster due to their smaller size
-// - Huge player moves slower due to their bigger size and the player movement being a specific number of units each frame
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
