@@ -2550,16 +2550,13 @@ function componentSound(source, type)
     if (this.type == "BGM") { this.sound.loop = true; this.sound.volume = 0.3; }
     else if (this.type == "SFX") { this.sound.loop = false; this.sound.volume = 0.5; }
 
-    this.update = function()
+    if (this.type == "BGM") { this.sound.addEventListener("timeupdate", () =>
     {
-        if (this.type == "BGM")
+        if ((this.restartTime != 0.000 || this.endTime != 0.000) && this.sound.currentTime >= this.endTime)
         {
-            if ((this.restartTime != 0.000 || this.endTime != 0.000) && this.sound.currentTime >= this.endTime)
-            {
-                this.sound.currentTime = this.restartTime;
-            }
+            this.sound.currentTime = this.restartTime;
         }
-    }
+    })};
 
     this.changeLoopEndpoints = function(newRestart, newEnd) { this.restartTime = newRestart; this.endTime = newEnd; }
 
@@ -2704,9 +2701,6 @@ function updateGameArea()
 
     // Updating the HUD
     for (i = 0; i < hud.length; i++) { if (hud[i]) { hud[i].update(); } }
-
-    // Updating the music and sound effects
-    if (music) { music.update(); }
 
     // Updating the player
     if (player) { player.update(); }
@@ -2941,7 +2935,6 @@ function toggleAudioMuting()
 // IDEAS
 // - Write general game instructions across the menu screen, or put it all into separate "Instructions" level
 // - Replace emoji text in HUD elements with emoji images so that the emojis are consistent between devices
-// - Make the background music loop properly instead of fading out and restarting
 // - Add toggle button that forces the player to move more slowly, for accessibility reasons
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
 // - Add Time Trial mode by having target completion times for each level, earning the player platinum level warps if they beat them
@@ -2956,6 +2949,7 @@ function toggleAudioMuting()
 
 // ISSUES
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place
+// - Background music does not loop seamlessly and may have a noticeable cut upon reaching the loop point time
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Text being mirrored and hard to read when in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
