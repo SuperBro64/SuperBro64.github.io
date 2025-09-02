@@ -524,7 +524,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 1", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 60, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_1.mp3";
         music.changeLoopEndpoints(3.753, 93.751); music.play(); // First Loop Point: 48.752 sec.
@@ -578,7 +578,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 2", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 120, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_2.mp3";
         music.changeLoopEndpoints(3.970, 130.906); music.play(); // First Loop Point: 67.438 sec.
@@ -638,7 +638,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 3", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 120, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_3.mp3";
         music.changeLoopEndpoints(6.395, 211.203); music.play(); // First Loop Point: 108.799 sec.
@@ -708,7 +708,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 4", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 120, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_4.mp3";
         music.changeLoopEndpoints(0.000, 127.986); music.play(); // First Loop Point: 63.993 sec.
@@ -862,7 +862,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 6", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 80, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_6.mp3";
         music.changeLoopEndpoints(1.776, 171.194); music.play(); // First Loop Point: 86.485 sec.
@@ -952,7 +952,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 7", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 180, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_7.mp3";
         music.changeLoopEndpoints(0.486, 125.362); music.play(); // First Loop Point: 62.924 sec.
@@ -1035,7 +1035,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 8", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 240, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_8.mp3";
         music.changeLoopEndpoints(0.000, 116.342); music.play(); // First Loop Point: 58.171 sec.
@@ -1122,7 +1122,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 9", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 240, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_9.mp3";
         music.changeLoopEndpoints(7.677, 172.897); music.play(); // First Loop Point: 90.287 sec.
@@ -1329,7 +1329,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level A", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Bonus.mp3";
         music.changeLoopEndpoints(1.634, 106.858); music.play(); // First Loop Point: 54.246 sec.
@@ -1390,7 +1390,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level B", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 100, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Target.mp3";
         music.changeLoopEndpoints(4.012, 132.012); music.play(); // First Loop Point: 68.012 sec.
@@ -1506,7 +1506,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level C", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 80, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Soccer.mp3";
         music.changeLoopEndpoints(0.000, 135.006); music.play(); //  First Loop Point: 67.503 sec.
@@ -2399,10 +2399,10 @@ function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, l
 
         for (i = 0; i < teleporters.length; i++)
         {
-            if (!teleporters[i][0].sfx.sound.paused || !teleporters[i][1].sfx.sound.paused) { return; }
-
             if (teleporters[i][0].value == this.value)
             {
+                if (!teleporters[i][0].sfx.sound.paused || !teleporters[i][1].sfx.sound.paused) { return; }
+
                 if (teleporters[i][0].x == this.x && teleporters[i][0].y == this.y)
                 {
                     player.x = teleporters[i][1].x; player.y = teleporters[i][1].y; teleporters[i][0].sfx.play();
@@ -2415,6 +2415,8 @@ function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, l
             }
             else if (teleporters[i][1].value == this.value)
             {
+                if (!teleporters[i][1].sfx.sound.paused || !teleporters[i][0].sfx.sound.paused) { return; }
+
                 if (teleporters[i][1].x == this.x && teleporters[i][1].y == this.y)
                 {
                     player.x = teleporters[i][0].x; player.y = teleporters[i][0].y; teleporters[i][1].sfx.play();
@@ -2997,7 +2999,6 @@ function toggleAudioMuting()
 // - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
 // - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
-// - Using a teleport before the sound effect finishes playing for a different teleport recently used softlocks the game
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
