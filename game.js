@@ -1208,8 +1208,10 @@ var levelSetup =
                  (new componentHole(-1, 329, 122, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(985, 123, 40, 78, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(357, 545, 40, 80, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(61, 558, 40, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(-1, 628, 40, 40, colors.Black, 2, colors.Black, false, "N/A", 0))];
+                 (new componentHole(61, 545, 40, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(-1, 628, 40, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(750, 668, 50, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(850, 729, 50, 40, colors.Black, 2, colors.Black, false, "N/A", 0))];
         treasure = [(new componentTreasure(462, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(562, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(462, 710, 10, 0, 2, colors.Gold, 2, colors.Black)),
@@ -1225,7 +1227,11 @@ var levelSetup =
                     (new componentTreasure(50.5, 450.5, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(241.5, 549.5, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(345, 668, 10, 0, 2, colors.Gold, 2, colors.Black)),
-                    (new componentTreasure(154.5, 743, 10, 0, 2, colors.Gold, 2, colors.Black))];
+                    (new componentTreasure(154.5, 743, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(973, 440.5, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(677.5, 575, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(992, 633, 10, 0, 2, colors.Gold, 2, colors.Black)),
+                    (new componentTreasure(825, 719, 10, 0, 2, colors.Gold, 2, colors.Black))];
         warps = [(new componentWarp(512, 90, 30, 30, 0, colors.Cyan, 2, colors.Black, "Credits", "Goal"))];
         switches = [(new componentSwitch(492, 405, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
                     (new componentSwitch(178, 111, 40, 40, colors.White, 2, colors.Black, "Door", "ON", 1)),
@@ -1246,9 +1252,11 @@ var levelSetup =
                         (new componentTeleporter(357, 439, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 3))],
                        [(new componentTeleporter(557, 610, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 4)),
                         (new componentTeleporter(667, 439, 30, 30, 0, colors.MediumPurple, 2, colors.Black, 4))]];
-        burners = [(new componentBurner(275, 267, 20, 102, colors.LightGray, 2, colors.Black, 2, "ON", true)),
-                   (new componentBurner(627, 201, 81, 20, colors.LightGray, 2, colors.Black, 4, "OFF", false)),
-                   (new componentBurner(188, 399, 20, 103, colors.LightGray, 2, colors.Black, 4, "ON", false)),
+        burners = [(new componentBurner(275, 267, 20, 102, colors.LightGray, 2, colors.Black, 3, "ON", true)),
+                   (new componentBurner(627, 201, 81, 20, colors.LightGray, 2, colors.Black, 3, "OFF", true)),
+                   (new componentBurner(188, 399, 20, 103, colors.LightGray, 2, colors.Black, 3, "OFF", false)),
+                   (new componentBurner(902, 399, 20, 83, colors.LightGray, 2, colors.Black, 3, "ON", false)),
+                   (new componentBurner(627, 648, 101, 20, colors.LightGray, 2, colors.Black, 3, "OFF", false)),
                    (new componentBurner(188, -1, 20, 75, colors.LightGray, 2, colors.Black, 0, "ON", true)),
                    (new componentBurner(275, -1, 20, 102, colors.LightGray, 2, colors.Black, 0, "ON", true)),
                    (new componentBurner(295, 81, 75, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
@@ -1259,12 +1267,13 @@ var levelSetup =
                    (new componentBurner(188, 605, 20, 83, colors.LightGray, 2, colors.Black, 0, "ON", true)),
                    (new componentBurner(188, 718, 20, 51, colors.LightGray, 2, colors.Black, 0, "ON", true)),
                    (new componentBurner(275, 668, 20, 101, colors.LightGray, 2, colors.Black, 0, "ON", true)),
-                   (new componentBurner(728, 482, 194, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),                
+                   (new componentBurner(728, 482, 194, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),
+                   (new componentBurner(922, 598, 103, 20, colors.LightGray, 2, colors.Black, 0, "ON", true)),                
                    (new componentBurner(922, 648, 103, 20, colors.LightGray, 2, colors.Black, 0, "ON", true))];
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 10", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 200, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 600, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3";
         music.changeLoopEndpoints(7.397, 188.277); music.play(); // First Loop Point: 97.837 sec.
@@ -2999,33 +3008,6 @@ function toggleAudioMuting()
 // - Add toggle button that forces the player to move more slowly, for accessibility reasons
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
 // - Add Time Trial mode by having target completion times for each level, earning the player platinum level warps if they beat them
-// - Suggestions given for tailoring time limits to each level:
-//    - "Speedrun the level and set it close to that time"
-//    - "What I would do, is to play the levels the best I can (since I'm devleoping the game, I can do things very fast
-//      since I know the quirks and all). Log the time you took to complete the level and you caa use a factor multiplier
-//      (or divider) of your choice based on your own time so you can have a sweet spot to tweak from 'beginner' to 'super pro'.
-//      And if you want a more viable option, is to later on make playtests, ask players their time (or log them into a file
-//      and ask your playtester to send you that file) and you can then process those batch to get the average time."
-//    - "Have people of different skill levels play it and test how long they take."
-// +----------+---------+-----------------+
-// | Level #  | My Time | Allowed Time    |
-// |          | (secs.) | (My Time x2)    |
-// +----------+---------+-----------------+
-// | Level 1  |     ~30 |  60 (1.0 mins.) |
-// | Level 2  |     ~60 | 120 (2.0 mins.) |
-// | Level 3  |     ~60 | 120 (2.0 mins.) | 
-// | Level 4  |     ~60 | 120 (2.0 mins.) |
-// | Level 5  |    ~100 | 200 (3.3 mins.) |
-// | Level 6  |     ~40 |  80 (1.3 mins.) |
-// | Level 7  |     ~90 | 180 (3.0 mins.) |
-// | Level 8  |    ~120 | 240 (4.0 mins.) |
-// | Level 9  |    ~120 | 240 (4.0 mins.) |
-// | Level 10 |     --- | --- (-.- mins.) |
-// | Level A  |     ~50 | 100 (1.6 mins.) |
-// | Level B  |     ~50 | 100 (1.6 mins.) |
-// | Level C  |     ~40 |  80 (1.3 mins.) |
-// | Level ?  |    ~100 | 200 (3.3 mins.) |
-// +----------+---------+-----------------+
 
 // ISSUES
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place
@@ -3035,7 +3017,6 @@ function toggleAudioMuting()
 // - Warps and teleports have a displaced interaction collision box due to their constant rotation
 // - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
-// - Level time limits currently all set to default of 200 seconds and not adjusted for each individual level length
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
