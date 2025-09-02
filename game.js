@@ -2801,7 +2801,7 @@ function gameOver(type)
         player.x - player.radius, player.y - (2.25 * player.radius), 2 * player.radius, 2 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                            colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
+                            colors.transparency(colors.Gray, 0.66), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < gameOverOverlay.length; i++) { gameOverOverlay[i].update(); }
     
     var gameOverText = [(new componentHud("60px NewSuperMarioFontU", colors.Red, colors.Black, 350, 364, "GAME OVER", 0, "N/A")),
@@ -2858,7 +2858,7 @@ function levelEnd()
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
 
     var levelCompleteOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                 colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
+                                 colors.transparency(colors.Gray, 0.66), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < levelCompleteOverlay.length; i++) { levelCompleteOverlay[i].update(); }
 
     var levelCompleteText = [(new componentHud("60px NewSuperMarioFontU", colors.Gold, colors.Black, 425, 364, "GOAL!!", 0, "N/A")),
@@ -2952,15 +2952,15 @@ function pauseGame()
             document.querySelector("#pauseButton").textContent = "▶️";
 
             var pauseOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                    colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
+                                    colors.transparency(colors.Gray, 0.66), 0, colors.Clear, false, "N/A", 0))];
             for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
-            var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 400, 314, "PAUSED", 0, "N/A")),
-                             (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 364,
+            var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.Cyan, colors.Black, 400, 314, "PAUSED", 0, "N/A")),
+                             (new componentHud("40px NewSuperMarioFontU", colors.Cyan, colors.Black, 220, 364,
                                 "Click ▶️ to resume the game.", 0, "N/A")),
-                             (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 414,
+                             (new componentHud("40px NewSuperMarioFontU", colors.Cyan, colors.Black, 220, 414,
                                 "Move 🔘 to restart the level.", 0, "N/A")),
-                             (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 215, 464,
+                             (new componentHud("40px NewSuperMarioFontU", colors.Cyan, colors.Black, 215, 464,
                                 "Click 🏠 to return to the hub.", 0, "N/A"))];
             for (i = 0; i < pauseText.length; i++) { pauseText[i].update(); }
 

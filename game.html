@@ -23,7 +23,7 @@
             {
                 background-color: goldenrod; color: black; display: inline-block;
                 font-family: monospace; font-size: xx-large; text-align: center; padding: 25px 25px;
-                border-left: 5px solid black; border-right: 0px solid black;
+                border-left: 0px solid black; border-right: 5px solid black;
                 border-top: 0px solid black; border-bottom: 2px solid black;
             }
             #pauseButton:active { background-color: darkgoldenrod; }
@@ -31,7 +31,7 @@
             {
                 background-color: mediumseagreen; color: black; display: inline-block;
                 font-family: monospace; font-size: xx-large; text-align: center; padding: 25px 25px;
-                border-left: 5px solid black; border-right: 0px solid black;
+                border-left: 0px solid black; border-right: 5px solid black;
                 border-top: 3px solid black; border-bottom: 3px solid black;
             }
             #actionButton:active { background-color: seagreen; }
@@ -39,7 +39,7 @@
             {
                 background-color: slateblue; color: black; display: inline-block;
                 font-family: monospace; font-size: xx-large; text-align: center; padding: 25px 25px;
-                border-left: 5px solid black; border-right: 0px solid black;
+                border-left: 0px solid black; border-right: 5px solid black;
                 border-top: 2px solid black; border-bottom: 0px solid black;
             }
             #audioButton:active { background-color: darkslateblue; }
@@ -81,15 +81,15 @@
                 <p style = "font-family: NewSuperMarioFontU; font-size: xx-large; margin: 0px; color: black;
                             border-bottom: 5px solid black; background-color: darkgray;">CONTROLS</p>
 
-                <div id = "joystick" style = "float: left;"></div>
-
-                <div id = "buttons" style = "float: right;">
+                <div id = "buttons" style = "float: left;">
                     <button id = "pauseButton" onclick = "pauseGame()"><b>⏸️</b></button>
                     <br>
                     <button id = "actionButton" onclick = "playerAction()"><b>🅰️</b></button>
                     <br>
                     <button id = "audioButton" onclick = "toggleAudioMuting()"><b>🔊</b></button>
                 </div>
+
+                <div id = "joystick" style = "float: right;"></div>
 
             </div>
 
