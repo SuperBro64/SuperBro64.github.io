@@ -1701,8 +1701,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             this.burnTimer--; this.sprite.src = "resources/images/player_burning.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
         }
-
-        if (this.falling)
+        else if (this.falling)
         {
             this.radius -= 0.15; this.sprite.src = "resources/images/player_falling.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
@@ -1717,7 +1716,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             }
         }
 
-        if (gameArea.gameLoaded && saveProgress.completion[14][1] == 101 && !this.burning)
+        if (gameArea.gameLoaded && !this.burning && saveProgress.completion[14][1] == 101)
         {
             this.hat.src = "resources/images/player_hat_crown.png";
             this.context.drawImage(this.hat, this.x - this.radius, this.y - (2.2 * this.radius), 2 * this.radius, 2 * this.radius);
@@ -3005,7 +3004,7 @@ function toggleAudioMuting()
 }
 
 // IDEAS
-// - Replace emoji text in HUD elements with emoji images so that the emojis are consistent between devices
+// - Replace emoji text in HUD elements with emoji images so that the emoji designs are consistent between devices
 // - Add toggle button that forces the player to move more slowly, for accessibility reasons
 // - Change restarting the current level when paused from moving the joystick to the slow movement toggle button
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
@@ -3022,7 +3021,6 @@ function toggleAudioMuting()
 // - Warps and teleports have a displaced interaction collision box due to their constant rotation
 // - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed)
-// - The player no longer making their victory face upon level completion when they are huge or tiny
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
