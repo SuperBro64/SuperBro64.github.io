@@ -2778,6 +2778,8 @@ function gameOver(type)
 // Code for restarting the current level the player is on after a Game Over occurs
 function levelRestart()
 {
+    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Enter_Course.wav"; sfx.play();
+
     switch (gameArea.currentLevel)
     {
         case "Title Screen": levelSetup.titleScreen(); break;
@@ -2910,9 +2912,11 @@ function pauseGame()
                                     colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
             for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
-            var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 400, 364, "PAUSED", 0, "N/A")),
-                             (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 414,
+            var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 400, 314, "PAUSED", 0, "N/A")),
+                             (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 364,
                                 "Click ▶️ to resume the game.", 0, "N/A")),
+                             (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 414,
+                                "Move 🔘 to restart the level.", 0, "N/A")),
                              (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 215, 464,
                                 "Click 🏠 to return to the hub.", 0, "N/A"))];
             for (i = 0; i < pauseText.length; i++) { pauseText[i].update(); }
@@ -3104,7 +3108,8 @@ var JoyStick = (function (container, parameters, callback)
 
     function onTouchMove(event)
     {
-        if (pressed === 1 && event.targetTouches[0].target === canvas && gameArea.gameLoaded && gameArea.gameStarted)
+        if (pressed === 1 && event.targetTouches[0].target === canvas &&
+                gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling)
         {
             innerFillColor = colors.shading(colors.Gray, 0);
 
@@ -3127,6 +3132,16 @@ var JoyStick = (function (container, parameters, callback)
             StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
             StickStatus.cardinalDirection = getCardinalDirection();
             callback(StickStatus);
+        }
+        else if (pressed === 1 && event.targetTouches[0].target === canvas && gameArea.gameLoaded && gameArea.gameStarted &&
+                    !gameArea.levelComplete && !gameArea.gameIsOver && !gameArea.interval)
+        {
+            document.querySelector("#actionButton").textContent = "🅰️";
+            document.querySelector("#pauseButton").textContent = "⏸️";
+
+            sfx.stop(); gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
+            music.stop(); levelRestart();
         }
     }
 
@@ -3152,7 +3167,7 @@ var JoyStick = (function (container, parameters, callback)
 
     function onMouseMove(event)
     {
-        if (pressed === 1 && gameArea.gameLoaded && gameArea.gameStarted)
+        if (pressed === 1 && gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling)
         {
             innerFillColor = colors.shading(colors.Gray, 0)
 
@@ -3175,6 +3190,16 @@ var JoyStick = (function (container, parameters, callback)
             StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
             StickStatus.cardinalDirection = getCardinalDirection();
             callback(StickStatus);
+        }
+        else if (pressed === 1 && gameArea.gameLoaded && gameArea.gameStarted &&
+                    !gameArea.levelComplete && !gameArea.gameIsOver && !gameArea.interval)
+        {
+            document.querySelector("#actionButton").textContent = "🅰️";
+            document.querySelector("#pauseButton").textContent = "⏸️";
+
+            sfx.stop(); gameArea.interval = setInterval(updateGameArea, gameArea.updateSpeed);
+
+            music.stop(); levelRestart();
         }
     }
 
