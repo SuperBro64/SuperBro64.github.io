@@ -333,7 +333,41 @@ var levelSetup =
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 440, 360, "⬉", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 360, "⬈", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 440, 450, "⬋", 0, "N/A")),
-               (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 450, "⬊", 0, "N/A"))];
+               (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 450, "⬊", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 240,
+                "Find your way to", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 280,
+                "the goal in each", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 320,
+                "level before time", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 360,
+                "runs out to move", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 400,
+                "on. Doing so will", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 440,
+                "turn the level's", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 480,
+                "entrance in the", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 520,
+                "main hub silver.", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 240,
+                "Collect every", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 280,
+                "piece of treasure", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 320,
+                "lying around each", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 360,
+                "level before you", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 400,
+                "reach the goal to", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 440,
+                "turn the level's", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 480,
+                "entrance gold and", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 520,
+                "earn higher marks.", 0, "N/A")),
+               (new componentHud("50px NewSuperMarioFontU", colors.White, colors.Black, 385, 590,
+                "Good luck!", 0, "N/A"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3";
         music.changeLoopEndpoints(3.360, 57.074); music.play(); // First Loop Point: 30.217 sec.
@@ -2961,7 +2995,6 @@ function toggleAudioMuting()
 }
 
 // IDEAS
-// - Write general game instructions across the menu screen, or put it all into separate "Instructions" level
 // - Replace emoji text in HUD elements with emoji images so that the emojis are consistent between devices
 // - Add toggle button that forces the player to move more slowly, for accessibility reasons
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
