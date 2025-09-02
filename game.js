@@ -313,62 +313,64 @@ var levelSetup =
         walls = [];
         holes = [];
         treasure = [];
-        warps = [(new componentWarp(120, 100, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Credits", "N/A")),
+        warps = [(new componentWarp(135, 100, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Credits", "N/A")),
                  (new componentWarp(512, 100, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Main Hub", "N/A")),
-                 // (new componentWarp(904, 100, 30, 30, 0, colors.Goldenrod, 2, colors.Black, "Menu Screen", "Debugging")),
-                 (new componentWarp(120, 718, 30, 30, 0, colors.RoyalBlue, 2, colors.Black, "Title Screen", "N/A")),
-                 (new componentWarp(512, 718, 30, 30, 0, colors.Orange, 2, colors.Black, "Menu Screen", "Mirror")),
-                 (new componentWarp(904, 718, 30, 30, 0, colors.Crimson, 2, colors.Black, "Menu Screen", "Deletion"))];
+                 (new componentWarp(889, 100, 30, 30, 0, colors.Orange, 2, colors.Black, "Menu Screen", "Mirror")),
+                 (new componentWarp(135, 718, 30, 30, 0, colors.RoyalBlue, 2, colors.Black, "Title Screen", "N/A")),
+                 // (new componentWarp(512, 718, 30, 30, 0, colors.Goldenrod, 2, colors.Black, "Menu Screen", "Debugging")),
+                 (new componentWarp(889, 718, 30, 30, 0, colors.Crimson, 2, colors.Black, "Menu Screen", "Deletion"))];
         switches = [];
         resizers = [];
         teleporters = [];
         burners = [];
 
         hud = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 360, 50, "MAIN MENU", 0, "Level")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 160, "Credits", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 60, 160, "Credits", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 400, 160, "Start Game!", 0, "N/A")),
-               // (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 840, 160, "Debug", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 25, 680, "Quit Game", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 395, 680, "Mirror Mode", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 780, 680, "Erase Game", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 770, 160, "Mirror Mode", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 40, 680, "Quit Game", 0, "N/A")),
+               // (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 395, 680, "Debug Save", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 770, 680, "Erase Game", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 440, 360, "⬉", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 360, "⬈", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 440, 450, "⬋", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 450, "⬊", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 240,
-                "Find your way to", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 280,
-                "the goal in each", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 320,
-                "level before time", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 360,
-                "runs out to move", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 400,
-                "on. Doing so will", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 440,
-                "turn the level's", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 480,
-                "entrance in the", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 45, 520,
-                "main hub silver.", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 240,
-                "Collect every", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 280,
-                "piece of treasure", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 320,
-                "lying around each", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 360,
-                "level before you", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 400,
-                "reach the goal to", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 440,
-                "turn the level's", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 480,
-                "entrance gold and", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 630, 520,
-                "earn higher marks.", 0, "N/A")),
-               (new componentHud("50px NewSuperMarioFontU", colors.White, colors.Black, 385, 590,
-                "Good luck!", 0, "N/A"))];
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 250,
+                "Find your way to the", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 290,
+                "goal warp in each level", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 330,
+                "before time runs out", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 370,
+                "to move on. Doing so", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 410,
+                "will turn the level's", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 450,
+                "entrance in the main", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 490,
+                "hub silver and earn", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 530,
+                "you a higher total", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 570,
+                "percent completion.", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 250,
+                "Collect every piece", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 290,
+                "of treasure lying", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 330,
+                "around each level", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 370,
+                "before you reach", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 410,
+                "the goal to turn the", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 450,
+                "level's entrance gold", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 490,
+                "and earn you an even", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 530,
+                "higher total percent", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 570,
+                "completion. Good luck!", 0, "N/A"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3";
         music.changeLoopEndpoints(3.360, 57.074); music.play(); // First Loop Point: 30.217 sec.
@@ -2802,7 +2804,7 @@ function gameOver(type)
         player.x - player.radius, player.y - (2.25 * player.radius), 2 * player.radius, 2 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                            colors.transparency(colors.Gray, 0.66), 0, colors.Clear, false, "N/A", 0))];
+                            colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < gameOverOverlay.length; i++) { gameOverOverlay[i].update(); }
     
     var gameOverText = [(new componentHud("60px NewSuperMarioFontU", colors.Red, colors.Black, 350, 364, "GAME OVER", 0, "N/A")),
@@ -2859,7 +2861,7 @@ function levelEnd()
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
 
     var levelCompleteOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                 colors.transparency(colors.Gray, 0.66), 0, colors.Clear, false, "N/A", 0))];
+                                 colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < levelCompleteOverlay.length; i++) { levelCompleteOverlay[i].update(); }
 
     var levelCompleteText = [(new componentHud("60px NewSuperMarioFontU", colors.Gold, colors.Black, 425, 364, "GOAL!!", 0, "N/A")),
@@ -2953,7 +2955,7 @@ function pauseGame()
             document.querySelector("#pauseButton").textContent = "▶️";
 
             var pauseOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
-                                    colors.transparency(colors.Gray, 0.66), 0, colors.Clear, false, "N/A", 0))];
+                                    colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
             for (i = 0; i < pauseOverlay.length; i++) { pauseOverlay[i].update(); }
 
             var pauseText = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 400, 364, "PAUSED", 0, "N/A")),
