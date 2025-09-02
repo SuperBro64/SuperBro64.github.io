@@ -290,6 +290,7 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 310, 500, "Click on 🚩 to play!", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 220, 550,
                     "Read below for instructions!", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 860, 755, "Ver. 1.0.0", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 165, 660, "TOTAL GAME COMPLETION:", 0, "N/A")),
                (new componentHud("70px NewSuperMarioFontU", colors.Red, colors.Black, 705, 660, "000%", 0, "Completion"))];
 
@@ -3006,17 +3007,22 @@ function toggleAudioMuting()
 // IDEAS
 // - Replace emoji text in HUD elements with emoji images so that the emojis are consistent between devices
 // - Add toggle button that forces the player to move more slowly, for accessibility reasons
+// - Change restarting the current level when paused from moving the joystick to the slow movement toggle button
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
 // - Add Time Trial mode by having target completion times for each level, earning the player platinum level warps if they beat them
+// - Add multiple save files that can be selected from the title screen, and are saved and deleted separately
+// - Make the credits in the credits level scroll so that room can be made for more credits
 
 // ISSUES
-// - Sound effects using the global sfx variable getting cutoff when another sound takes their place
+// - All audio sometimes completely cuts out and stops playing until the game is reloaded
+// - Sound effects using the global sfx variable getting cutoff when another sound takes their place before they finish
 // - Background music does not loop seamlessly and may have a noticeable cut upon reaching the loop point time
-// - Background music restarts when restarting the same level over instead of staying at its current time
+// - Background music restarts when restarting the same level again instead of staying at its current time
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - Warps and teleports have a displaced interaction collision box due to their constant rotation
 // - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
-// - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans ("else if" not needed)
+// - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed)
+// - The player no longer making their victory face upon level completion when they are huge or tiny
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
