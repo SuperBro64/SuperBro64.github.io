@@ -1088,6 +1088,8 @@ var levelSetup =
         player = new componentPlayer(105, 710, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [(new componentWall(880, 160, 20, 99, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
                  (new componentWall(290, 519, 20, 100, colors.Tomato, 2, colors.Black, true, "Cracked", 0)),
+                 (new componentWall(210, 639, 20, 130, colors.Orange, 2, colors.Black, false, "Flip", -1)),
+                 (new componentWall(-1, 559, 211, 20, colors.Orange, 2, colors.Black, false, "Flip", -1)),
                  (new componentWall(880, 639, 20, 130, colors.Orange, 2, colors.Black, false, "Flip", -1)),
                  (new componentWall(900, 619, 125, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
                  (new componentWall(790, 379, 120, 20, colors.SkyBlue, 2, colors.Black, true, "Flip", -2)),
@@ -1121,7 +1123,8 @@ var levelSetup =
                     (new componentTreasure(400, 569, 10, 0, 2, colors.Gold, 2, colors.Black)),
                     (new componentTreasure(290, 417, 10, 0, 2, colors.Gold, 2, colors.Black))];
         warps = [(new componentWarp(290, 210, 30, 30, 0, colors.Cyan, 2, colors.Black, "Main Hub", "Goal"))];
-        switches = [(new componentSwitch(930, 670, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+        switches = [(new componentSwitch(20, 708, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
+                    (new componentSwitch(930, 670, 70, 70, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
                     (new componentSwitch(943, 190, 40, 40, colors.White, 2, colors.Black, "Flip", "OFF", 0)),
                     (new componentSwitch(800, 685, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 1)),
                     (new componentSwitch(410, 429, 40, 40, colors.White, 2, colors.Black, "Door", "OFF", 2))];
