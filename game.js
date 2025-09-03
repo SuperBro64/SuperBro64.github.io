@@ -1824,22 +1824,27 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.stopMoving = function()         { this.speedX = 0,      this.speedY = 0; }
 
     // Check for collision with any object
-    this.objectCollision = function(object)
+    this.objectCollision = function(object, type)
     {
         var left = this.x - this.radius, right = this.x + this.radius;
         var top = this.y - this.radius, bottom = this.y + this.radius;
 
         var objLeft, objRight, objTop, objBottom;
 
-        if (object.radius > 0)
+        if (type == "Circular")
         {
             objLeft = object.x - object.radius, objRight = object.x + object.radius;
             objTop = object.y - object.radius, objBottom = object.y + object.radius;
         }
-        else
+        else if (type == "Rectangular")
         {
             objLeft = object.x, objRight = object.x + object.width;
             objTop = object.y, objBottom = object.y + object.height;
+        }
+        else if (type == "WarpTeleport")
+        {
+            objLeft = object.x - 15, objRight = object.x + object.width - 15;
+            objTop = object.y - 15, objBottom = object.y + object.height - 15;
         }
 
         return ((bottom > objTop) && (top < objBottom) && (right > objLeft) && (left < objRight));
@@ -2137,8 +2142,7 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
             if (hud[i].type == "Treasure" && treasure.length > 0)
             {
                 if (hud[i].treasureCollected == treasure.length - 1) { this.sfx[1].play(); }
-                else { this.sfx[0].play(); }
-                break;
+                else { this.sfx[0].play(); } break;
             }
         }
     }
@@ -2687,7 +2691,7 @@ function updateGameArea()
         {
             walls[i].update();
         
-            if (player && player.objectCollision(walls[i])) { player.handleWallCollision(walls[i]); }
+            if (player && player.objectCollision(walls[i], "Rectangular")) { player.handleWallCollision(walls[i]); }
         }
     }
 
@@ -2698,7 +2702,7 @@ function updateGameArea()
         {
             holes[i].update();
 
-            if (player && player.objectCollision(holes[i])) { player.handleHoleFalling(holes[i]); }
+            if (player && player.objectCollision(holes[i], "Rectangular")) { player.handleHoleFalling(holes[i]); }
         }
     }
 
@@ -2709,7 +2713,7 @@ function updateGameArea()
         {
             treasure[i].update();
 
-            if (player && player.objectCollision(treasure[i]) && treasure[i].radius != 0)
+            if (player && player.objectCollision(treasure[i], "Circular"))
             {
                 treasure[i].disappear();
                 hud[1].treasureCollected += 1;
@@ -2724,7 +2728,7 @@ function updateGameArea()
         {
             warps[i].update();
 
-            if (player && player.objectCollision(warps[i]))
+            if (player && player.objectCollision(warps[i], "WarpTeleport"))
             {
                 warps[i].rotationSpeed = 45;
 
@@ -2741,7 +2745,7 @@ function updateGameArea()
         {
             switches[i].update();
 
-            if (player && player.objectCollision(switches[i]))
+            if (player && player.objectCollision(switches[i], "Rectangular"))
             {
                 switches[i].enoughPlayerWeightToActivate();
 
@@ -2758,7 +2762,7 @@ function updateGameArea()
         {
             resizers[i].update();
 
-            if (player && player.objectCollision(resizers[i]))
+            if (player && player.objectCollision(resizers[i], "Circular"))
             {
                 resizers[i].activatable = true;
 
@@ -2775,13 +2779,13 @@ function updateGameArea()
         {
             teleporters[i][0].update(); teleporters[i][1].update();
 
-            if (player && player.objectCollision(teleporters[i][0]))
+            if (player && player.objectCollision(teleporters[i][0], "WarpTeleport"))
             {
                 teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
 
                 if (player.action) { teleporters[i][0].teleportPlayer(); }
             }
-            else if (player && player.objectCollision(teleporters[i][1]))
+            else if (player && player.objectCollision(teleporters[i][1], "WarpTeleport"))
             {
                 teleporters[i][0].rotationSpeed = teleporters[i][1].rotationSpeed = 22.5;
 
@@ -2798,7 +2802,7 @@ function updateGameArea()
         {
             burners[i].update();
 
-            if (player && player.objectCollision(burners[i])) { player.handleBurnerTouching(burners[i]); }
+            if (player && player.objectCollision(burners[i], "Rectangular")) { player.handleBurnerTouching(burners[i]); }
         }
     }
 
@@ -3040,7 +3044,6 @@ function toggleAudioMuting()
 // - Background music does not loop seamlessly and may have a noticeable cut upon reaching the loop point time
 // - Background music restarts when restarting the same level again instead of staying at its current time
 // - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
-// - Warps and teleports have a displaced interaction collision box due to their constant rotation
 // - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed)
 
