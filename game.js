@@ -1211,8 +1211,8 @@ var levelSetup =
                  (new componentHole(-1, 329, 122, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(985, 123, 40, 78, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(357, 545, 40, 80, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(61, 545, 40, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
-                 (new componentHole(-1, 628, 40, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(41, 545, 60, 45, colors.Black, 2, colors.Black, false, "N/A", 0)),
+                 (new componentHole(-1, 623, 60, 45, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(750, 668, 50, 40, colors.Black, 2, colors.Black, false, "N/A", 0)),
                  (new componentHole(850, 729, 50, 40, colors.Black, 2, colors.Black, false, "N/A", 0))];
         treasure = [(new componentTreasure(462, 90, 10, 0, 2, colors.Gold, 2, colors.Black)),
@@ -1647,7 +1647,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.speedX = 0, this.speedY = 0;
     this.x = x, this.y = y, this.radius = radius; this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-    this.falling = false, this.teetering = false, this.teeterTimer = 25, this.burning = false, this.burnTimer = 25;
+    this.falling = false, this.teetering = false, this.teeterTimer = 25;
+    this.burning = false, this.smoldering = false, this.smolderTimer = 25;
     this.action = false, this.originalX = x, this.originalY = y, this.originalRadius = radius;
     this.sprite = new Image(), this.hat = new Image(), this.idleTimer = 0;
 
@@ -1668,9 +1669,9 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         this.action = false;
 
-        if (!this.teetering && !this.falling && !this.burning)
+        if (!this.teetering && !this.falling && !this.smoldering && !this.burning)
         {
-            this.teeterTimer = this.burnTimer = 25;
+            this.teeterTimer = this.smolderTimer = 25;
 
             if (gameArea.gameLoaded && gameArea.gameStarted && this.idleTimer < 1500) { this.idleTimer++; }
 
@@ -1696,9 +1697,9 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             this.teeterTimer--; this.sprite.src = "resources/images/player_teetering.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
         }
-        else if (this.burning)
+        else if (this.smoldering)
         {
-            this.burnTimer--; this.sprite.src = "resources/images/player_burning.png";
+            this.smolderTimer--; this.sprite.src = "resources/images/player_smoldering.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
         }
         else if (this.falling)
@@ -1713,6 +1714,24 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
                 document.querySelector("#actionButton").textContent = "🅰️";
                 document.querySelector("#pauseButton").textContent = "⏸️";
+
+                gameArea.frameNum += 250;
+            }
+        }
+        else if (this.burning)
+        {
+            this.radius -= 0.2; this.sprite.src = "resources/images/player_burning.png";
+            this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+
+            if (this.radius <= 0)
+            {
+                this.burning = false;
+                this.x = this.originalX; this.y = this.originalY; this.radius = this.originalRadius;
+
+                document.querySelector("#actionButton").textContent = "🅰️";
+                document.querySelector("#pauseButton").textContent = "⏸️";
+
+                gameArea.frameNum += 500;
             }
         }
 
@@ -1733,13 +1752,13 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
                     this.hat.width / 1.25, this.hat.height / 1.25);
         }
 
-        this.teetering = this.burning = false;
+        this.teetering = this.smoldering = false;
     }
 
     // Calculates each frame the new x and y positions of the player as they move around
     this.newPosition = function()
     {
-        if (!gameArea.gameLoaded || !gameArea.gameStarted || this.falling) { return; }
+        if (!gameArea.gameLoaded || !gameArea.gameStarted || this.falling || this.burning) { return; }
 
         var stickX = joystick.getX(), stickY = joystick.getY();
         var stickAngle = Math.atan2(stickY, stickX) * 180 / Math.PI;
@@ -1769,7 +1788,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             if (stickX < 90 && stickX > -90) { this.speedX /= 2; } if (stickX < 66 && stickX > -66) { this.speedX /= 2; }
             if (stickY < 90 && stickY > -90) { this.speedY /= 2; } if (stickY < 66 && stickY > -66) { this.speedY /= 2; }
 
-            if (this.teetering || this.burning) { this.speedX /= 4; this.speedY /= 4; }
+            if (this.teetering || this.smoldering) { this.speedX /= 4; this.speedY /= 4; }
 
             if (gameArea.mirrorMode) { this.speedX *= -1; }
 
@@ -1869,9 +1888,16 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     // Handle the player touching an active burner
     this.handleBurnerTouching = function(burner)
     {
-        if (burner.state == "OFF") { return; }
+        if (burner.state == "OFF" || this.burning) { return; }
 
-        this.burning = true;
+        this.smoldering = true; if (this.smolderTimer > 0) { return; }
+
+        this.radius = 20;
+        
+        this.burning = true; burner.sfx[1].play();
+
+        document.querySelector("#actionButton").textContent = "❌";
+        document.querySelector("#pauseButton").textContent = "❌";
     }
 }
 
@@ -2161,7 +2187,7 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
 
     this.toDestination = function()
     {
-        if (player.falling) { return; }
+        if (player.falling || player.burning) { return; }
 
         if (this.type == "Goal")
         {
@@ -2253,7 +2279,7 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
 
     this.changeState = function()
     {
-        if (!this.sfx[0].sound.paused || player.falling) { return; }
+        if (!this.sfx[0].sound.paused || player.falling || player.burning) { return; }
         if (!this.activatable) { this.sfx[1].play(); return; }
         
         this.sfx[0].play();
@@ -2390,7 +2416,7 @@ function componentResizer(x, y, radius, startAngle, endAngle, fillColor, lineWid
 
     this.resizePlayer = function()
     {
-        if (!this.sfx[0].sound.paused || !this.sfx[1].sound.paused || player.falling) { return; }
+        if (!this.sfx[0].sound.paused || !this.sfx[1].sound.paused || player.falling || player.burning) { return; }
 
         if (this.type == "Tiny")
         {
@@ -2440,7 +2466,7 @@ function componentTeleporter(x, y, width, height, angle, fillColor, lineWidth, l
 
     this.teleportPlayer = function()
     {
-        if (player.falling) { return; }
+        if (player.falling || player.burning) { return; }
 
         for (i = 0; i < teleporters.length; i++)
         {
@@ -2483,7 +2509,8 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.intermittence = intermittence, this.state = state, this.playSound = playSound;
     this.animationCycle = 2.5, this.animationReverse = false;
-    this.sfx = new componentSound("resources/sounds/Super_Mario_64_-_Fire.wav", "SFX");
+    this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Fire.wav", "SFX")),
+                (new componentSound("resources/sounds/Super_Mario_64_-_Burning.wav", "SFX"))];
 
     if (this.intermittence > 0) { this.timer = this.intermittence * 50; }
 
@@ -2512,7 +2539,7 @@ function componentBurner(x, y, width, height, fillColor, lineWidth, lineColor, i
             this.timer = this.intermittence * 50;
 
             if (this.state == "ON") { this.state = "OFF"; }
-            else if (this.state == "OFF") { this.state = "ON"; if (this.playSound) { this.sfx.play(); } }
+            else if (this.state == "OFF") { this.state = "ON"; if (this.playSound) { this.sfx[0].play(); } }
         }
 
         if (this.state == "OFF")
@@ -2589,11 +2616,15 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
         {
             if (this.timeRemaining > 0) { this.timeRemaining = (this.startingTime - (gameArea.frameNum / 50)).toFixed(1); }
             if (this.timeRemaining < 20) { this.fillColor = colors.Red; music.sound.playbackRate = 1.5; }
+            if (this.timeRemaining <= 0) { this.timeRemaining = (0).toFixed(1); }
 
             this.text = "⏱️";
             if (this.timeRemaining < 10) { this.text += "00"; }
             else if (this.timeRemaining < 100) { this.text += "0"; }
             this.text += this.timeRemaining;
+
+            if (player.falling) { this.text = "🕳️-5 s."; }
+            else if (player.burning) { this.text = "🔥-10 s."; }
         }
         else if (this.type == "Developer") { this.fillColor = colors.rainbow(this.fillColor, 1); }
 
@@ -2644,7 +2675,7 @@ function updateGameArea()
 {
     // Clearing the game area
     gameArea.clear();
-    if (player && !player.falling) { gameArea.frameNum += 1; }
+    if (player && !player.falling && !player.burning) { gameArea.frameNum += 1; }
 
     // Updating the walls
     for (i = 0; i < walls.length; i++)
@@ -2778,29 +2809,20 @@ function updateGameArea()
     if (gameArea.levelComplete) { levelEnd(); }
 
     // Checking conditions for a Game Over occuring
-    if (hud[2] && hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver("Time Up"); }
-    if (player && player.burnTimer <= 0 && !gameArea.gameIsOver) { gameOver("Burning"); }
+    if (hud[2] && hud[2].startingTime > 0 && hud[2].timeRemaining <= 0 && !gameArea.gameIsOver) { gameOver(); }
 }
 
 // Code for the Game Over that occurs when the level time has run out
-function gameOver(type)
+function gameOver()
 {
     gameArea.gameIsOver = true;
 
     document.querySelector("#actionButton").textContent = "🏠";
     document.querySelector("#pauseButton").textContent = "🔄️";
 
-    if (type == "Time Up") { player.sprite.src = "resources/images/player_game_over_time_up.png"; }
-    else if (type == "Burning")
-    {
-        player.sprite.src = "resources/images/player_game_over_burn.png";
-        player.hat.src = "resources/images/player_hat_fire.png";
-    }
-
+    player.sprite.src = "resources/images/player_game_over.png";
     player.context.drawImage(player.sprite,
         player.x - player.radius, player.y - player.radius, 2 * player.radius, 2 * player.radius);
-    player.context.drawImage(player.hat,
-        player.x - player.radius, player.y - (2.25 * player.radius), 2 * player.radius, 2 * player.radius);
 
     var gameOverOverlay = [(new componentWall(0, 0, gameArea.canvas.width, gameArea.canvas.height,
                             colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
@@ -2813,10 +2835,7 @@ function gameOver(type)
                             "Click 🏠 to return to the hub.", 0, "N/A"))];
     for (i = 0; i < gameOverText.length; i++) { gameOverText[i].update(); }
 
-    if (type == "Time Up") { sfx.sound.src = "resources/sounds/Super_Mario_64_-_Oof.wav"; }
-    else if (type == "Burning") { sfx.sound.src = "resources/sounds/Super_Mario_64_-_Burning.wav"; }
-    
-    sfx.play(); music.sound.playbackRate = 1.0;
+    sfx.sound.src = "resources/sounds/Super_Mario_64_-_Oof.wav"; sfx.play(); music.sound.playbackRate = 1.0;
     clearInterval(gameArea.interval); gameArea.interval = null;
 }
 
@@ -2946,7 +2965,7 @@ function playerAction()
 // Code for pausing the game during normal gameplay, or for restarting the current level after getting a Game Over
 function pauseGame()
 {
-    if (gameArea.gameStarted && !gameArea.levelComplete && !gameArea.gameIsOver && !player.falling)
+    if (gameArea.gameStarted && !gameArea.levelComplete && !gameArea.gameIsOver && !player.falling && !player.burning)
     {
         if (gameArea.interval) // Pausing the game
         {
@@ -3127,7 +3146,7 @@ var JoyStick = (function (container, parameters, callback)
     function onTouchMove(event)
     {
         if (pressed === 1 && event.targetTouches[0].target === canvas &&
-                gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling)
+            gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling && !player.burning)
         {
             movedX = event.targetTouches[0].pageX, movedY = event.targetTouches[0].pageY;
 
@@ -3187,7 +3206,8 @@ var JoyStick = (function (container, parameters, callback)
 
     function onMouseMove(event)
     {
-        if (pressed === 1 && gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling)
+        if (pressed === 1 &&
+            gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling && !player.burning)
         {
             movedX = event.pageX, movedY = event.pageY;
 
