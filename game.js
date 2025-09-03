@@ -1766,8 +1766,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
             else if (stickAngle >= 303.75 && stickAngle < 326.25) { this.moveUpRight(); }
             else if (stickAngle >= 326.25 && stickAngle < 348.75) { this.moveRightUpRight(); }
 
-            if (stickX < 90 && stickX > -90) { this.speedX /= 2; }
-            if (stickY < 90 && stickY > -90) { this.speedY /= 2; }
+            if (stickX < 90 && stickX > -90) { this.speedX /= 2; } if (stickX < 66 && stickX > -66) { this.speedX /= 2; }
+            if (stickY < 90 && stickY > -90) { this.speedY /= 2; } if (stickY < 66 && stickY > -66) { this.speedY /= 2; }
 
             if (this.teetering || this.burning) { this.speedX /= 4; this.speedY /= 4; }
 
@@ -3005,8 +3005,8 @@ function toggleAudioMuting()
 
 // IDEAS
 // - Replace emoji text in HUD elements with emoji images so that the emoji designs are consistent between devices
-// - Add toggle button that forces the player to move more slowly, for accessibility reasons
-// - Change restarting the current level when paused from moving the joystick to the slow movement toggle button
+// - Add another button that when toggled forces the player to move more slowly, for accessibility reasons
+// - Make the added button restart the current level when paused but not during a Game Over
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
 // - Add Time Trial mode by having target completion times for each level, earning the player platinum level warps if they beat them
 // - Add multiple save files that can be selected from the title screen, and are saved and deleted separately
@@ -3129,8 +3129,6 @@ var JoyStick = (function (container, parameters, callback)
         if (pressed === 1 && event.targetTouches[0].target === canvas &&
                 gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling)
         {
-            innerFillColor = colors.shading(colors.Gray, 0);
-
             movedX = event.targetTouches[0].pageX, movedY = event.targetTouches[0].pageY;
 
             if (canvas.offsetParent.tagName.toUpperCase() === "BODY")
@@ -3150,6 +3148,20 @@ var JoyStick = (function (container, parameters, callback)
             StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
             StickStatus.cardinalDirection = getCardinalDirection();
             callback(StickStatus);
+
+            if (StickStatus.x < 25 && StickStatus.x > -25 && StickStatus.y < 25 && StickStatus.y > -25)
+            {
+                innerFillColor = colors.shading(colors.Gray, 15);
+            }
+            else if (StickStatus.x < 66 && StickStatus.x > -66 && StickStatus.y < 66 && StickStatus.y > -66)
+            {
+                innerFillColor = colors.shading(colors.Gray, 5);
+            }
+            else if (StickStatus.x < 90 && StickStatus.x > -90 && StickStatus.y < 90 && StickStatus.y > -90)
+            {
+                innerFillColor = colors.shading(colors.Gray, -5);
+            }
+            else { innerFillColor = colors.shading(colors.Gray, -15); }
         }
     }
 
@@ -3177,8 +3189,6 @@ var JoyStick = (function (container, parameters, callback)
     {
         if (pressed === 1 && gameArea.gameLoaded && gameArea.gameStarted && gameArea.interval && player && !player.falling)
         {
-            innerFillColor = colors.shading(colors.Gray, 0)
-
             movedX = event.pageX, movedY = event.pageY;
 
             if (canvas.offsetParent.tagName.toUpperCase() === "BODY")
@@ -3198,6 +3208,20 @@ var JoyStick = (function (container, parameters, callback)
             StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
             StickStatus.cardinalDirection = getCardinalDirection();
             callback(StickStatus);
+
+            if (StickStatus.x < 25 && StickStatus.x > -25 && StickStatus.y < 25 && StickStatus.y > -25)
+            {
+                innerFillColor = colors.shading(colors.Gray, 15);
+            }
+            else if (StickStatus.x < 66 && StickStatus.x > -66 && StickStatus.y < 66 && StickStatus.y > -66)
+            {
+                innerFillColor = colors.shading(colors.Gray, 5);
+            }
+            else if (StickStatus.x < 90 && StickStatus.x > -90 && StickStatus.y < 90 && StickStatus.y > -90)
+            {
+                innerFillColor = colors.shading(colors.Gray, -5);
+            }
+            else { innerFillColor = colors.shading(colors.Gray, -15); }
         }
     }
 
