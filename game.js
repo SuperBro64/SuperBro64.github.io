@@ -112,6 +112,7 @@ var colors =
     Clear                : "hsla(  0,   0%, 100%, 0.0)",
 
     // Code for changing a color's shade, originally by Chalarangelo (Angelos Chalaris) on GitHub
+    // Link: https://github.com/Chalarangelo/30-seconds-of-code/blob/master/content/snippets/js/s/change-lightness.md
     shading: function(color, delta)
     {
         var [hue, saturation, lightness, alpha] = color.match(/\d+/g).map(Number);
@@ -397,7 +398,7 @@ var levelSetup =
         gameArea.fillColor = colors.diagonalLinearGradient(colors.DarkSlateBlue, -25, gameArea,
                                 0, 0, gameArea.canvas.width, gameArea.canvas.height);
 
-        player = new componentPlayer(512, 510, 20, 0, 2, colors.Red, 2, colors.Black);
+        player = new componentPlayer(512, 565, 20, 0, 2, colors.Red, 2, colors.Black);
         walls = [];
         holes = [];
         treasure = [];
@@ -409,25 +410,49 @@ var levelSetup =
 
         hud = [(new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 380, 50, "CREDITS", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 470, 750, "Exit", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 120,
-                "Game Creator . . . . . . . . . . SuperBro64", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 160,
-                "Background Music . . . . . Super Monkey Ball 2", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 200,
-                "Sound Effects . . . . . . . . . Super Mario 64", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 240,
-                "Font . . . . . . . . . . . . . . . . . . . . New Super Mario Bros. U", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 280,
-                "Emoji Images . . . . . . . . . . . emoji.aranja.com", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 320,
-                "Joystick Code . . . . . . . . . . Bobboteck", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 360,
-                "Color Shading Code . . . . Chalarangelo", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 400,
-                "Music Looping Help . . . . Audacity Fork by Jackoalan", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 50, 440,
-                "Special Thanks . . . . . . . . Rick Jackson, Bryce Pavlakos", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 30, 620,
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 120,
+                "Game Creator", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 120,
+                "SuperBro64 (Brandon Jackson)", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 160,
+                "Background Music", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 160,
+                "Super Monkey Ball 2", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 200,
+                "Sound Effects", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 200,
+                "Super Mario 64", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 240,
+                "Font", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 240,
+                "New Super Mario Bros. U", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 280,
+                "Emoji Images", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 280,
+                "emoji.aranja.com", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 320,
+                "Joystick Code", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 320,
+                "Bobboteck (Roberto D'Amico)", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 360,
+                "Color Shading Code", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 360,
+                "Chalarangelo (Angelos Chalaris)", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 400,
+                "Music Looping Help", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 400,
+                "Jackoalan (Jack Andersen)", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 440,
+                "Tools Used", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 440,
+                "VS Code, Audacity, Google.com", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 50, 480,
+                "Special Thanks", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 480,
+                "Rick Jackson, Bryce Pavlakos,", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Cyan, colors.Black, 450, 520,
+                "Fellow Online Programmers, You!", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 30, 640,
                 "❤️ Thank you so much for a-playing my game! ❤️", 0, "N/A"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Credits.mp3";
@@ -3067,6 +3092,7 @@ function toggleAudioMuting()
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed)
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
+// Link: https://github.com/bobboteck/JoyStick
 let StickStatus = { xPosition: 0, yPosition: 0, x: 0, y: 0, cardinalDirection: "C" };
 
 var JoyStick = (function (container, parameters, callback)
