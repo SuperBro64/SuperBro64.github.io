@@ -87,11 +87,11 @@ var colors =
     Bisque               : "hsla( 33, 100%,  88%, 1.0)", NavajoWhite          : "hsla( 36, 100%,  84%, 1.0)",
     Wheat                : "hsla( 39,  77%,  83%, 1.0)", BurlyWood            : "hsla( 34,  57%,  70%, 1.0)",
     Tan                  : "hsla( 34,  44%,  69%, 1.0)", RosyBrown            : "hsla(  0,  25%,  65%, 1.0)",
-    SandyBrown           : "hsla( 28,  87%,  67%, 1.0)", Goldenrod            : "hsla( 43,  74%,  49%, 1.0)",
-    DarkGoldenrod        : "hsla( 43,  89%,  38%, 1.0)", Peru                 : "hsla( 30,  59%,  53%, 1.0)",
-    Chocolate            : "hsla( 25,  75%,  47%, 1.0)", SaddleBrown          : "hsla( 25,  76%,  31%, 1.0)",
-    Sienna               : "hsla( 19,  56%,  40%, 1.0)", Brown                : "hsla(  0,  59%,  41%, 1.0)",
-    Maroon               : "hsla(  0, 100%,  25%, 1.0)",
+    SandyBrown           : "hsla( 28,  87%,  67%, 1.0)", Bronze               : "hsla( 30,  58%,  54%, 1.0)",
+    Goldenrod            : "hsla( 43,  74%,  49%, 1.0)", DarkGoldenrod        : "hsla( 43,  89%,  38%, 1.0)",
+    Peru                 : "hsla( 30,  59%,  53%, 1.0)", Chocolate            : "hsla( 25,  75%,  47%, 1.0)",
+    SaddleBrown          : "hsla( 25,  76%,  31%, 1.0)", Sienna               : "hsla( 19,  56%,  40%, 1.0)",
+    Brown                : "hsla(  0,  59%,  41%, 1.0)", Maroon               : "hsla(  0, 100%,  25%, 1.0)",
     // White Colors ---------------------------------------------------------------------------------------------
     White                : "hsla(  0,   0%, 100%, 1.0)", Snow                 : "hsla(  0, 100%,  99%, 1.0)",
     HoneyDew             : "hsla(120, 100%,  97%, 1.0)", MintCream            : "hsla(150, 100%,  98%, 1.0)",
@@ -166,16 +166,24 @@ var saveProgress =
         {
             if (this.completion[i][0] == gameArea.currentLevel)
             {
-                if (hud[1].treasureCollected == treasure.length) { this.completion[i][1] = 2; }
-                else if (this.completion[i][1] != 2) { this.completion[i][1] = 1; } break;
+                if (hud[1].treasureCollected == treasure.length && hud[2].timeRemaining >= Math.round(hud[2].startingTime / 3))
+                {
+                    this.completion[i][1] = 3;
+                }
+                else if (this.completion[i][1] < 3 &&
+                    (hud[1].treasureCollected == treasure.length || hud[2].timeRemaining >= Math.round(hud[2].startingTime / 3)))
+                {
+                    this.completion[i][1] = 2;
+                }
+                else if (this.completion[i][1] < 2) { this.completion[i][1] = 1; } break;
             }
         }
 
         this.completion[14][1] = 0.00;
         for (i = 0; i < this.completion.length - 2; i++) { this.completion[14][1] += this.completion[i][1]; }
-        this.completion[14][1] = Math.min(Math.round((this.completion[14][1] / (13 * 2)) * 100), 100);
+        this.completion[14][1] = Math.min(Math.round((this.completion[14][1] / (13 * 3)) * 100), 100);
 
-        if (this.completion[14][1] == 100 && this.completion[13][1] == 2) { this.completion[14][1] = 101; }
+        if (this.completion[14][1] == 100 && this.completion[13][1] == 3) { this.completion[14][1] = 101; }
 
         if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
     },
@@ -205,7 +213,7 @@ var saveProgress =
     // Immediately sets the player's current game progress to full completion and saves it to web storage
     debug: function(storageName)
     {
-        for (i = 0; i < this.completion.length - 1; i++) { this.completion[i][1] = 2; }
+        for (i = 0; i < this.completion.length - 1; i++) { this.completion[i][1] = 3; }
         this.completion[14][1] = 101;
 
         if (typeof(Storage) !== "undefined") { localStorage.setItem(storageName, this.completion); }
@@ -330,47 +338,53 @@ var levelSetup =
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 770, 160, "Mirror Mode", 0, "N/A")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 40, 680, "Quit Game", 0, "N/A")),
                // (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 395, 680, "Debug Save", 0, "N/A")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 770, 680, "Erase Game", 0, "N/A")),
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 775, 680, "Erase Save", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 440, 360, "⬉", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 360, "⬈", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 440, 450, "⬋", 0, "N/A")),
                (new componentHud("60px NewSuperMarioFontU", colors.White, colors.Black, 535, 450, "⬊", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 250,
-                "Find your way to the", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 290,
-                "goal warp in each level", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 330,
-                "before time runs out", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 370,
-                "to move on. Doing so", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 410,
-                "will turn the level's", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 450,
-                "entrance in the main", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 490,
-                "hub silver and earn", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 530,
-                "you a higher total", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 30, 570,
-                "percent completion.", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 250,
-                "Collect every piece", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 290,
-                "of treasure lying", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 330,
-                "around each level", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 370,
-                "before you reach", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 410,
-                "the goal to turn the", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 450,
-                "level's entrance gold", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 490,
-                "and earn you an even", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 530,
-                "higher total percent", 0, "N/A")),
-               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 620, 570,
-                "completion. Good luck!", 0, "N/A"))];
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 250,
+                "Move Hyperion by click-", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 290,
+                "dragging the Joystick.", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.DarkGray, colors.Black, 257, 290,
+                "Joystick", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 330,
+                "When positioned upon", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 370,
+                "certain objects, click", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 410,
+                "the A Button to use or", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.MediumSeaGreen, colors.Black, 88.5, 410,
+                "A Button", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 450,
+                "activate them. Click on", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 490,
+                "the Pause Button to", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Goldenrod, colors.Black, 88.5, 490,
+                "Pause Button", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 530,
+                "suspend or resume all", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 20, 570,
+                "gameplay functions.", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 610, 250,
+                "There are three tasks", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 610, 290,
+                "to complete per level:", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 610, 330,
+                "1) Reach the goal warp", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 610, 370,
+                "2) Collect all treasure", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 610, 410,
+                "3) Have at least 1/3 of", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.Gold, colors.Black, 610, 450,
+                "     initial time limit left", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 610, 490,
+                "The more tasks you do,", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 610, 530,
+                "the higher your total", 0, "N/A")),
+               (new componentHud("35px NewSuperMarioFontU", colors.White, colors.Black, 610, 570,
+                "percentage. Good luck!", 0, "N/A"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_Title.mp3";
         music.changeLoopEndpoints(3.360, 57.074); music.play(); // First Loop Point: 30.217 sec.
@@ -439,21 +453,21 @@ var levelSetup =
         holes = [];
         treasure = [];
         warps = [(new componentWarp(512, 688, 30, 30, 0, colors.SeaGreen, 2, colors.Black, "Menu Screen", "N/A")),
-                 (new componentWarp(370, 644, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 1", "Level 1")),
-                 (new componentWarp(45, 728, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 2", "Level 2")),
-                 (new componentWarp(150, 504, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 3", "Level 3")),
-                 (new componentWarp(240, 310, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 4", "Level 4")),
-                 (new componentWarp(75, 90, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 5", "Level 5")),
-                 (new componentWarp(390, 170, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 6", "Level 6")),
-                 (new componentWarp(700, 110, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 7", "Level 7")),
-                 (new componentWarp(940, 230, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 8", "Level 8")),
-                 (new componentWarp(830, 430, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 9", "Level 9")),
-                 (new componentWarp(512, 384, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level 10", "Level 10")),
-                 (new componentWarp(865, 604, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level A", "Level A")),
-                 (new componentWarp(765, 704, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level B", "Level B")),
-                 (new componentWarp(965, 704, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level C", "Level C"))];
+                 (new componentWarp(370, 644, 30, 30, 0, colors.White, 2, colors.Black, "Level 1", "Level 1")),
+                 (new componentWarp(45, 728, 30, 30, 0, colors.White, 2, colors.Black, "Level 2", "Level 2")),
+                 (new componentWarp(150, 504, 30, 30, 0, colors.White, 2, colors.Black, "Level 3", "Level 3")),
+                 (new componentWarp(240, 310, 30, 30, 0, colors.White, 2, colors.Black, "Level 4", "Level 4")),
+                 (new componentWarp(75, 90, 30, 30, 0, colors.White, 2, colors.Black, "Level 5", "Level 5")),
+                 (new componentWarp(390, 170, 30, 30, 0, colors.White, 2, colors.Black, "Level 6", "Level 6")),
+                 (new componentWarp(700, 110, 30, 30, 0, colors.White, 2, colors.Black, "Level 7", "Level 7")),
+                 (new componentWarp(940, 230, 30, 30, 0, colors.White, 2, colors.Black, "Level 8", "Level 8")),
+                 (new componentWarp(830, 430, 30, 30, 0, colors.White, 2, colors.Black, "Level 9", "Level 9")),
+                 (new componentWarp(512, 384, 30, 30, 0, colors.White, 2, colors.Black, "Level 10", "Level 10")),
+                 (new componentWarp(865, 604, 30, 30, 0, colors.White, 2, colors.Black, "Level A", "Level A")),
+                 (new componentWarp(765, 704, 30, 30, 0, colors.White, 2, colors.Black, "Level B", "Level B")),
+                 (new componentWarp(965, 704, 30, 30, 0, colors.White, 2, colors.Black, "Level C", "Level C"))];
         if (saveProgress.completion[14][1] >= 100)
-        { warps.push(new componentWarp(410, 460, 30, 30, 0, colors.Sienna, 2, colors.Black, "Level ?", "Level ?")); }
+        { warps.push(new componentWarp(410, 460, 30, 30, 0, colors.White, 2, colors.Black, "Level ?", "Level ?")); }
 
         switches = [];
         resizers = [];
@@ -1279,7 +1293,7 @@ var levelSetup =
 
         hud = [(new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 10, 35, "Level 10", 0, "Level")),
                (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 430, 35, "🪙", 0, "Treasure")),
-               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 600, "Timer"))];
+               (new componentHud("40px NewSuperMarioFontU", colors.White, colors.Black, 870, 35, "⏱️", 500, "Timer"))];
 
         music.sound.src = "resources/sounds/Super_Monkey_Ball_2_-_World_10.mp3";
         music.changeLoopEndpoints(7.397, 188.277); music.play(); // First Loop Point: 97.837 sec.
@@ -1647,10 +1661,10 @@ var levelSetup =
 // Code for the player
 function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidth, lineColor)
 {
-    this.speedX = 0, this.speedY = 0;
+    this.speedX = 0, this.speedY = 0, this.debugSpeed = false;
     this.x = x, this.y = y, this.radius = radius; this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
-    this.falling = false, this.teetering = false, this.teeterTimer = 25;
+    this.falling = false, this.teetering = false, this.teeterTimer = 25, this.holeCenterX = 0, this.holeCenterY = 0;
     this.burning = false, this.smoldering = false, this.smolderTimer = 25;
     this.action = false, this.originalX = x, this.originalY = y, this.originalRadius = radius;
     this.sprite = new Image(), this.hat = new Image(), this.idleTimer = 0;
@@ -1709,6 +1723,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         {
             this.radius -= 0.15; this.sprite.src = "resources/images/player_falling.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+
+            this.x += (this.holeCenterX - this.x) * 0.05; this.y += (this.holeCenterY - this.y) * 0.05;
 
             if (this.radius <= 0)
             {
@@ -1795,6 +1811,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
             if (gameArea.mirrorMode) { this.speedX *= -1; }
 
+            if (this.debugSpeed) { this.speedX *= 2; this.speedY *= 2; }
+
             this.idleTimer = 0;
         }
 
@@ -1879,15 +1897,9 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         this.teetering = true; if (this.teeterTimer > 0) { return; }
 
-        this.radius = 20;
+        this.radius = 20; this.falling = true; hole.sfx.play();
 
-        var overlapX = Math.min(this.x + this.radius, hole.x + hole.width) - Math.max(this.x - this.radius, hole.x);
-        var overlapY = Math.min(this.y + this.radius, hole.y + hole.height) - Math.max(this.y - this.radius, hole.y);
-
-        if (this.x < hole.x) { this.x -= (overlapX - (this.radius * 2)); } else { this.x += (overlapX - (this.radius * 2)); }
-        if (this.y < hole.y) { this.y -= (overlapY - (this.radius * 2)); } else { this.y += (overlapY - (this.radius * 2)); }
-
-        this.falling = true; hole.sfx.play();
+        this.holeCenterX = hole.x + (hole.width / 2); this.holeCenterY = hole.y + (hole.height / 2);
 
         document.querySelector("#actionButton").textContent = "❌";
         document.querySelector("#pauseButton").textContent = "❌";
@@ -1900,9 +1912,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
         this.smoldering = true; if (this.smolderTimer > 0) { return; }
 
-        this.radius = 20;
-        
-        this.burning = true; burner.sfx[1].play();
+        this.radius = 20; this.burning = true; burner.sfx[1].play();
 
         document.querySelector("#actionButton").textContent = "❌";
         document.querySelector("#pauseButton").textContent = "❌";
@@ -2135,14 +2145,16 @@ function componentTreasure(x, y, radius, startAngle, endAngle, fillColor, lineWi
 
     this.disappear = function()
     {
+        if (player.falling || player.burning) { return; }
+
         this.x = -100; this.y = -100;
 
         for (i = 0; i < hud.length; i++)
         {
             if (hud[i].type == "Treasure" && treasure.length > 0)
             {
-                if (hud[i].treasureCollected == treasure.length - 1) { this.sfx[1].play(); }
-                else { this.sfx[0].play(); } break;
+                if (hud[i].treasureCollected == treasure.length - 1) { this.sfx[1].play(); } else { this.sfx[0].play(); }
+                hud[i].treasureCollected++; break;
             }
         }
     }
@@ -2160,9 +2172,10 @@ function componentWarp(x, y, width, height, angle, fillColor, lineWidth, lineCol
     {
         if (saveProgress.completion[i][0] == this.type)
         {
-            if (saveProgress.completion[i][1] == 0) { this.fillColor = colors.Sienna; }
-            else if (saveProgress.completion[i][1] == 1) { this.fillColor = colors.Silver; }
-            else if (saveProgress.completion[i][1] == 2) { this.fillColor = colors.Gold; }
+            if (saveProgress.completion[i][1] == 0) { this.fillColor = colors.Clear; }
+            else if (saveProgress.completion[i][1] == 1) { this.fillColor = colors.Bronze; }
+            else if (saveProgress.completion[i][1] == 2) { this.fillColor = colors.Silver; }
+            else if (saveProgress.completion[i][1] == 3) { this.fillColor = colors.Gold; }
             break;
         }
     }
@@ -2603,16 +2616,11 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
         }
         else if (this.type == "Completion")
         {
-            if (saveProgress.completion[14][1] < 50) { this.fillColor = colors.White; }
-            else if (saveProgress.completion[14][1] >= 50 && saveProgress.completion[14][1] < 100)
-            {
-                this.fillColor = colors.shading(colors.Silver, 10);
-            }
+            if (saveProgress.completion[14][1] < 33) { this.fillColor = colors.White; }
+            else if (saveProgress.completion[14][1] >= 33 && saveProgress.completion[14][1] < 66) { this.fillColor = colors.Bronze; }
+            else if (saveProgress.completion[14][1] >= 66 && saveProgress.completion[14][1] < 100) { this.fillColor = colors.Silver; }
             else if (saveProgress.completion[14][1] == 100) { this.fillColor = colors.Gold; }
-            else if (saveProgress.completion[14][1] >= 101)
-            {
-                this.fillColor = colors.rainbow(this.fillColor, 1);
-            }
+            else if (saveProgress.completion[14][1] >= 101) { this.fillColor = colors.rainbow(this.fillColor, 1); }
 
             this.text = "";
             if (saveProgress.completion[14][1] < 10) { this.text += "00"; }
@@ -2622,6 +2630,7 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
         else if (this.type == "Timer" && this.startingTime > 0)
         {
             if (this.timeRemaining > 0) { this.timeRemaining = (this.startingTime - (gameArea.frameNum / 50)).toFixed(1); }
+            if (this.timeRemaining < Math.round(this.startingTime / 3)) { this.fillColor = colors.shading(colors.Orange, 10); }
             if (this.timeRemaining < 20) { this.fillColor = colors.Red; music.sound.playbackRate = 1.5; }
             if (this.timeRemaining <= 0) { this.timeRemaining = (0).toFixed(1); }
 
@@ -2630,8 +2639,8 @@ function componentHud(font, fillColor, outlineColor, x, y, text, startingTime, t
             else if (this.timeRemaining < 100) { this.text += "0"; }
             this.text += this.timeRemaining;
 
-            if (player.falling) { this.text = "🕳️-5 s."; }
-            else if (player.burning) { this.text = "🔥-10 s."; }
+            if (player.falling) { this.fillColor = colors.White; this.text = "🕳️-5 s."; }
+            else if (player.burning) { this.fillColor = colors.White; this.text = "🔥-10 s."; }
         }
         else if (this.type == "Developer") { this.fillColor = colors.rainbow(this.fillColor, 1); }
 
@@ -2713,11 +2722,7 @@ function updateGameArea()
         {
             treasure[i].update();
 
-            if (player && player.objectCollision(treasure[i], "Circular"))
-            {
-                treasure[i].disappear();
-                hud[1].treasureCollected += 1;
-            }
+            if (player && player.objectCollision(treasure[i], "Circular")) { treasure[i].disappear(); }
         }
     }
 
@@ -2889,7 +2894,7 @@ function levelEnd()
                                  colors.transparency(colors.Gray, 0.5), 0, colors.Clear, false, "N/A", 0))];
     for (i = 0; i < levelCompleteOverlay.length; i++) { levelCompleteOverlay[i].update(); }
 
-    var levelCompleteText = [(new componentHud("60px NewSuperMarioFontU", colors.Gold, colors.Black, 425, 364, "GOAL!!", 0, "N/A")),
+    var levelCompleteText = [(new componentHud("60px NewSuperMarioFontU", colors.Gold, colors.Black, 425, 314, "GOAL!!", 0, "N/A")),
                              (new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 215, 464,
                                 "Click 🏠 to return to the hub.", 0, "N/A"))];
     for (i = 0; i < hud.length; i++)
@@ -2898,13 +2903,30 @@ function levelEnd()
         {
             if (hud[i].treasureCollected == treasure.length)
             {
-                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 180, 414,
-                    "You collected all of the treasure!", 0, "N/A")));
+                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 65, 364,
+                    "💰 You collected every piece of treasure! ✔️", 0, "N/A")));
             }
             else
             {
-                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 170, 414,
-                    "You missed some of the treasure...", 0, "N/A")));
+                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 100, 364,
+                    "💰 You missed " + (treasure.length - hud[i].treasureCollected) + " piece(s) of treasure... ❌", 0, "N/A")));
+            }
+            break;
+        }
+    }
+    for (i = 0; i < hud.length; i++)
+    {
+        if (hud[i].type == "Timer" && hud[i].startingTime > 0)
+        {
+            if (hud[i].timeRemaining >= Math.round(hud[i].startingTime / 3))
+            {
+                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 20, 414,
+                    "⏱️ You reached the goal with " + Math.round(hud[i].startingTime / 3) + "+ seconds left! ✔️", 0, "N/A")));
+            }
+            else
+            {
+                levelCompleteText.push((new componentHud("40px NewSuperMarioFontU", colors.Gold, colors.Black, 40, 414,
+                    "⏱️ You didn't make it with " + Math.round(hud[i].startingTime / 3) + "+ seconds left... ❌", 0, "N/A")));
             }
             break;
         }
@@ -3034,8 +3056,6 @@ function toggleAudioMuting()
 // - Add another button that when toggled forces the player to move more slowly, for accessibility reasons
 // - Make the added button restart the current level when paused but not during a Game Over
 // - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
-// - Add Time Trial mode by having target completion times for each level, earning the player platinum level warps if they beat them
-// - Add multiple save files that can be selected from the title screen, and are saved and deleted separately
 // - Make the credits in the credits level scroll so that room can be made for more credits
 
 // ISSUES
@@ -3043,7 +3063,6 @@ function toggleAudioMuting()
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place before they finish
 // - Background music does not loop seamlessly and may have a noticeable cut upon reaching the loop point time
 // - Background music restarts when restarting the same level again instead of staying at its current time
-// - Wonkiness with falling into holes, possibly causing the player to fall only partially within the hole
 // - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
 // - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed)
 
