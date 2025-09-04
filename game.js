@@ -1,3 +1,10 @@
+/********************************************************\
+| FILE:    game.js (Hyperion's Treasure-Maxed Labyrinth) |
+| AUTHOR:  SuperBro64 (Brandon Jackson)                  |
+| DATE:    February 7, 2025 - September 3, 2025          |
+| VERSION: 1.0.0                                         |
+\********************************************************/
+
 // Setup for the start of the game
 function startGame()
 {
@@ -1690,8 +1697,8 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
     this.x = x, this.y = y, this.radius = radius; this.startAngle = startAngle, this.endAngle = endAngle;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.falling = false, this.teetering = false, this.teeterTimer = 25, this.holeCenterX = 0, this.holeCenterY = 0;
-    this.burning = false, this.smoldering = false, this.smolderTimer = 25;
-    this.action = false, this.originalX = x, this.originalY = y, this.originalRadius = radius;
+    this.burning = false, this.smoldering = false, this.smolderTimer = 25, this.shakeDirection = 0, this.shakeTimer = 120;
+    this.action = false, this.originalX = x, this.originalY = y;
     this.sprite = new Image(), this.hat = new Image(), this.idleTimer = 0;
 
     this.update = function()
@@ -1753,8 +1760,7 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
 
             if (this.radius <= 0)
             {
-                this.falling = false;
-                this.x = this.originalX; this.y = this.originalY; this.radius = this.originalRadius;
+                this.falling = false; this.x = this.originalX; this.y = this.originalY; this.radius = 20;
 
                 document.querySelector("#actionButton").textContent = "🅰️";
                 document.querySelector("#pauseButton").textContent = "⏸️";
@@ -1764,13 +1770,22 @@ function componentPlayer(x, y, radius, startAngle, endAngle, fillColor, lineWidt
         }
         else if (this.burning)
         {
-            this.radius -= 0.2; this.sprite.src = "resources/images/player_burning.png";
+            this.shakeTimer--; this.sprite.src = "resources/images/player_burning.png";
             this.context.drawImage(this.sprite, this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
 
-            if (this.radius <= 0)
+            if (this.shakeTimer >= 119) { this.x += 3; }
+            switch (this.shakeTimer % 16)
             {
-                this.burning = false;
-                this.x = this.originalX; this.y = this.originalY; this.radius = this.originalRadius;
+                case  7: this.x -= 4.5; this.y += 1.5; break; case  5: this.x += 1.5; this.y -= 4.5; break;
+                case  3: this.x += 1.5; this.y += 4.5; break; case  1: this.x -= 4.5; this.y -= 1.5; break;
+                case 15: this.x += 4.5; this.y -= 1.5; break; case 13: this.x -= 1.5; this.y += 4.5; break;
+                case 11: this.x -= 1.5; this.y -= 4.5; break; case  9: this.x += 4.5; this.y += 1.5; break;
+                default: break;
+            }
+
+            if (this.shakeTimer <= 0)
+            {
+                this.burning = false; this.x = this.originalX; this.y = this.originalY; this.shakeTimer = 120;
 
                 document.querySelector("#actionButton").textContent = "🅰️";
                 document.querySelector("#pauseButton").textContent = "⏸️";
@@ -3076,20 +3091,11 @@ function toggleAudioMuting()
     }
 }
 
-// IDEAS
-// - Replace emoji text in HUD elements with emoji images so that the emoji designs are consistent between devices
-// - Add another button that when toggled forces the player to move more slowly, for accessibility reasons
-// - Make the added button restart the current level when paused but not during a Game Over
-// - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
-// - Make the credits in the credits level scroll so that room can be made for more credits
-
 // ISSUES
 // - All audio sometimes completely cuts out and stops playing until the game is reloaded
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place before they finish
 // - Background music does not loop seamlessly and may have a noticeable cut upon reaching the loop point time
 // - Background music restarts when restarting the same level again instead of staying at its current time
-// - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
-// - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed)
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 // Link: https://github.com/bobboteck/JoyStick
