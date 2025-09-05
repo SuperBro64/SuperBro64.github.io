@@ -1,9 +1,9 @@
-/********************************************************\
-| FILE:    game.js (Hyperion's Treasure-Maxed Labyrinth) |
-| AUTHOR:  SuperBro64 (Brandon Jackson)                  |
-| DATE:    February 7, 2025 - September 3, 2025          |
-| VERSION: 1.0.0                                         |
-\********************************************************/
+/*-----------------------------+
+| FILE:      game.js           |
+| AUTHOR:    Brandon Jackson   |
+| CREATED:   07/07/2025        |
+| COPYRIGHT: © 2025 SuperBro64 |
++-----------------------------*/
 
 // Setup for the start of the game
 function startGame()
