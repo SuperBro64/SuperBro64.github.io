@@ -2294,7 +2294,7 @@ function componentSwitch(x, y, width, height, fillColor, lineWidth, lineColor, t
     this.x = x, this.y = y, this.width = width, this.height = height;
     this.fillColor = fillColor, this.lineWidth = lineWidth, this.lineColor = lineColor;
     this.type = type, this.state = state, this.value = value; this.activatable = false;
-    this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Camera_Click.wav", "SFX")),
+    this.sfx = [(new componentSound("resources/sounds/Super_Mario_64_-_Switch.wav", "SFX")),
                 (new componentSound("resources/sounds/Super_Mario_64_-_Camera_Buzz.wav", "SFX"))];
 
     this.update = function()
