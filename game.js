@@ -3091,11 +3091,21 @@ function toggleAudioMuting()
     }
 }
 
+// IDEAS
+// - Replace emoji text in HUD elements with emoji images so that the emoji designs are consistent between devices
+// - Add another button that when toggled forces the player to move more slowly, for accessibility reasons
+// - Make the added button restart the current level when paused but not during a Game Over
+// - More fully implement Mirror Mode by unlocking it after completing the main game, with it having separate save data
+// - Add multiple save files that can be selected from the title screen, and are saved and deleted separately
+// - Make the credits in the credits level scroll so that room can be made for more credits
+
 // ISSUES
 // - All audio sometimes completely cuts out and stops playing until the game is reloaded
 // - Sound effects using the global sfx variable getting cutoff when another sound takes their place before they finish
 // - Background music does not loop seamlessly and may have a noticeable cut upon reaching the loop point time
 // - Background music restarts when restarting the same level again instead of staying at its current time
+// - All onscreen text being mirrored and thus hard to read when playing in Mirror Mode
+// - Change "else if" conditions to "else" conditions for "if-else" statements that use booleans (an "else if" is not needed
 
 // Code for the joystick, originally by Bobboteck (Roberto D'Amico) on GitHub
 // Link: https://github.com/bobboteck/JoyStick
